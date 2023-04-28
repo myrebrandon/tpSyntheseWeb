@@ -7,6 +7,7 @@ const HttpError = require("./models/http-errors");
 
 const routesStages = require("./routes/routes-stages");
 const routesEntrepreneurs = require("./routes/routes-entrepreneurs");
+const routesEtudiants = require("./routes/routes-etudiants");
 
 const app = express();
 
@@ -14,7 +15,8 @@ app.use(bodyParser.json());
 
 // Routes
 app.use('/api/stages', routesStages);
-app.use('/api/entrepreneur', routesEntrepreneurs);
+app.use('/api/entrepreneurs', routesEntrepreneurs);
+app.use('/api/etudiants', routesEtudiants);
 
 app.use((requete, reponse, next) => {
     return next(new HttpError("Route non rejoignable", 404));
