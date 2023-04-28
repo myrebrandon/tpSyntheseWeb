@@ -5,6 +5,36 @@ const HttpError = require("../models/http-errors");
 const Stage = require("../models/stage");
 const Entrepreneur = require("../models/entrepreneur");
 
+const retourDesStages = async (requete, reponse, next) => {
+    let listeStages;
+    try {
+        listeStages = await Stage.find();
+        console.log(listeStages);
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    return reponse.status(201).json({listeStages: listeStages});
+}
+
+const retourUnStage = async (requete, reponse, next) => {
+    const idStage = requete.params.idStage;
+    
+    let stage;
+    
+    try {
+        stage = await Stage.findById(idStage);
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(!stage) {
+        return next(new HttpError("Le stage n'existe pas", 401));
+    }
+
+    return reponse.status(201).json({stage: stage.toObject({getters: true})});
+}
+
 const ajouterStage = async (requete, reponse, next) => {
     const idEntrepreneur = requete.params.idEntrepreneur;
     const { titre, nomCompletContact, courriel, numeroCell, nomEntreprise, adresseEntreprise, type, nbPostes, description, renumeration, etat } = requete.body;
@@ -64,3 +94,5 @@ const ajouterStage = async (requete, reponse, next) => {
 }
 
 module.exports.ajouterStage = ajouterStage;
+module.exports.retourUnStage = retourUnStage;
+module.exports.retourDesStages = retourDesStages;
