@@ -5,13 +5,16 @@ mongoose.set('strictQuery', true);
 
 const HttpError = require("./models/http-errors");
 
+const routesStages = require("./routes/routes-stages");
+const routesEntrepreneurs = require("./routes/routes-entrepreneurs");
 
 const app = express();
 
 app.use(bodyParser.json());
 
 // Routes
-
+app.use('/api/stages', routesStages);
+app.use('/api/entrepreneur', routesEntrepreneurs);
 
 app.use((requete, reponse, next) => {
     return next(new HttpError("Route non rejoignable", 404));

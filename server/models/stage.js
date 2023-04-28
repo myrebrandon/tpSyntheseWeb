@@ -4,6 +4,7 @@ const Types = require("./types");
 
 const stageSchema = new Schema({
     titre:{type:String, required:true},
+    entrepreneurId:{type:String, required:true},
     nomCompletContact:{type:String, required:true},
     courriel:{type:String, required:true},
     numeroCell:{type:String, required:true},
