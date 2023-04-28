@@ -5,6 +5,30 @@ const HttpError = require("../models/http-errors");
 const Etudiant = require("../models/etudiant");
 const { hashage, compare } = require("./passwordManager");
 
+const loginEtudiant = async (requete, reponse, next) => {
+    const { courriel, mdp } = requete.body;
+
+    let etudiant;
+
+    try {
+        etudiant = await Etudiant.findOne({courriel: courriel});
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(!etudiant) {
+        return next(new HttpError("Courriel inexistant ou mauvais mot de passe", 401));
+    }
+
+    const verifMdp = await compare(mdp, etudiant.mdp);
+
+    if(verifMdp) {
+        return next(new HttpError("Courriel inexistant ou mauvais mot de passe", 401));
+    }
+
+    return reponse.status(201).json({message: "connexion autorise"});
+}
+
 const ajouterEtudiant = async (requete, reponse, next) => {
     const { numDa, nomComplet, courriel, mdp, type } = requete.body;
 
@@ -36,7 +60,8 @@ const ajouterEtudiant = async (requete, reponse, next) => {
         return next(new HttpError("Erreur dans la sauvegarde de l'etudiant", 500));
     }
 
-    reponse.status(201).json({nouveauEtudiant: nouvEtudiant.toObject({getters: true})});
+    return reponse.status(201).json({nouveauEtudiant: nouvEtudiant.toObject({getters: true})});
 }
 
 module.exports.ajouterEtudiant = ajouterEtudiant;
+module.exports.loginEtudiant = loginEtudiant;
