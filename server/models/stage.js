@@ -11,7 +11,7 @@ const stageSchema = new Schema({
     nomEntreprise:{type:String, required:true},
     adresseEntreprise:{type:String, required:true},
     type:{type:String, enum: [Types.Reseaux, Types.Developpement], required:true},
-    nbPostes:{type:String, required:true},
+    nbPostes:{type:Number, required:true},
     description:{type:String, required:true},
     renumeration:{type:String, required:true},
     etat:{type:String, required:true}
