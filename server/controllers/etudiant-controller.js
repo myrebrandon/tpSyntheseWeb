@@ -17,16 +17,34 @@ const loginEtudiant = async (requete, reponse, next) => {
     }
 
     if(!etudiant) {
-        return next(new HttpError("Courriel inexistant ou mauvais mot de passe", 401));
+        return next(new HttpError("Courriel inexistant", 401));
     }
 
     const verifMdp = await compare(mdp, etudiant.mdp);
 
-    if(verifMdp) {
-        return next(new HttpError("Courriel inexistant ou mauvais mot de passe", 401));
+    if(!verifMdp) {
+        return next(new HttpError("Mauvais mot de passe", 401));
     }
 
-    return reponse.status(201).json({message: "connexion autorise"});
+    return reponse.status(201).json({message: etudiant.id});
+}
+
+const retourEtudiant = async (requete, reponse, next) => {
+    const idEtudiant = requete.params.idEtudiant;
+
+    let etudiant;
+
+    try {
+        etudiant = await Etudiant.findById(idEtudiant, "-mdp");
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(!etudiant) {
+        return next(new HttpError("L'etudiant n'existe pas", 401));
+    }
+
+    return reponse.status(201).json({etudiant: etudiant.toObject({getters: true})});
 }
 
 const ajouterEtudiant = async (requete, reponse, next) => {
@@ -65,3 +83,4 @@ const ajouterEtudiant = async (requete, reponse, next) => {
 
 module.exports.ajouterEtudiant = ajouterEtudiant;
 module.exports.loginEtudiant = loginEtudiant;
+module.exports.retourEtudiant = retourEtudiant;

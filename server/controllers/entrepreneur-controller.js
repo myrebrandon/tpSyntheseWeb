@@ -6,8 +6,50 @@ const Entrepreneur = require("../models/entrepreneur");
 const { hashage, compare } = require("./passwordManager");
 
 
+const loginEntrepreneur = async (requete, reponse, next) => {
+    const { courriel, mdp } = requete.body;
+
+    let entrepreneur;
+
+    try {
+        entrepreneur = await Entrepreneur.findOne({courriel: courriel});
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(!entrepreneur) {
+        return next(new HttpError("Courriel inexistant", 401));
+    }
+
+    const verifMdp = await compare(mdp, entrepreneur.mdp);
+
+    if(!verifMdp) {
+        return next(new HttpError("Mauvais mot de passe", 401));
+    }
+
+    return reponse.status(201).json({message: entrepreneur.id});
+}
+
+const retourEntrepreneur = async (requete, reponse, next) => {
+    const idEntrepreneur = requete.params.idEntrepreneur;
+
+    let entrepreneur;
+
+    try {
+        entrepreneur = await Entrepreneur.findById(idEntrepreneur, "-mdp");
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(!entrepreneur) {
+        return next(new HttpError("L'entrepreneur n'existe pas", 401));
+    }
+    
+    return reponse.status(201).json({entrepreneur: entrepreneur.toObject({getters: true})});
+}
+
 const ajouterEntrepreneur = async (requete, reponse, next) => {
-    const { nomComplet, courriel, mdp} = requete.body;
+    const { nomComplet, courriel, mdp } = requete.body;
 
     let entrepreneurExistant;
 
@@ -41,3 +83,5 @@ const ajouterEntrepreneur = async (requete, reponse, next) => {
 } 
 
 module.exports.ajouterEntrepreneur = ajouterEntrepreneur;
+module.exports.loginEntrepreneur = loginEntrepreneur;
+module.exports.retourEntrepreneur = retourEntrepreneur;

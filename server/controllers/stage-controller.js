@@ -9,13 +9,24 @@ const ajouterStage = async (requete, reponse, next) => {
     const idEntrepreneur = requete.params.idEntrepreneur;
     const { titre, nomCompletContact, courriel, numeroCell, nomEntreprise, adresseEntreprise, type, nbPostes, description, renumeration, etat } = requete.body;
 
-    // Verif si existe deja
+    // Verif si stage existe deja
+    let stageExistant;
+
+    try {
+        stageExistant = await Stage.findOne({titre:titre, nomCompletContact:nomCompletContact, courriel:courriel, numeroCell:numeroCell, nomEntreprise:nomEntreprise, adresseEntreprise:adresseEntreprise, type:type, description:description});
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(stageExistant) {
+        return next(new HttpError("Le stage existe deja", 401));
+    }
 
     // Verif si entrepreneur existe
     let entrepreneurExistant;
 
     try {
-        entrepreneurExistant = await Entrepreneur.findById(idEntrepreneur);
+        entrepreneurExistant = await Entrepreneur.findById(idEntrepreneur).populate("stages");
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }
@@ -40,8 +51,11 @@ const ajouterStage = async (requete, reponse, next) => {
     });
 
     try {
+        entrepreneurExistant.stages.push(nouvStage);
+
+        await entrepreneurExistant.save();
+
         await nouvStage.save();
-        // Ajouter a la liste de l'entrepreneur
     } catch(err) {
         return next(new HttpError("Erreur dans la sauvegarde du stage", 500));
     }
