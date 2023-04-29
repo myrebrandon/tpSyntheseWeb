@@ -23,7 +23,52 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.imgLogoNavbar{
+  width: 50px;
+}
+.divImgProfilNavbar{
+  /* margin: 0 auto; */
+  display: flex;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 30px;
+  z-index: 2;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+.ImgProfilNavBar{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  z-index: 1;
+}
+.StageMomoTitle{
+  font-family: 'Roboto', sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  text-shadow: 1px 1px #fff;
+}
+.loginTitle{
+  display: inline-block;
+  border: 3.5px solid transparent;
+  text-align: center;
+  background-color: transparent;
+  color: #C1D72D;
+  transition: border-color 0.3s ease-in-out;
+  font-size: 19px;
+}
+.loginTitle:hover {
+  border-color: #C1D72D;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
 .App-link {
   color: #61dafb;
 }
