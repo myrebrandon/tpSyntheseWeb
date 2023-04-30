@@ -136,7 +136,39 @@ const postuler = async (requete, reponse, next) => {
     return reponse.status(201).json({message: "L'etudiant a bien postule"});
 }
 
+const deleteEtudiant = async (requete, reponse, next) => {
+    const idEtudiant = requete.params.idEtudiant;
+    
+    let etudiant;
+
+    try {
+        etudiant = await Etudiant.findById(idEtudiant).populate("stages");
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(!etudiant) {
+        return next(new HttpError("L'etudiant n'existe pas", 401));
+    }
+
+    try {
+        for(let st of etudiant.stages) {
+            let stage;
+            stage = await Stage.findById(st.id).populate("etudiantsPostuler");
+            stage.etudiantsPostuler.pop(etudiant);
+            await stage.save();
+        }
+
+        await Etudiant.findByIdAndRemove(idEtudiant);
+    } catch(err) {
+        return next(new HttpError("Erreur dans la supression de l'etudiant", 401));
+    }
+
+    return reponse.status(201).json({message: "Etudiant bien supprime"});
+}
+
 module.exports.ajouterEtudiant = ajouterEtudiant;
 module.exports.loginEtudiant = loginEtudiant;
 module.exports.retourEtudiant = retourEtudiant;
 module.exports.postuler = postuler;
+module.exports.deleteEtudiant = deleteEtudiant;
