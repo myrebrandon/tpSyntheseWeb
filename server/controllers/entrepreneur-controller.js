@@ -6,6 +6,18 @@ const Entrepreneur = require("../models/entrepreneur");
 const Stage = require("../models/stage");
 const { hashage, compare } = require("./passwordManager");
 
+const retourDesEntrepreneur = async (requete, reponse, next) => {
+    let listeEntrepreneur;
+    try {
+        const selectedFields = { mdp: 0 }
+
+        listeEntrepreneur = await Entrepreneur.find().select(selectedFields);
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    return reponse.status(201).json({listeEntrepreneur: listeEntrepreneur});
+}
 
 const loginEntrepreneur = async (requete, reponse, next) => {
     const { courriel, mdp } = requete.body;
@@ -111,6 +123,7 @@ const deleteEntrepreneur = async (requete, reponse, next) => {
     return reponse.status(201).json({message: "Entrepreneur bien supprime"});
 }
 
+module.exports.retourDesEntrepreneur = retourDesEntrepreneur;
 module.exports.ajouterEntrepreneur = ajouterEntrepreneur;
 module.exports.loginEntrepreneur = loginEntrepreneur;
 module.exports.retourEntrepreneur = retourEntrepreneur;

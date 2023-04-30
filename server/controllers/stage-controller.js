@@ -10,7 +10,6 @@ const retourDesStages = async (requete, reponse, next) => {
     let listeStages;
     try {
         listeStages = await Stage.find();
-        console.log(listeStages);
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }

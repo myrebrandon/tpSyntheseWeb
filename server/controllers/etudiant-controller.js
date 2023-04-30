@@ -6,6 +6,19 @@ const Etudiant = require("../models/etudiant");
 const Stage = require("../models/stage");
 const { hashage, compare } = require("./passwordManager");
 
+const retourDesEtudiants = async (requete, reponse, next) => {
+    let listeEtudiants;
+    try {
+        const selectedFields = { mdp: 0 }
+
+        listeEtudiants = await Etudiant.find().select(selectedFields);
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    return reponse.status(201).json({listeEtudiants: listeEtudiants});
+}
+
 const loginEtudiant = async (requete, reponse, next) => {
     const { courriel, mdp } = requete.body;
 
@@ -167,8 +180,10 @@ const deleteEtudiant = async (requete, reponse, next) => {
     return reponse.status(201).json({message: "Etudiant bien supprime"});
 }
 
-module.exports.ajouterEtudiant = ajouterEtudiant;
-module.exports.loginEtudiant = loginEtudiant;
+
+module.exports.retourDesEtudiants = retourDesEtudiants;
 module.exports.retourEtudiant = retourEtudiant;
+module.exports.loginEtudiant = loginEtudiant;
+module.exports.ajouterEtudiant = ajouterEtudiant;
 module.exports.postuler = postuler;
 module.exports.deleteEtudiant = deleteEtudiant;
