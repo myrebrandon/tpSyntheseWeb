@@ -101,7 +101,7 @@ const postuler = async (requete, reponse, next) => {
     let stage;
 
     try {
-        stage = await Stage.findById(idStage);
+        stage = await Stage.findById(idStage).populate("etudiantsPostuler");
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }
@@ -122,8 +122,12 @@ const postuler = async (requete, reponse, next) => {
     
 
     try {
+        stage.etudiantsPostuler.push(etudiant);
+
         etudiant.stages.push(stage);
 
+
+        await stage.save();
         await etudiant.save();
     } catch(err) {
         return next(new HttpError("Erreur de postulation", 500));

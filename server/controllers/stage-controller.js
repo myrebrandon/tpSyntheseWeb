@@ -4,6 +4,7 @@ const { default: mongoose, mongo } = require("mongoose");
 const HttpError = require("../models/http-errors");
 const Stage = require("../models/stage");
 const Entrepreneur = require("../models/entrepreneur");
+const Etudiant = require("../models/etudiant");
 
 const retourDesStages = async (requete, reponse, next) => {
     let listeStages;
@@ -77,7 +78,8 @@ const ajouterStage = async (requete, reponse, next) => {
         nbPostes,
         description,
         renumeration,
-        etat
+        etat,
+        etudiantsPostuler: []
     });
 
     try {
@@ -93,6 +95,43 @@ const ajouterStage = async (requete, reponse, next) => {
     return reponse.status(201).json({ nouveauStage: nouvStage.toObject({ getters: true })});
 }
 
+const deleteStage = async (requete, reponse, next) => {
+    const idStage = requete.params.idStage;
+    
+    let stage;
+
+    try {
+        stage = await Stage.findById(idStage).populate("etudiantsPostuler");
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(!stage) {
+        return next(new HttpError("Le stage n'existe pas", 401));
+    }
+
+    try {
+        for(let etu of stage.etudiantsPostuler) {
+            let etudiant;
+            etudiant = await Etudiant.findById(etu.id).populate("stages");
+            etudiant.stages.pop(stage);
+            await etudiant.save();
+        }
+
+        let entrepreneur;
+        entrepreneur = await Entrepreneur.findById(stage.entrepreneurId);
+        entrepreneur.stages.pop(stage);
+        await entrepreneur.save();
+
+        await Stage.findByIdAndRemove(idStage);
+    } catch(err) {
+        return next(new HttpError("Erreur dans la supression du stage", 401));
+    }
+
+    return reponse.status(201).json({message: "Le stage a bien ete supprime"});
+}
+
 module.exports.ajouterStage = ajouterStage;
 module.exports.retourUnStage = retourUnStage;
 module.exports.retourDesStages = retourDesStages;
+module.exports.deleteStage = deleteStage;

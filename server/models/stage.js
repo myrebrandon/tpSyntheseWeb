@@ -14,7 +14,8 @@ const stageSchema = new Schema({
     nbPostes:{type:Number, required:true},
     description:{type:String, required:true},
     renumeration:{type:String, required:true},
-    etat:{type:String, required:true}
+    etat:{type:String, required:true},
+    etudiantsPostuler:[{type:mongoose.Types.ObjectId, required: true, ref: "Etudiant"}]
 });
 
 module.exports = mongoose.model("Stage", stageSchema);

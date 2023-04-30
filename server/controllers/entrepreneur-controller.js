@@ -103,7 +103,7 @@ const deleteEntrepreneur = async (requete, reponse, next) => {
             await Stage.findByIdAndRemove(st.id);
         }
 
-        await Entrepreneur.findByIdAndRemove(entrepreneur.id);
+        await Entrepreneur.findByIdAndRemove(idEntrepreneur);
     } catch(err) {
         return next(new HttpError("Erreur dans la supression de l'entrepreneur", 401));
     }
