@@ -3,6 +3,7 @@ const { default: mongoose, mongo} = require("mongoose");
 
 const HttpError = require("../models/http-errors");
 const Entrepreneur = require("../models/entrepreneur");
+const Stage = require("../models/stage");
 const { hashage, compare } = require("./passwordManager");
 
 
@@ -82,6 +83,35 @@ const ajouterEntrepreneur = async (requete, reponse, next) => {
     return reponse.status(201).json({nouveauEntrepreneur: nouvEntrepreneur.toObject({getters: true})});
 } 
 
+const deleteEntrepreneur = async (requete, reponse, next) => {
+    const idEntrepreneur = requete.params.idEntrepreneur;
+    
+    let entrepreneur;
+
+    try {
+        entrepreneur = await Entrepreneur.findById(idEntrepreneur).populate("stages");
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(!entrepreneur) {
+        return next(new HttpError("L'entrepreneur n'existe pas", 401));
+    }
+
+    try {
+        for(let st of entrepreneur.stages) {
+            await Stage.findByIdAndRemove(st.id);
+        }
+
+        await Entrepreneur.findByIdAndRemove(entrepreneur.id);
+    } catch(err) {
+        return next(new HttpError("Erreur dans la supression de l'entrepreneur", 401));
+    }
+
+    return reponse.status(201).json({message: "Entrepreneur bien supprime"});
+}
+
 module.exports.ajouterEntrepreneur = ajouterEntrepreneur;
 module.exports.loginEntrepreneur = loginEntrepreneur;
 module.exports.retourEntrepreneur = retourEntrepreneur;
+module.exports.deleteEntrepreneur = deleteEntrepreneur;

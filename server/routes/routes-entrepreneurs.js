@@ -5,5 +5,6 @@ const router = express.Router();
 router.get("/login", controllerEntrepreneur.loginEntrepreneur);
 router.get("/:idEntrepreneur", controllerEntrepreneur.retourEntrepreneur)
 router.post("/inscription", controllerEntrepreneur.ajouterEntrepreneur);
+router.delete("/:idEntrepreneur", controllerEntrepreneur.deleteEntrepreneur);
 
 module.exports = router;
