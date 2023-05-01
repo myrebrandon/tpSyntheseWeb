@@ -6,6 +6,7 @@ router.get("/", controllerEntrepreneur.retourDesEntrepreneur);
 router.get("/login", controllerEntrepreneur.loginEntrepreneur);
 router.get("/:idEntrepreneur", controllerEntrepreneur.retourEntrepreneur)
 router.post("/inscription", controllerEntrepreneur.ajouterEntrepreneur);
+router.patch("/:idEntrepreneur", controllerEntrepreneur.modifierEntrepreneur);
 router.delete("/:idEntrepreneur", controllerEntrepreneur.deleteEntrepreneur);
 
 module.exports = router;

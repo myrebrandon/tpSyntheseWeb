@@ -95,6 +95,59 @@ const ajouterEntrepreneur = async (requete, reponse, next) => {
     return reponse.status(201).json({nouveauEntrepreneur: nouvEntrepreneur.toObject({getters: true})});
 } 
 
+const modifierEntrepreneur = async (requete, reponse, next) => {
+    const idEntrepreneur = requete.params.idEntrepreneur;
+    const { nomComplet, courriel, mdp } = requete.body;
+
+    let entrepreneur;
+
+    try {
+        entrepreneur = await Entrepreneur.findById(idEntrepreneur);
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(!entrepreneur) {
+        return next(new HttpError("L'entrepreneur n'existe pas", 401));
+    }
+
+    try {
+        if(nomComplet != null) {
+            entrepreneur.nomComplet = nomComplet;
+        }
+
+        if(courriel != null) {
+            let emailExistant;
+            try {
+                emailExistant = await Entrepreneur.findOne({courriel:courriel});
+                if(!emailExistant) {
+                    entrepreneur.courriel = courriel;
+                } else {
+                    return next(new HttpError("Le email est deja utilise", 401));
+                }
+            } catch(err) {
+                return next(new HttpError("Erreur de bd", 500));
+            }
+        }
+
+        if(mdp != null) {
+            let verifMdp = await compare(mdp, entrepreneur.mdp);
+            if(!verifMdp) {
+                let hashedMdp = await hashage(mdp);
+                entrepreneur.mdp = hashedMdp;
+            } else {
+                return next(new HttpError("Le mot de passe n'a pas change", 401));
+            }
+        }
+
+        await entrepreneur.save();
+    } catch(err) {
+        return next(new HttpError("Erreur de modification", 401));
+    }
+
+    return reponse.status(201).json({entrepreneurModif: entrepreneur});
+}
+
 const deleteEntrepreneur = async (requete, reponse, next) => {
     const idEntrepreneur = requete.params.idEntrepreneur;
     
@@ -126,5 +179,6 @@ const deleteEntrepreneur = async (requete, reponse, next) => {
 module.exports.retourDesEntrepreneur = retourDesEntrepreneur;
 module.exports.ajouterEntrepreneur = ajouterEntrepreneur;
 module.exports.loginEntrepreneur = loginEntrepreneur;
+module.exports.modifierEntrepreneur = modifierEntrepreneur;
 module.exports.retourEntrepreneur = retourEntrepreneur;
 module.exports.deleteEntrepreneur = deleteEntrepreneur;
