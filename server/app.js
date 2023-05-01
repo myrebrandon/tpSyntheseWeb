@@ -13,10 +13,18 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use((requete, reponse, next) =>{
+    reponse.setHeader("Access-Control-Allow-Origin", "*");
+    reponse.setHeader("Access-Control-Allow-Headers", "*");
+    reponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+    next();
+  })
+
 // Routes
 app.use('/api/stages', routesStages);
 app.use('/api/entrepreneurs', routesEntrepreneurs);
 app.use('/api/etudiants', routesEtudiants);
+    
 
 app.use((requete, reponse, next) => {
     return next(new HttpError("Route non rejoignable", 404));

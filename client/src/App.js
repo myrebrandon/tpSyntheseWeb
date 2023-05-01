@@ -1,14 +1,28 @@
 import './App.css';
 import React, { useState } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navigationbar from './components/Navbar/Navigationbar.js'
+import StageList from './components/StageList/StageList.js'
 
 function App() {
 
   return (
     <div className="App">
-      <Navigationbar/>
+
+      <Router>
+        <Navigationbar />
+        <Routes>
+
+          <Route path="/stage"
+            element={
+              <StageList />
+            }
+          />
+
+        </Routes>
+      </Router>
+
     </div>
   );
 }
