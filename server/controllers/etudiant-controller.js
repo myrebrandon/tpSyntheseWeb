@@ -3,6 +3,7 @@ const { default: mongoose, mongo } = require("mongoose");
 
 const HttpError = require("../models/http-errors");
 const Etudiant = require("../models/etudiant");
+const Entrepreneur = require("../models/entrepreneur");
 const Stage = require("../models/stage");
 const { hashage, compare } = require("./passwordManager");
 
@@ -65,15 +66,21 @@ const ajouterEtudiant = async (requete, reponse, next) => {
     const { numDa, nomComplet, courriel, mdp, type } = requete.body;
 
     let etudiantExistant;
+    let emailEntrExistant;
 
     try {
         etudiantExistant = await Etudiant.findOne({courriel: courriel});
+        emailEntrExistant = await Entrepreneur.findOne({courriel: courriel});
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }
 
     if(etudiantExistant) {
-        return next(new HttpError("L'etudiant existe deja", 401))
+        return next(new HttpError("L'etudiant existe deja", 401));
+    }
+
+    if(emailEntrExistant) {
+        return next(new HttpError("Le email est deja utilise", 401));
     }
     
     const hashPwd = await hashage(mdp);
@@ -149,6 +156,65 @@ const postuler = async (requete, reponse, next) => {
     return reponse.status(201).json({message: "L'etudiant a bien postule"});
 }
 
+const modifierEtudiant = async (requete, reponse, next) => {
+    const idEtudiant = requete.params.idEtudiant;
+    const { nomComplet, courriel, mdp, type } = requete.body;
+
+    let etudiant;
+
+    try {
+        etudiant = await Etudiant.findById(idEtudiant);
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(!etudiant) {
+        return next(new HttpError("L'etudiant n'existe pas", 401));
+    }
+
+    try {
+        if(nomComplet != null) {
+            etudiant.nomComplet = nomComplet;
+        }
+
+        if(courriel != null) {
+            let emailExistant;
+            let emailExistantEntr;
+            try {
+                emailExistant = await Etudiant.findOne({courriel:courriel});
+                emailExistantEntr = await Entrepreneur.findOne({courriel:courriel});
+                if(!emailExistant && !emailExistantEntr) {
+                    etudiant.courriel = courriel;
+                } else {
+                    return next(new HttpError("Le email est deja utilise", 401));
+                }
+            } catch(err) {
+                return next(new HttpError("Erreur de bd", 500));
+            }
+        }
+
+        if(mdp != null) {
+            let verifMdp = await compare(mdp, etudiant.mdp);
+            if(!verifMdp) {
+                let hashedMdp = await hashage(mdp);
+                etudiant.mdp = hashedMdp;
+            } else {
+                return next(new HttpError("Le mot de passe n'a pas change", 401));
+            }
+        }
+
+        if(type != null) {
+            etudiant.type = type;
+        }
+
+        await etudiant.save();
+    } catch(err) {
+        return next(new HttpError("Erreur de modification", 401));
+    }
+
+    return reponse.status(201).json({etudiantModif: etudiant.toObject({getters: true})});
+}
+
 const deleteEtudiant = async (requete, reponse, next) => {
     const idEtudiant = requete.params.idEtudiant;
     
@@ -186,4 +252,5 @@ module.exports.retourEtudiant = retourEtudiant;
 module.exports.loginEtudiant = loginEtudiant;
 module.exports.ajouterEtudiant = ajouterEtudiant;
 module.exports.postuler = postuler;
+module.exports.modifierEtudiant = modifierEtudiant;
 module.exports.deleteEtudiant = deleteEtudiant;
