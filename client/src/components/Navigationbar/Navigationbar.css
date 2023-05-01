@@ -1,15 +1,31 @@
-.Divider{
+.App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  .Divider{
     color: #C1D72D;
     size: 3px;
   }
   .navElements {
-    color:#61dafb;
+    font-weight:bold;
+    /* To delete if team decide */
     font-size: 19px;
     user-select:none;
     position: relative;
     display: inline-block;
     padding-bottom: 2px;
     margin-right: 15px;
+    color:red;
   }
   .navElements::after {
     content: "";
@@ -20,14 +36,18 @@
     left: 0;
     background-color: #C1D72D;
     transform: scaleX(0);
-    transform-origin: bottom right;
+    /* Ou transform: scaleY(0); */
+    transform-origin: bottom right; 
+    /* Pourrait mettre top, left, bottom */
     transition: transform 0.6s ease-out;
   }
   
   .navElements:hover::after,
   .navElements:focus::after {
+    color:#C1D72D;
     transform: scaleX(1);
     transform-origin: bottom left;
+    transform-origin: top left;
   }
   
   .navElements:hover {
@@ -38,8 +58,8 @@
     outline: none;
     color: #C1D72D;
   }
+  
   .App-header {
-    background-color: #282c34;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -104,7 +124,6 @@
     font-family: 'Roboto', sans-serif;
     font-size: 28px;
     font-weight: bold;
-    color: #333;
     text-shadow: 0 0 2px BLACK;
   }
   .loginTitle{
@@ -138,7 +157,6 @@
     position: relative;
     display: block;
     padding: 10px 0;
-    color: #000;
     text-decoration: none;
     transition: color 0.3s ease-in-out;
   }
