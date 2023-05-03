@@ -14,12 +14,12 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use(cors());
+
 // Routes
 app.use('/api/stages', routesStages);
 app.use('/api/entrepreneurs', routesEntrepreneurs);
 app.use('/api/etudiants', routesEtudiants);
-
-app.use(cors());
 
 app.use((requete, reponse, next) => {
     return next(new HttpError("Route non rejoignable", 404));
