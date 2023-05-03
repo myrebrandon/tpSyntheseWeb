@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
 mongoose.set('strictQuery', true);
 
 const HttpError = require("./models/http-errors");
@@ -17,6 +18,8 @@ app.use(bodyParser.json());
 app.use('/api/stages', routesStages);
 app.use('/api/entrepreneurs', routesEntrepreneurs);
 app.use('/api/etudiants', routesEtudiants);
+
+app.use(cors());
 
 app.use((requete, reponse, next) => {
     return next(new HttpError("Route non rejoignable", 404));
