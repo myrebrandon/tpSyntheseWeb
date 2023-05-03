@@ -3,6 +3,7 @@ const { default: mongoose, mongo} = require("mongoose");
 
 const HttpError = require("../models/http-errors");
 const Entrepreneur = require("../models/entrepreneur");
+const Etudiant = require("../models/etudiant");
 const Stage = require("../models/stage");
 const { hashage, compare } = require("./passwordManager");
 
@@ -65,15 +66,21 @@ const ajouterEntrepreneur = async (requete, reponse, next) => {
     const { nomComplet, courriel, mdp } = requete.body;
 
     let entrepreneurExistant;
+    let emailEtuExistant;
 
     try {
         entrepreneurExistant = await Entrepreneur.findOne({courriel: courriel});
+        emailEtuExistant = await Etudiant.findOne({courriel: courriel});
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }
 
     if(entrepreneurExistant) {
         return next(new HttpError("L'entrepreneur existe deja", 401));
+    }
+
+    if(emailEtuExistant) {
+        return next(new HttpError("Le email est deja utilise", 401));
     }
 
     let hashedPwd = await hashage(mdp);
@@ -118,9 +125,11 @@ const modifierEntrepreneur = async (requete, reponse, next) => {
 
         if(courriel != null) {
             let emailExistant;
+            let emailExistantEtu;
             try {
                 emailExistant = await Entrepreneur.findOne({courriel:courriel});
-                if(!emailExistant) {
+                emailExistantEtu = await Etudiant.findOne({courriel:courriel});
+                if(!emailExistant && !emailExistantEtu) {
                     entrepreneur.courriel = courriel;
                 } else {
                     return next(new HttpError("Le email est deja utilise", 401));
@@ -145,7 +154,7 @@ const modifierEntrepreneur = async (requete, reponse, next) => {
         return next(new HttpError("Erreur de modification", 401));
     }
 
-    return reponse.status(201).json({entrepreneurModif: entrepreneur});
+    return reponse.status(201).json({entrepreneurModif: entrepreneur.toObject({getters: true})});
 }
 
 const deleteEntrepreneur = async (requete, reponse, next) => {
