@@ -41,7 +41,9 @@ const loginEtudiant = async (requete, reponse, next) => {
         return next(new HttpError("Mauvais mot de passe", 401));
     }
 
-    return reponse.status(201).json({message: etudiant.id});
+    const token = jwt.sign(etudiant.id, process.env.TOKEN_SECRET);
+
+    return reponse.status(201).json({message: token});
 }
 
 const retourEtudiant = async (requete, reponse, next) => {
