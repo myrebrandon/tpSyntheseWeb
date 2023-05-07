@@ -132,7 +132,7 @@
     border: 3.5px solid transparent;
     text-align: center;
     background-color: transparent;
-    color: #C1D72D;
+    color: black;
     transition: border-color 0.3s ease-in-out;
     font-size: 19px;
   }
