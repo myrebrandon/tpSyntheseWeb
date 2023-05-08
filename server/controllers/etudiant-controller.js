@@ -6,6 +6,7 @@ const Etudiant = require("../models/etudiant");
 const Entrepreneur = require("../models/entrepreneur");
 const Stage = require("../models/stage");
 const { hashage, compare } = require("./passwordManager");
+const { send } = require("./envoie-email");
 
 const retourDesEtudiants = async (requete, reponse, next) => {
     let listeEtudiants;
@@ -41,7 +42,9 @@ const loginEtudiant = async (requete, reponse, next) => {
         return next(new HttpError("Mauvais mot de passe", 401));
     }
 
-    return reponse.status(201).json({message: etudiant.id});
+    const token = jwt.sign(etudiant.id, process.env.TOKEN_SECRET);
+
+    return reponse.status(201).json({message: token});
 }
 
 const retourEtudiant = async (requete, reponse, next) => {
@@ -104,7 +107,7 @@ const ajouterEtudiant = async (requete, reponse, next) => {
 
 const postuler = async (requete, reponse, next) => {
     const idEtudiant = requete.params.idEtudiant;
-    const { idStage } = requete.body;
+    const { idStage, to, subject, text } = requete.body;
 
     let etudiant;
 
@@ -149,6 +152,15 @@ const postuler = async (requete, reponse, next) => {
 
         await stage.save();
         await etudiant.save();
+
+        const data = {
+            "from": process.env.EMAIL,
+            "to": to,
+            "subject": subject,
+            "text": text
+        }
+
+        send(data);
     } catch(err) {
         return next(new HttpError("Erreur de postulation", 500));
     }

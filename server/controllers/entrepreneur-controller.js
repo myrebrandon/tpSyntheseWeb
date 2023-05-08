@@ -1,6 +1,9 @@
 const { reponse } = require("express");
 const { default: mongoose, mongo} = require("mongoose");
 
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 const HttpError = require("../models/http-errors");
 const Entrepreneur = require("../models/entrepreneur");
 const Etudiant = require("../models/etudiant");
@@ -41,7 +44,9 @@ const loginEntrepreneur = async (requete, reponse, next) => {
         return next(new HttpError("Mauvais mot de passe", 401));
     }
 
-    return reponse.status(201).json({message: entrepreneur.id});
+    const token = jwt.sign(entrepreneur.id, process.env.TOKEN_SECRET);
+
+    return reponse.status(201).json({message: token});
 }
 
 const retourEntrepreneur = async (requete, reponse, next) => {

@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 mongoose.set('strictQuery', true);
 
+require("dotenv").config();
+
 const HttpError = require("./models/http-errors");
 
 const routesStages = require("./routes/routes-stages");
@@ -37,7 +39,7 @@ app.use((error, requete, reponse, next) => {
 });
 
 mongoose
-.connect("mongodb://127.0.0.1:27017/synthese")
+.connect(process.env.DBLINK)
 .then(() => {
     app.listen(5000);
     console.log("Connexion a la bd reussie");
