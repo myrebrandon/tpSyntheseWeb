@@ -7,6 +7,7 @@ router.get("/login", controllerEtudiant.loginEtudiant);
 router.get("/:idEtudiant", controllerEtudiant.retourEtudiant);
 router.post("/inscription", controllerEtudiant.ajouterEtudiant);
 router.patch("/:idEtudiant/postuler", controllerEtudiant.postuler);
+router.patch("/:idEtudiant", controllerEtudiant.modifierEtudiant);
 router.delete("/:idEtudiant", controllerEtudiant.deleteEtudiant);
 
 module.exports = router;
