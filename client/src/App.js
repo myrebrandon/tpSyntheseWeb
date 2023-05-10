@@ -1,28 +1,24 @@
 import './App.css';
 import React, { useState } from 'react';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navigationbar from './components/Navbar/Navigationbar.js'
-import StageList from './components/StageList/StageList.js'
+import PageDeConnexion from './components/PageDeConnexion/PageDeConnexion';
 
 function App() {
-
   return (
     <div className="App">
-
       <Router>
         <Navigationbar />
         <Routes>
 
-          <Route path="/stage"
+          <Route path="/action/3.1"
             element={
-              <StageList />
+              <PageDeConnexion />
             }
           />
 
         </Routes>
       </Router>
-
     </div>
   );
 }
