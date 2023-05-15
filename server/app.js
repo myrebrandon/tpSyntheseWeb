@@ -11,6 +11,7 @@ const HttpError = require("./models/http-errors");
 const routesStages = require("./routes/routes-stages");
 const routesEntrepreneurs = require("./routes/routes-entrepreneurs");
 const routesEtudiants = require("./routes/routes-etudiants");
+const routesCoordinateurs = require("./routes/routes-coordinateurs");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(cors());
 app.use('/api/stages', routesStages);
 app.use('/api/entrepreneurs', routesEntrepreneurs);
 app.use('/api/etudiants', routesEtudiants);
+app.use('/api/coordinateurs', routesCoordinateurs);
 
 app.use((requete, reponse, next) => {
     return next(new HttpError("Route non rejoignable", 404));
