@@ -6,6 +6,7 @@ import Navigationbar from './components/Navbar/Navigationbar.js'
 import StageList from './components/StageList/StageList.js'
 import StageInfo from './components/StageInfo/StageInfo';
 import ProfilEtCompetence from './components/ProfilEtCompetence/ProfilEtCompetence';
+import StageAjout from './components/StageAjout/StageAjout';
 
 function App() {
 
@@ -30,6 +31,12 @@ function App() {
           <Route path="/temp/profil-et-competence"
             element={
               <ProfilEtCompetence/>
+            }
+          />
+
+          <Route path="/temp/AjoutStage"
+            element={
+              <StageAjout/>
             }
           />
 
