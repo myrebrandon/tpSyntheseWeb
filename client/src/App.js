@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navigationbar from './components/Navbar/Navigationbar.js'
 import StageList from './components/StageList/StageList.js'
 import StageInfo from './components/StageInfo/StageInfo';
+import ProfilEtCompetence from './components/ProfilEtCompetence/ProfilEtCompetence';
 
 function App() {
 
@@ -23,6 +24,12 @@ function App() {
           <Route path="/stage/:stageid"
             element={
               <StageInfo />
+            }
+          />
+
+          <Route path="/temp/profil-et-competence"
+            element={
+              <ProfilEtCompetence/>
             }
           />
 
