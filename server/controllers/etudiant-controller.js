@@ -4,8 +4,10 @@ const { default: mongoose, mongo } = require("mongoose");
 const HttpError = require("../models/http-errors");
 const Etudiant = require("../models/etudiant");
 const Entrepreneur = require("../models/entrepreneur");
+const Coordinateur = require("../models/coordinateur");
 const Stage = require("../models/stage");
 const { hashage, compare } = require("./passwordManager");
+const { send } = require("./envoie-email");
 
 const retourDesEtudiants = async (requete, reponse, next) => {
     let listeEtudiants;
@@ -41,7 +43,9 @@ const loginEtudiant = async (requete, reponse, next) => {
         return next(new HttpError("Mauvais mot de passe", 401));
     }
 
-    return reponse.status(201).json({message: etudiant.id});
+    const token = jwt.sign(etudiant.id, process.env.TOKEN_SECRET);
+
+    return reponse.status(201).json({message: token});
 }
 
 const retourEtudiant = async (requete, reponse, next) => {
@@ -67,10 +71,12 @@ const ajouterEtudiant = async (requete, reponse, next) => {
 
     let etudiantExistant;
     let emailEntrExistant;
+    let emailCoordinateur;
 
     try {
         etudiantExistant = await Etudiant.findOne({courriel: courriel});
         emailEntrExistant = await Entrepreneur.findOne({courriel: courriel});
+        emailCoordinateur = await Coordinateur.findOne({courriel: courriel});
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }
@@ -83,6 +89,10 @@ const ajouterEtudiant = async (requete, reponse, next) => {
         return next(new HttpError("Le email est deja utilise", 401));
     }
     
+    if(emailCoordinateur) {
+        return next(new HttpError("Le email est deja utilise", 401));
+    }
+
     const hashPwd = await hashage(mdp);
 
     const nouvEtudiant = new Etudiant({
@@ -104,7 +114,7 @@ const ajouterEtudiant = async (requete, reponse, next) => {
 
 const postuler = async (requete, reponse, next) => {
     const idEtudiant = requete.params.idEtudiant;
-    const { idStage } = requete.body;
+    const { idStage, to, subject, text } = requete.body;
 
     let etudiant;
 
@@ -149,6 +159,15 @@ const postuler = async (requete, reponse, next) => {
 
         await stage.save();
         await etudiant.save();
+
+        const data = {
+            "from": process.env.EMAIL,
+            "to": to,
+            "subject": subject,
+            "text": text
+        }
+
+        send(data);
     } catch(err) {
         return next(new HttpError("Erreur de postulation", 500));
     }
@@ -212,7 +231,7 @@ const modifierEtudiant = async (requete, reponse, next) => {
         return next(new HttpError("Erreur de modification", 401));
     }
 
-    return reponse.status(201).json({etudiantModif: etudiant.toObject({getters: true})});
+    return reponse.status(201).json({message: "Etudiant bien modifie"});
 }
 
 const deleteEtudiant = async (requete, reponse, next) => {

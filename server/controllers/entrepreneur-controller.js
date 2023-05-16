@@ -1,9 +1,13 @@
 const { reponse } = require("express");
 const { default: mongoose, mongo} = require("mongoose");
 
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 const HttpError = require("../models/http-errors");
 const Entrepreneur = require("../models/entrepreneur");
 const Etudiant = require("../models/etudiant");
+const Coordinateur = require("../models/coordinateur");
 const Stage = require("../models/stage");
 const { hashage, compare } = require("./passwordManager");
 
@@ -41,7 +45,9 @@ const loginEntrepreneur = async (requete, reponse, next) => {
         return next(new HttpError("Mauvais mot de passe", 401));
     }
 
-    return reponse.status(201).json({message: entrepreneur.id});
+    const token = jwt.sign(entrepreneur.id, process.env.TOKEN_SECRET);
+
+    return reponse.status(201).json({message: token});
 }
 
 const retourEntrepreneur = async (requete, reponse, next) => {
@@ -67,10 +73,12 @@ const ajouterEntrepreneur = async (requete, reponse, next) => {
 
     let entrepreneurExistant;
     let emailEtuExistant;
+    let emailCoordinateur;
 
     try {
         entrepreneurExistant = await Entrepreneur.findOne({courriel: courriel});
         emailEtuExistant = await Etudiant.findOne({courriel: courriel});
+        emailCoordinateur = await Coordinateur.findOne({courriel: courriel});
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }
@@ -80,6 +88,10 @@ const ajouterEntrepreneur = async (requete, reponse, next) => {
     }
 
     if(emailEtuExistant) {
+        return next(new HttpError("Le email est deja utilise", 401));
+    }
+
+    if(emailCoordinateur) {
         return next(new HttpError("Le email est deja utilise", 401));
     }
 
@@ -154,7 +166,7 @@ const modifierEntrepreneur = async (requete, reponse, next) => {
         return next(new HttpError("Erreur de modification", 401));
     }
 
-    return reponse.status(201).json({entrepreneurModif: entrepreneur.toObject({getters: true})});
+    return reponse.status(201).json({message: "Entrepreneur bien modifie"});
 }
 
 const deleteEntrepreneur = async (requete, reponse, next) => {

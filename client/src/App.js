@@ -4,6 +4,9 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navigationbar from './components/Navbar/Navigationbar.js'
 import StageList from './components/StageList/StageList.js'
+import StageInfo from './components/StageInfo/StageInfo';
+import ProfilEtCompetence from './components/ProfilEtCompetence/ProfilEtCompetence';
+import StageAjout from './components/StageAjout/StageAjout';
 
 function App() {
 
@@ -17,6 +20,23 @@ function App() {
           <Route path="/stage"
             element={
               <StageList />
+            }
+          />
+          <Route path="/stage/:stageid"
+            element={
+              <StageInfo />
+            }
+          />
+
+          <Route path="/temp/profil-et-competence"
+            element={
+              <ProfilEtCompetence/>
+            }
+          />
+
+          <Route path="/temp/AjoutStage"
+            element={
+              <StageAjout/>
             }
           />
 
