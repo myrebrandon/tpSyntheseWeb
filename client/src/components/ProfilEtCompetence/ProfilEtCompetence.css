@@ -1,0 +1,34 @@
+
+.ProfilEtCompetence-Options{
+  background-color: #C1D72D;
+  width: 30%;
+  display: inline-block;
+}
+
+.ProfilEtCompetence-Profil{
+  width: 50%;
+  border: 1px solid black;
+  margin: 0 auto;
+}
+
+.ProfilEtCompetence-Profil-Titre{
+  text-align: left;
+  font-weight: bold;
+  font-size: large;
+}
+
+.ProfilEtCompetence-Profil-Description{
+  text-align: left;
+}
+
+.ProfilEtCompetence-Profil-ListeCompetence{
+  padding-left: 40px;
+  padding-right: 5px;
+  text-align: left;
+  list-style-type: circle;
+}
+
+.ProfilEtCompetence-Profil-MajorCompetence{
+  text-align: left;
+  font-weight: 500;
+}

@@ -4,6 +4,7 @@ const { default: mongoose, mongo } = require("mongoose");
 const HttpError = require("../models/http-errors");
 const Etudiant = require("../models/etudiant");
 const Entrepreneur = require("../models/entrepreneur");
+const Coordinateur = require("../models/coordinateur");
 const Stage = require("../models/stage");
 const { hashage, compare } = require("./passwordManager");
 const { send } = require("./envoie-email");
@@ -70,10 +71,12 @@ const ajouterEtudiant = async (requete, reponse, next) => {
 
     let etudiantExistant;
     let emailEntrExistant;
+    let emailCoordinateur;
 
     try {
         etudiantExistant = await Etudiant.findOne({courriel: courriel});
         emailEntrExistant = await Entrepreneur.findOne({courriel: courriel});
+        emailCoordinateur = await Coordinateur.findOne({courriel: courriel});
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }
@@ -86,6 +89,10 @@ const ajouterEtudiant = async (requete, reponse, next) => {
         return next(new HttpError("Le email est deja utilise", 401));
     }
     
+    if(emailCoordinateur) {
+        return next(new HttpError("Le email est deja utilise", 401));
+    }
+
     const hashPwd = await hashage(mdp);
 
     const nouvEtudiant = new Etudiant({
@@ -224,7 +231,7 @@ const modifierEtudiant = async (requete, reponse, next) => {
         return next(new HttpError("Erreur de modification", 401));
     }
 
-    return reponse.status(201).json({etudiantModif: etudiant.toObject({getters: true})});
+    return reponse.status(201).json({message: "Etudiant bien modifie"});
 }
 
 const deleteEtudiant = async (requete, reponse, next) => {

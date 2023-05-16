@@ -6,6 +6,9 @@ import PageDeConnexion from './components/PageDeConnexion/PageDeConnexion';
 import FAQ from './components/FAQ/FAQ';
 import Accueil from './components/Accueil/Accueil';
 import useContext from './useContext';
+import StageInfo from './components/StageInfo/StageInfo';
+import ProfilEtCompetence from './components/ProfilEtCompetence/ProfilEtCompetence';
+import StageAjout from './components/StageAjout/StageAjout';
 
 function App() {
   const [token, setToken] = useState("");
@@ -49,6 +52,23 @@ function App() {
           <Route path="/FAQ"
             element={
               <FAQ />
+            }
+          />
+          <Route path="/stage/:stageid"
+            element={
+              <StageInfo />
+            }
+          />
+
+          <Route path="/temp/profil-et-competence"
+            element={
+              <ProfilEtCompetence/>
+            }
+          />
+
+          <Route path="/temp/AjoutStage"
+            element={
+              <StageAjout/>
             }
           />
 
