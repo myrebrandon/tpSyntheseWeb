@@ -34,7 +34,7 @@ function App() {
             }
           />
 
-          <Route path="/temp/AjoutStage"
+          <Route path="/stages/AjoutStage"
             element={
               <StageAjout/>
             }

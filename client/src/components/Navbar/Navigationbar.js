@@ -25,15 +25,19 @@ function Navigationbar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link className="navElements" href="#Accueil">Accueil</Nav.Link>
-              <Nav.Link className="navElements" href="#Employeurs">Espace Employeurs</Nav.Link>
-              <Nav.Link className="navElements" href="#Stagiaires">Espace Stagiaires</Nav.Link>
+              <Nav.Link className="navElements" href="/Accueil">Accueil</Nav.Link>
+              <Nav.Link className="navElements" href="/Employeurs">Espace Employeurs</Nav.Link>
+              <Nav.Link className="navElements" href="/stage">Espace Stagiaires</Nav.Link>
+              <NavDropdown className="navElements" style={{color:"red"}} title="Stages" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/Stages">Voir les Stages</NavDropdown.Item>
+                <NavDropdown.Item href="/stages/AjoutStage">Ajouter un Stage</NavDropdown.Item>
+              </NavDropdown>
               <NavDropdown className="navElements" style={{color:"red"}} title="Autres" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#FAQ">FAQ</NavDropdown.Item>
-                <NavDropdown.Item href="#Coordonnateurs">Coordonnateurs</NavDropdown.Item>
+                <NavDropdown.Item href="/FAQ">FAQ</NavDropdown.Item>
+                <NavDropdown.Item href="/Coordonnateurs">Coordonnateurs</NavDropdown.Item>
                 <NavDropdown.Item href="https://www.cmontmorency.qc.ca/" target="_blank" >College Montmorency ↗</NavDropdown.Item>
                 <NavDropdown.Divider className='Divider'/>
-                <NavDropdown.Item href="#DevTeam">Equipe de developpement</NavDropdown.Item>
+                <NavDropdown.Item href="/DevTeam">Equipe de developpement</NavDropdown.Item>
               </NavDropdown>
             </Nav>
             <div className={isActive ? "divImgProfilNavbarActive" : "divImgProfilNavbar"}>
