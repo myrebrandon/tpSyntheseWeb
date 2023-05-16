@@ -2,7 +2,6 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 
 export const useHttpClient = () => {
   const [error, setError] = useState();
-
   const sendRequest = useCallback(
     async (url, method = 'GET', body = null, headers = {}) => {
 
@@ -16,7 +15,6 @@ export const useHttpClient = () => {
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-
         return responseData;
       } catch (err) {
         setError(err.message);

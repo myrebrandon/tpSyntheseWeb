@@ -3,23 +3,75 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navigationbar from './components/Navbar/Navigationbar.js'
 import PageDeConnexion from './components/PageDeConnexion/PageDeConnexion';
+import FAQ from './components/FAQ/FAQ';
+import Accueil from './components/Accueil/Accueil';
+import useContext from './useContext';
 
 function App() {
+  const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
+  const [type, setType] = useState("");
+
+  const handleLogin = () => {
+    
+  }
+
+  const handleLogout = () => {
+    
+  }
+
   return (
+    <useContext.Provider
+    value={{
+      token,
+      type,
+      userId,
+      handleLogin,
+      handleLogout
+    }}>
+
     <div className="App">
       <Router>
         <Navigationbar />
         <Routes>
-
+          <Route path="/Accueil"
+            exact
+            element={
+              <Accueil />
+            }
+          />
           <Route path="/action/3.1"
+            exact
             element={
               <PageDeConnexion />
             }
           />
+          <Route path="/FAQ"
+            element={
+              <FAQ />
+            }
+          />
 
+          <Route path="/Employeurs"
+            element={
+              <>
+
+              </>
+              // <FAQ />
+            }
+          />
+
+          <Route path="/Stagiaires"
+            element={
+              <>
+
+              </>
+            }
+          />
         </Routes>
       </Router>
     </div>
+    </useContext.Provider>
   );
 }
 
