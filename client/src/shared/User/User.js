@@ -7,3 +7,5 @@ const contexteAuthentification = createContext({
     handleLogin() {},
     handleLogout() {},
 })
+
+export default contexteAuthentification;

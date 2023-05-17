@@ -1,12 +1,13 @@
-import { useContext } from "react"
-import UseContext from "../../useContext"
+import { useContext } from "react";
 import React from 'react';
 import validator from 'validator';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import contexteAuthentification from "../../shared/User/User";
+import jwtDecode from "jwt-decode";
 
 export default function Inscription (props) {
-    const {token, handleLogin} = useContext(UseContext);
+    const {handleLogin} = useContext(contexteAuthentification);
     const {register, handleSubmit, formState: {errors}, setError} = useForm();
 
     const handleButtonConnexion = () => {
@@ -22,6 +23,7 @@ export default function Inscription (props) {
             })
         } else {
             if(type === "entrepreneur") {
+                let token;
                 await axios.post(process.env.REACT_APP_URL + "entrepreneurs/inscription",
                     { 
                         "nomComplet": nom,
@@ -33,6 +35,19 @@ export default function Inscription (props) {
                         console.log(res);
                         console.log(res.data);
                     })
+
+                await axios.post(process.env.REACT_APP_URL + "entrepreneurs/login",
+                    {
+                        "courriel": courriel,
+                        "mdp": mdp
+                    },
+                    { headers: { "Content-Type": "application/json" }}
+                    ).then(res => {
+                        token = res.data.message;
+                    })
+                    console.log(token);
+                const idUser = jwtDecode(token);
+                handleLogin(idUser.id, token, "entrepreneur");
 
             } else if(type === "etudiant") {
                 axios.post(process.env.REACT_APP_URL + "etudiants/inscription")
@@ -66,7 +81,7 @@ export default function Inscription (props) {
                 </div>
                 <div>
                     <label>Type de compte: </label>
-                    <label><input type="radio" name ="type" value="entrepreneur" {...register("type",{required: true})}/>Entrepreneur</label>
+                    <label><input type="radio" name ="type" value="entrepreneur" checked={true} {...register("type",{required: true})}/>Entrepreneur</label>
                     <label><input type="radio" name ="type" value="etudiant" {...register("type",{required: true})}/>Etudiant</label>
                 </div>
                 <button type="submit">S'inscrire</button>

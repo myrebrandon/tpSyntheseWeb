@@ -19,12 +19,18 @@ function App() {
   const [userId, setUserId] = useState("");
   const [type, setType] = useState("");
 
-  const handleLogin = () => {
-    
+  const handleLogin = (id, token, type) => {
+    localStorage.setItem("jwt", token)
+    setToken(token);
+    setUserId(id);
+    setType(type);
   }
 
   const handleLogout = () => {
-    
+    localStorage.removeItem("jwt");
+    setToken(null);
+    setUserId(null);
+    setType("guess");
   }
 
   return (
