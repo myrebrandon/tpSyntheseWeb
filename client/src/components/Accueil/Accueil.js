@@ -1,8 +1,10 @@
 export default function Accueil() {
     
+    const date = new Date().getFullYear();
+
     return (
         <p>
-            Édition [ANNEE]
+            Édition {date}<br/><br/>
 
             Bienvenue sur le site des stages de fin d'études des
             techniques de l'informatique du Collège Montmorency!

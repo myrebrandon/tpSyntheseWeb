@@ -77,7 +77,7 @@ function StageInfo() {
                 </div>
             </div>
             <div className="bouton-retour">
-                    <Link to="/stage">Retour</Link>
+                    <Link to="/stages">Retour</Link>
                 </div>
         </div>
     );

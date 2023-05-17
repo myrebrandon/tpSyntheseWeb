@@ -7,8 +7,10 @@ import FAQ from './components/FAQ/FAQ';
 import Accueil from './components/Accueil/Accueil';
 import useContext from './useContext';
 import StageInfo from './components/StageInfo/StageInfo';
+import StageList from './components/StageList/StageList'
 import ProfilEtCompetence from './components/ProfilEtCompetence/ProfilEtCompetence';
 import StageAjout from './components/StageAjout/StageAjout';
+import DeroulementStage from './components/DeroulementStage/DeroulementStage';
 
 function App() {
   const [token, setToken] = useState("");
@@ -81,13 +83,25 @@ function App() {
             }
           />
 
-          <Route path="/Stagiaires"
+          <Route path="/Stages"
             element={
-              <>
-
-              </>
+              <StageList/>
             }
           />
+
+          <Route path="/temp/StageEntrepreneur"
+            element={
+              <StageList entrepreneur="6462881124439bed25ad7ef9"/>
+            }
+          />
+
+          <Route path="/temp/Deroulement" 
+          element={
+            <DeroulementStage/>
+          }
+          />
+
+
         </Routes>
       </Router>
     </div>

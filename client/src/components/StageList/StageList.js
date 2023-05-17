@@ -5,7 +5,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 
 import StageCard from '../StageCard/StageCard.js'
 
-function StageList() {
+function StageList(props) {
     const [loadedStage, setLoadedStage] = useState();
     let [type, setType] = useState("Tout");
     const { error, sendRequest, clearError } = useHttpClient();
@@ -14,21 +14,35 @@ function StageList() {
         setType(e.target.value);
     }
 
+    const entrepreneur = props.entrepreneur;
+
 
     useEffect(() => {
         const fetchStages = async () => {
             try {
+
+                const dblink = process.env.REACT_APP_URL + "stages/" //"http://localhost:5000/api/stages/";
+
                 const responseData = await sendRequest(
-                    `http://localhost:5000/api/stages/`
+                    dblink
                 );
                 console.log(responseData);
-                setLoadedStage(responseData.listeStages.filter(s => {
+                let listeStages = responseData.listeStages.filter(s => {
                     if (type == "Tout") {
                         return true;
                     }
 
                     return s.type === type;
-                }));
+                })
+
+                //alert(entrepreneur);
+                if(entrepreneur){
+                    setLoadedStage(listeStages.filter(s => {
+                        return s.entrepreneurId === entrepreneur;
+                    }));
+                }else{
+                    setLoadedStage(listeStages);
+                }
             } catch (err) { }
         };
         fetchStages();
@@ -40,8 +54,8 @@ function StageList() {
                 <select id="type" onChange={getType}>
 
                     <option value="Tout">Tout</option>
-                    <option value="Types.Reseaux">Reseaux</option>
-                    <option value="Types.Developpement">Developpement</option>
+                    <option value="Reseaux et securite">Reseaux</option>
+                    <option value="Developpement d'application">Developpement</option>
 
                 </select>
                 <p>Aucun Stage</p>
@@ -54,8 +68,8 @@ function StageList() {
                 <select id="type" onChange={getType}>
 
                     <option value="Tout">Tout</option>
-                    <option value="Types.Reseaux">Reseaux</option>
-                    <option value="Types.Developpement">Developpement</option>
+                    <option value="Reseaux et securite">Reseaux</option>
+                    <option value="Developpement d'application">Developpement</option>
 
                 </select>
 
