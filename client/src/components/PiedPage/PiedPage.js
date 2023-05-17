@@ -14,7 +14,6 @@ function PiedPage() {
                 </div>
             </footer>
         </div>
-
     );
 
 }

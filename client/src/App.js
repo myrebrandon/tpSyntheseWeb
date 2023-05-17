@@ -12,6 +12,7 @@ import ProfilEtCompetence from './components/ProfilEtCompetence/ProfilEtCompeten
 import StageAjout from './components/StageAjout/StageAjout';
 import DeroulementStage from './components/DeroulementStage/DeroulementStage';
 import PiedPage from './components/PiedPage/PiedPage';
+import Inscription from './components/PageDeConnexion/Inscription';
 
 function App() {
   const [token, setToken] = useState("");
@@ -52,6 +53,14 @@ function App() {
               <PageDeConnexion />
             }
           />
+
+          <Route path="/Register"
+            exact
+            element={
+              <Inscription />
+            }
+          />
+
           <Route path="/FAQ"
             element={
               <FAQ />

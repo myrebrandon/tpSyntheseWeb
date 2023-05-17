@@ -1,9 +1,9 @@
 import { createContext } from "react";
 
 const contexteAuthentification = createContext({
-    token, 
-    userId,
-    role, 
+    token: null, 
+    userId: null,
+    role: "guess", 
     handleLogin() {},
     handleLogout() {},
 })
