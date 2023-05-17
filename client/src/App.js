@@ -11,6 +11,7 @@ import StageList from './components/StageList/StageList'
 import ProfilEtCompetence from './components/ProfilEtCompetence/ProfilEtCompetence';
 import StageAjout from './components/StageAjout/StageAjout';
 import DeroulementStage from './components/DeroulementStage/DeroulementStage';
+import PiedPage from './components/PiedPage/PiedPage';
 
 function App() {
   const [token, setToken] = useState("");
@@ -103,6 +104,7 @@ function App() {
 
 
         </Routes>
+        <PiedPage/>
       </Router>
     </div>
     </useContext.Provider>
