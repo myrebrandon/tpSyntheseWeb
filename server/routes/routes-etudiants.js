@@ -4,7 +4,7 @@ const router = express.Router();
 const { authentifierToken } = require("../utils/authentification-token");
 
 router.get("/", controllerEtudiant.retourDesEtudiants);
-router.get("/login", controllerEtudiant.loginEtudiant);
+router.post("/login", controllerEtudiant.loginEtudiant);
 router.get("/:idEtudiant", authentifierToken, controllerEtudiant.retourEtudiant);
 router.post("/inscription", controllerEtudiant.ajouterEtudiant);
 router.patch("/:idEtudiant/postuler", authentifierToken, controllerEtudiant.postuler);

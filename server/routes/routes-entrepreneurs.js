@@ -4,7 +4,7 @@ const router = express.Router();
 const { authentifierToken } = require("../utils/authentification-token");
 
 router.get("/", controllerEntrepreneur.retourDesEntrepreneur);
-router.get("/login", controllerEntrepreneur.loginEntrepreneur);
+router.post("/login", controllerEntrepreneur.loginEntrepreneur);
 router.get("/:idEntrepreneur", authentifierToken, controllerEntrepreneur.retourEntrepreneur)
 router.post("/inscription", controllerEntrepreneur.ajouterEntrepreneur);
 router.patch("/:idEntrepreneur", authentifierToken, controllerEntrepreneur.modifierEntrepreneur);
