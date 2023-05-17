@@ -4,16 +4,18 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import contexteAuthentification from '../../shared/User/User';
 
 function Navigationbar() {
-  const { token, userId, role} = useContext(contexteAuthentification);
+  const {token, userId, handleLogout} = useContext(contexteAuthentification);
 
   const [isActive, setIsActive] = useState(false);
+
+  const [isConnected, setIsConnected] = useState(false);
 
   const handleToggle = (isOpen) => {
     setIsActive(isOpen);
   };
 
   useEffect(() => {
-    console.log(token);
+    setIsConnected(token != null);
   }, [token]);
 
   return (
@@ -51,11 +53,11 @@ function Navigationbar() {
               alt="Profile"
             />
           </div>
-          {userId === null ? <NavDropdown title="S'identifier" className='loginTitle' id="basic-nav-dropdown">
+          {isConnected === null ? <NavDropdown title="S'identifier" className='loginTitle' id="basic-nav-dropdown">
             <NavDropdown.Item href="/Login">Connexion</NavDropdown.Item>
             <NavDropdown.Item href="/Register">S'enregistrer</NavDropdown.Item>
           </NavDropdown>: <NavDropdown title="Connecté" className='loginTitle' id="basic-nav-dropdown">
-            <NavDropdown.Item>Déconnection</NavDropdown.Item>
+            <NavDropdown.Item onClick={handleLogout()}>Déconnection</NavDropdown.Item>
           </NavDropdown>}
         </Navbar.Collapse>
       </Navbar>
