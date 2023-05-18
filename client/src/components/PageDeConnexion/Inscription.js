@@ -46,8 +46,8 @@ export default function Inscription (props) {
                         token = res.data.message;
                     })
                 console.log("Connexion compte");
-                const idUser = jwtDecode(token);
-                handleLogin(idUser.id, token, "entrepreneur");
+                const decodedToken = jwtDecode(token);
+                handleLogin(decodedToken.id, token, decodedToken.type);
             } else if(type === "etudiant") {
                 axios.post(process.env.REACT_APP_URL + "etudiants/inscription")
             }

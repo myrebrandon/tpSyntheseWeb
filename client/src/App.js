@@ -22,12 +22,17 @@ function App() {
     let token = localStorage.getItem("jwt");
     if(token != null && token !== "") {
       try {
+        const decodedToken = jwtDecode(token);
         setToken(token);
+        setUserId(decodedToken.id);
+        setType(decodedToken.type);
       } catch(err) {
         console.log(err + "Invalid token");
       }
+    } else {
+      setToken(null);
     }
-  }, []);
+  });
 
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
