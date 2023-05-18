@@ -1,5 +1,6 @@
+require("dotenv").config();
 const bcrypt = require('bcrypt');
-const salt = 16;
+const salt = process.env.SALT;
 
 async function hashage(pswd) {
     let newPwd;
