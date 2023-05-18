@@ -16,6 +16,7 @@ function Navigationbar() {
 
   useEffect(() => {
     setIsConnected(token === null);
+    alert(token);
   }, [token]);
 
   return (

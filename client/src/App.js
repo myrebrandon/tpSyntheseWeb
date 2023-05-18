@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navigationbar from './components/Navbar/Navigationbar.js'
 import PageDeConnexion from './components/PageDeConnexion/PageDeConnexion';
@@ -13,15 +13,27 @@ import StageAjout from './components/StageAjout/StageAjout';
 import DeroulementStage from './components/DeroulementStage/DeroulementStage';
 import PiedPage from './components/PiedPage/PiedPage';
 import Inscription from './components/PageDeConnexion/Inscription';
+import jwtDecode from "jwt-decode";
+import axios from 'axios';
 
 function App() {
+
+  useEffect(() => {
+    let token = localStorage.getItem("jwt");
+    if(token != null && token !== "") {
+      try {
+        setToken(token);
+      } catch(err) {
+        console.log(err + "Invalid token");
+      }
+    }
+  }, []);
+
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
   const [type, setType] = useState("");
 
   const handleLogin = (id, token, type) => {
-    alert(id);
-    alert(token);
     localStorage.setItem("jwt", token)
     setToken(token);
     setUserId(id);
