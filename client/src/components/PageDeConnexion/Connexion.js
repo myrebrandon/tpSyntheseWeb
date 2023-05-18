@@ -17,7 +17,8 @@ export default function Connexion(props) {
 
         let token;
         
-        await axios.post(process.env.REACT_APP_URL + "login",
+        try{
+            await axios.post(process.env.REACT_APP_URL + "login",
             {
                 "courriel": data.email,
                 "mdp": data.mdp
@@ -26,10 +27,13 @@ export default function Connexion(props) {
             ).then((res) => {
                 token = res.data.message;
             });
-        
-        let decodedToken = jwtDecode(token);
-        handleLogin(decodedToken.id, token, decodedToken.type);
-        console.log("Connexion compte");
+
+            let decodedToken = jwtDecode(token);
+            handleLogin(decodedToken.id, token, decodedToken.type);
+            console.log("Connexion compte");
+        } catch(err) {
+            alert("Mauvaise information de connexion");
+        }
     }
 
     return (
