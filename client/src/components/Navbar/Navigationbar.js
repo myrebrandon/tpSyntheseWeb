@@ -15,7 +15,7 @@ function Navigationbar() {
   };
 
   useEffect(() => {
-    setIsConnected(token != null);
+    setIsConnected(token === null);
   }, [token]);
 
   return (
@@ -53,11 +53,11 @@ function Navigationbar() {
               alt="Profile"
             />
           </div>
-          {isConnected === null ? <NavDropdown title="S'identifier" className='loginTitle' id="basic-nav-dropdown">
+          {isConnected ? <NavDropdown title="S'identifier" className='loginTitle' id="basic-nav-dropdown">
             <NavDropdown.Item href="/Login">Connexion</NavDropdown.Item>
             <NavDropdown.Item href="/Register">S'enregistrer</NavDropdown.Item>
           </NavDropdown>: <NavDropdown title="Connecté" className='loginTitle' id="basic-nav-dropdown">
-            <NavDropdown.Item onClick={handleLogout()}>Déconnection</NavDropdown.Item>
+            <NavDropdown.Item onClick={handleLogout}>Déconnection</NavDropdown.Item>
           </NavDropdown>}
         </Navbar.Collapse>
       </Navbar>

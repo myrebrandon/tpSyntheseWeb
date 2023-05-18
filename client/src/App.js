@@ -5,7 +5,7 @@ import Navigationbar from './components/Navbar/Navigationbar.js'
 import PageDeConnexion from './components/PageDeConnexion/PageDeConnexion';
 import FAQ from './components/FAQ/FAQ';
 import Accueil from './components/Accueil/Accueil';
-import useContext from './useContext';
+import contexteAuthentification from './shared/User/User';
 import StageInfo from './components/StageInfo/StageInfo';
 import StageList from './components/StageList/StageList'
 import ProfilEtCompetence from './components/ProfilEtCompetence/ProfilEtCompetence';
@@ -20,6 +20,8 @@ function App() {
   const [type, setType] = useState("");
 
   const handleLogin = (id, token, type) => {
+    alert(id);
+    alert(token);
     localStorage.setItem("jwt", token)
     setToken(token);
     setUserId(id);
@@ -34,7 +36,7 @@ function App() {
   }
 
   return (
-    <useContext.Provider
+    <contexteAuthentification.Provider
     value={{
       token,
       type,
@@ -122,7 +124,7 @@ function App() {
         <PiedPage/>
       </Router>
     </div>
-    </useContext.Provider>
+    </contexteAuthentification.Provider>
   );
 }
 
