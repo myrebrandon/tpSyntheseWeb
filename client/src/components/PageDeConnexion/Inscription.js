@@ -32,8 +32,6 @@ export default function Inscription (props) {
                     },
                     { headers: { "Content-Type": "application/json" }}
                     ).then(res => {
-                        console.log(res);
-                        console.log(res.data);
                     })
 
                 await axios.post(process.env.REACT_APP_URL + "entrepreneurs/login",
