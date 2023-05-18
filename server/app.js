@@ -12,6 +12,7 @@ const routesStages = require("./routes/routes-stages");
 const routesEntrepreneurs = require("./routes/routes-entrepreneurs");
 const routesEtudiants = require("./routes/routes-etudiants");
 const routesCoordinateurs = require("./routes/routes-coordinateurs");
+const routesGeneral = require("./routes/routes-general");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/api/stages', routesStages);
 app.use('/api/entrepreneurs', routesEntrepreneurs);
 app.use('/api/etudiants', routesEtudiants);
 app.use('/api/coordinateurs', routesCoordinateurs);
+app.use('/api', routesGeneral);
 
 app.use((requete, reponse, next) => {
     return next(new HttpError("Route non rejoignable", 404));
