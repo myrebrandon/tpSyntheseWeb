@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import React from 'react';
 import validator from 'validator';
 import { useForm } from 'react-hook-form';
@@ -9,7 +9,12 @@ import jwtDecode from "jwt-decode";
 export default function Inscription (props) {
     const {handleLogin} = useContext(contexteAuthentification);
     const {register, handleSubmit, formState: {errors}, setError} = useForm();
+    const [typeCompte, setTypeCompte] = useState("entrepreneur");
 
+    const handleTypeCompte = (event) => {
+        setTypeCompte(event.target.value);
+        console.log(typeCompte)
+    }
     const handleButtonConnexion = () => {
         props.setTypeConnexion("connexion")
     }
@@ -66,8 +71,13 @@ export default function Inscription (props) {
                 <div>
                     <label>Nom : </label>
                     <input type="text" name="nom" {...register("nom",{required: true})}/>
-                    {errors.nom && <span>Veuillez entrer un svp.</span>}
+                    {errors.nom && <span>Veuillez entrer un nom svp.</span>}
                 </div>
+                {typeCompte === 'etudiant' && (<div>
+                    <label>Numero DA : </label>
+                    <input type="text" name="nda" {...register("nda",{required: true})}/>
+                    {errors.nda && <span>Veuillez entrer un svp.</span>}
+                </div>)}
                 <div>
                     <label>Mot de passe: </label>
                     <input type="password" name="mdp" {...register("mdp",{required: true, validate:validator.isLength("8")})}/>
@@ -80,8 +90,8 @@ export default function Inscription (props) {
                 </div>
                 <div>
                     <label>Type de compte: </label>
-                    <label><input type="radio" name ="type" value="entrepreneur" checked={true} {...register("type",{required: true})}/>Entrepreneur</label>
-                    <label><input type="radio" name ="type" value="etudiant" {...register("type",{required: true})}/>Etudiant</label>
+                    <label><input type="radio" name="type" onChange={handleTypeCompte} value="entrepreneur"/>Entrepreneur</label>
+                    <label><input type="radio" name="type" onChange={handleTypeCompte} value="etudiant"/>Etudiant</label>
                 </div>
                 <button type="submit">S'inscrire</button>
             </form>
