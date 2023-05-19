@@ -106,11 +106,11 @@ function App() {
             }
           />
 
-          <Route path="/temp/AjoutStage"
+          {role === "entrepreneur" && <Route path="/temp/AjoutStage"
             element={
               <StageAjout/>
             }
-          />
+          />}
 
           <Route path="/Employeurs"
             element={
@@ -127,11 +127,11 @@ function App() {
             }
           />
 
-          <Route path="/temp/StageEntrepreneur"
+          {role === "entrepreneur" && <Route path="/temp/StageEntrepreneur"
             element={
-              <StageList entrepreneur="6462881124439bed25ad7ef9"/>
+              <StageList entrepreneur={userId}/>
             }
-          />
+          />}
 
           <Route path="/temp/Deroulement" 
           element={

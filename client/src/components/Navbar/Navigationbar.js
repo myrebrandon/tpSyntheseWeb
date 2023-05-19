@@ -37,7 +37,7 @@ function Navigationbar() {
           <Nav className="mr-auto">
             <Nav.Link className={`navElements ${window.location.pathname === '/Accueil' ? 'active' : ''}`} href="/Accueil">Accueil</Nav.Link>
             <Nav.Link className="navElements" href="/Employeurs">Espace Employeurs</Nav.Link>
-            <Nav.Link className="navElements" href="/Stages">Espace Stagiaires</Nav.Link>
+            <Nav.Link className="navElements" href="/Stages">Stages</Nav.Link>
             <NavDropdown className="navElements" title="Autres" id="basic-nav-dropdown">
               <NavDropdown.Item href="/FAQ">FAQ</NavDropdown.Item>
               <NavDropdown.Item href="/Coordonnateurs">Coordonnateurs</NavDropdown.Item>

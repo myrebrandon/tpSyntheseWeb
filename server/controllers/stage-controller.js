@@ -78,7 +78,8 @@ const ajouterStage = async (requete, reponse, next) => {
         description,
         renumeration,
         etat,
-        etudiantsPostuler: []
+        etudiantsPostuler: [],
+        etudiantsAffectes: []
     });
 
     try {
