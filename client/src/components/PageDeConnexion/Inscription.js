@@ -37,8 +37,6 @@ export default function Inscription (props) {
                     },
                     { headers: { "Content-Type": "application/json" }}
                     ).then(res => {
-                        console.log(res);
-                        console.log(res.data);
                     })
 
                 await axios.post(process.env.REACT_APP_URL + "entrepreneurs/login",
@@ -54,7 +52,7 @@ export default function Inscription (props) {
                 const decodedToken = jwtDecode(token);
                 handleLogin(decodedToken.id, token, decodedToken.type);
             } else if(type === "etudiant") {
-                axios.post(process.env.REACT_APP_URL + "etudiants/inscription")
+                //axios.post(process.env.REACT_APP_URL + "etudiants/inscription")
             }
         }
     }

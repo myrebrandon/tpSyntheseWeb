@@ -37,7 +37,7 @@ function Navigationbar() {
           <Nav className="mr-auto">
             <Nav.Link className={`navElements ${window.location.pathname === '/Accueil' ? 'active' : ''}`} href="/Accueil">Accueil</Nav.Link>
             <Nav.Link className="navElements" href="/Employeurs">Espace Employeurs</Nav.Link>
-            <Nav.Link className="navElements" href="/Stages">Espace Stagiaires</Nav.Link>
+            <Nav.Link className="navElements" href="/Stages">Stages</Nav.Link>
             <NavDropdown className="navElements" title="Autres" id="basic-nav-dropdown">
               <NavDropdown.Item href="/FAQ">FAQ</NavDropdown.Item>
               <NavDropdown.Item href="/Coordonnateurs">Coordonnateurs</NavDropdown.Item>
@@ -57,6 +57,7 @@ function Navigationbar() {
             <NavDropdown.Item href="/Login">Connexion</NavDropdown.Item>
             <NavDropdown.Item href="/Register">S'enregistrer</NavDropdown.Item>
           </NavDropdown>: <NavDropdown title="Connecté" className='loginTitle' id="basic-nav-dropdown">
+          <NavDropdown.Item >Profil</NavDropdown.Item>
             <NavDropdown.Item onClick={handleLogout}>Déconnection</NavDropdown.Item>
           </NavDropdown>}
         </Navbar.Collapse>

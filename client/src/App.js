@@ -25,39 +25,41 @@ function App() {
         const decodedToken = jwtDecode(token);
         setToken(token);
         setUserId(decodedToken.id);
-        setType(decodedToken.type);
+        setRole(decodedToken.type);
       } catch(err) {
         console.log(err + "Invalid token");
       }
     } else {
       setToken(null);
+      setUserId(null);
+      setRole("guess");
     }
   });
 
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
-  const [type, setType] = useState("");
+  const [role, setRole] = useState("");
 
   const handleLogin = (id, token, type) => {
     localStorage.setItem("jwt", token)
     setToken(token);
     setUserId(id);
-    setType(type);
+    setRole(type);
   }
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     setToken(null);
     setUserId(null);
-    setType("guess");
+    setRole("guess");
   }
 
   return (
     <contexteAuthentification.Provider
     value={{
       token,
-      type,
       userId,
+      role,
       handleLogin,
       handleLogout
     }}>
@@ -72,19 +74,20 @@ function App() {
               <Accueil />
             }
           />
-          <Route path="/Login"
+          
+          {role === "guess" && <Route path="/Login"
             exact
             element={
               <PageDeConnexion />
             }
-          />
+          />}
 
-          <Route path="/Register"
+          {role === "guess" && <Route path="/Register"
             exact
             element={
               <Inscription />
             }
-          />
+          />}
 
           <Route path="/FAQ"
             element={
@@ -103,11 +106,17 @@ function App() {
             }
           />
 
-          <Route path="/temp/AjoutStage"
+          {role === "entrepreneur" && <Route path="/temp/AjoutStage"
             element={
-              <StageAjout/>
+              <StageAjout action="Ajouter"/>
             }
-          />
+          />}
+
+          {role === "entrepreneur" && <Route path="/temp/ModifierStage/:stageid"
+            element={
+              <StageAjout action="Modifier"/>
+            }
+          />}
 
           <Route path="/Employeurs"
             element={
@@ -124,11 +133,11 @@ function App() {
             }
           />
 
-          <Route path="/temp/StageEntrepreneur"
+          {role === "entrepreneur" && <Route path="/temp/StageEntrepreneur"
             element={
-              <StageList entrepreneur="6462881124439bed25ad7ef9"/>
+              <StageList entrepreneur={userId}/>
             }
-          />
+          />}
 
           <Route path="/temp/Deroulement" 
           element={

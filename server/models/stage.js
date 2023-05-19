@@ -15,7 +15,8 @@ const stageSchema = new Schema({
     description:{type:String, required:true},
     renumeration:{type:String, required:true},
     etat:{type:String, required:true},
-    etudiantsPostuler:[{type:mongoose.Types.ObjectId, required: true, ref: "Etudiant"}]
+    etudiantsPostuler:[{type:mongoose.Types.ObjectId, required: true, ref: "Etudiant"}],
+    etudiantsAffectes:[{type:mongoose.Types.ObjectId, required: true, ref: "Etudiant"}]
 });
 
 module.exports = mongoose.model("Stage", stageSchema);

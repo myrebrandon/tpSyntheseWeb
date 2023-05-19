@@ -78,7 +78,8 @@ const ajouterStage = async (requete, reponse, next) => {
         description,
         renumeration,
         etat,
-        etudiantsPostuler: []
+        etudiantsPostuler: [],
+        etudiantsAffectes: []
     });
 
     try {
@@ -149,6 +150,14 @@ const modifierStage = async (requete, reponse, next) => {
 
         if(etat) {
             stage.etat = etat;
+        }
+
+        if (renumeration){
+            stage.renumeration = renumeration;
+        }
+
+        if(nbPostes){
+            stage.nbPostes = nbPostes;
         }
 
         await stage.save();

@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const salt = 16;
+const salt = 10;
 
 async function hashage(pswd) {
     let newPwd;
