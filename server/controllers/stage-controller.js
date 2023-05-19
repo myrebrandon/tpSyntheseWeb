@@ -85,9 +85,9 @@ const ajouterStage = async (requete, reponse, next) => {
     try {
         entrepreneurExistant.stages.push(nouvStage);
 
-        await entrepreneurExistant.save();
-
         await nouvStage.save();
+
+        await entrepreneurExistant.save();
     } catch(err) {
         return next(new HttpError("Erreur dans la sauvegarde du stage", 500));
     }
@@ -166,7 +166,7 @@ const deleteStage = async (requete, reponse, next) => {
     let stage;
 
     try {
-        stage = await Stage.findById(idStage).populate("etudiantsPostuler");
+        stage = await Stage.findById(idStage).populate("etudiantsPostuler").populate("etudiantsAffectes");
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }
@@ -180,6 +180,13 @@ const deleteStage = async (requete, reponse, next) => {
             let etudiant;
             etudiant = await Etudiant.findById(etu.id).populate("stages");
             etudiant.stages.pop(stage);
+            await etudiant.save();
+        }
+
+        for(let etu of stage.etudiantsAffectes) {
+            let etudiant;
+            etudiant = await Etudiant.findById(etu.id);
+            etudiant.stageAffecte = null;
             await etudiant.save();
         }
 

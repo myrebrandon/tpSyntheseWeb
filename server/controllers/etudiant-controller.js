@@ -100,7 +100,8 @@ const ajouterEtudiant = async (requete, reponse, next) => {
         nomComplet,
         courriel,
         mdp: hashPwd,
-        type
+        type,
+        stages: []
     });
 
     try {
@@ -140,6 +141,10 @@ const postuler = async (requete, reponse, next) => {
         return next(new HttpError("Le stage n'existe pas", 401));
     }
 
+    if(stage.type !== etudiant.type) {
+        return next(new HttpError("L'etudiant n'est pas du bon type", 500));
+    }
+
     try {
         for(let st of etudiant.stages) {
             if(st.id === stage.id) {
@@ -173,6 +178,53 @@ const postuler = async (requete, reponse, next) => {
     }
 
     return reponse.status(201).json({message: "L'etudiant a bien postule"});
+}
+
+const affecter = async (requete, reponse, next) => {
+    const idEtudiant = requete.params.idEtudiant;
+    const { idStage } = requete.body;
+
+    let etudiant;
+    let stage;
+
+    try {
+        etudiant = await Etudiant.findById(idEtudiant);
+        stage = await Stage.findById(idStage).populate("etudiantsAffectes");
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    if(!etudiant) {
+        return next(new HttpError("L'etudiant n'existe pas", 401));
+    }
+
+    if(!stage) {
+        return next(new HttpError("Le stage n'existe pas", 401));
+    }
+
+    if(etudiant.stageAffecte != null) {
+        return next(new HttpError("Le stagiaire a deja un stage d'affecte", 500));
+    }
+
+    if(stage.etudiantsAffectes.length >= stage.nbPostes) {
+        return next(new HttpError("Le stage est plein", 500));
+    }
+
+    if(stage.type !== etudiant.type) {
+        return next(new HttpError("L'etudiant n'est pas du bon type", 500));
+    }
+
+    try {
+        etudiant.stageAffecte = stage;
+        stage.etudiantsAffectes.push(etudiant);
+        
+        await etudiant.save();
+        await stage.save();
+    } catch(err) {
+        return next(new HttpError("Erreur dans l'affectation", 500));
+    }
+
+    return reponse.status(201).json({message: "L'etudiant a bien ete affecte"});
 }
 
 const modifierEtudiant = async (requete, reponse, next) => {
@@ -249,7 +301,25 @@ const deleteEtudiant = async (requete, reponse, next) => {
         return next(new HttpError("L'etudiant n'existe pas", 401));
     }
 
+    let stageAffecte;
+    if(etudiant.stageAffecte != null) {
+        try {
+            stageAffecte = await Stage.findById(etudiant.stageAffecte._id).populate("etudiantsAffectes");
+        } catch(err) {
+            return next(new HttpError("Erreur de bd", 500));
+        }
+
+        if(!stageAffecte) {
+            return next(new HttpError("Stage affecte n'existe pas", 401));
+        }
+    }
+
     try {
+        if(stageAffecte) {
+            stageAffecte.etudiantsAffectes.pop(etudiant);
+            await stageAffecte.save();
+        }
+
         for(let st of etudiant.stages) {
             let stage;
             stage = await Stage.findById(st.id).populate("etudiantsPostuler");
@@ -271,5 +341,6 @@ module.exports.retourEtudiant = retourEtudiant;
 module.exports.loginEtudiant = loginEtudiant;
 module.exports.ajouterEtudiant = ajouterEtudiant;
 module.exports.postuler = postuler;
+module.exports.affecter = affecter;
 module.exports.modifierEtudiant = modifierEtudiant;
 module.exports.deleteEtudiant = deleteEtudiant;
