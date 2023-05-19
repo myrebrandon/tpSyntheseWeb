@@ -108,7 +108,13 @@ function App() {
 
           {role === "entrepreneur" && <Route path="/temp/AjoutStage"
             element={
-              <StageAjout/>
+              <StageAjout action="Ajouter"/>
+            }
+          />}
+
+          {role === "entrepreneur" && <Route path="/temp/ModifierStage/:stageid"
+            element={
+              <StageAjout action="Modifier"/>
             }
           />}
 

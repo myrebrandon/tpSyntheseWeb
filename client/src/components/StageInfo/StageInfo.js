@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './StageInfo.css';
 import { Link, useParams } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import contexteAuthentification from '../../shared/User/User';
+import axios from 'axios';
 
 function StageInfo() {
 
     let { stageid } = useParams()
     const [stage, setLoadedStage] = useState();
     const { error, sendRequest, clearError } = useHttpClient();
+
+    const { userId, role, token } = useContext(contexteAuthentification);
 
     useEffect(() => {
         const fetchStage = async () => {
@@ -30,6 +34,8 @@ function StageInfo() {
             </div>
         );
     }
+
+    console.log(stage.entrepreneurId + " / " + userId);
 
     return (
         <div className="page">
@@ -64,21 +70,34 @@ function StageInfo() {
                 <div className="stage-etat">
                     <p>{stage.etat}</p>
                 </div>
-                <div className="stage-bouton">
-                    <div className="stage-appliquer">
-                        <button>Appliquer</button>
-                    </div>
-                    <div className="stage-modifier">
-                        <button>Modifier</button>
-                    </div>
-                    <div className="stage-supprimer">
-                        <button>Supprimer</button>
-                    </div>
-                </div>
-            </div>
-            <div className="bouton-retour">
+
+
+                {
+                    role === "etudiant" ?
+                        <div className="stage-bouton">
+                            <div className="stage-appliquer">
+                                <button>Appliquer</button>
+                            </div>
+                        </div>
+                        :
+                        userId === stage.entrepreneurId ?
+                        <div className='stage-bouton'>
+                            <div className="stage-modifier">
+                                <Link to={`/temp/ModifierStage/${stageid}`}>Modifier</Link>
+                            </div>
+                            <div className="stage-supprimer">
+                                <button>Supprimer</button>
+                            </div>
+                        </div>
+                        :
+                        <div className='stage-bouton'></div>
+                }
+
+
+                <div className="bouton-retour">
                     <Link to="/stages">Retour</Link>
                 </div>
+            </div>
         </div>
     );
 };

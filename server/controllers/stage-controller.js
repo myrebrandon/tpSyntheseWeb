@@ -152,6 +152,14 @@ const modifierStage = async (requete, reponse, next) => {
             stage.etat = etat;
         }
 
+        if (renumeration){
+            stage.renumeration = renumeration;
+        }
+
+        if(nbPostes){
+            stage.nbPostes = nbPostes;
+        }
+
         await stage.save();
     } catch(err) {
         return next(new HttpError("Erreur dans la modification du stage", 500));

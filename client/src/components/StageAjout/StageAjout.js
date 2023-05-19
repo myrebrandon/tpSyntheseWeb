@@ -1,11 +1,33 @@
-import { useContext } from 'react';
+import { useContext,useState,useEffect } from 'react';
 import './StageAjout.css';
 import contexteAuthentification from '../../shared/User/User';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useHttpClient } from "../../shared/hooks/http-hook";
 
-function StageAjout() {
+function StageAjout({ action }) {
 
-  const {userId} = useContext(contexteAuthentification);
+  const { userId } = useContext(contexteAuthentification);
+  const stageId = useParams();
+  const [stage, setLoadedStage] = useState();
+  const { error, sendRequest, clearError } = useHttpClient();
+
+  console.log(stageId);
+
+  useEffect(() => {
+    const fetchStage = async () => {
+        try {
+            const responseData = await sendRequest(
+                `http://localhost:5000/api/stages/`
+            );
+            setLoadedStage(responseData.listeStages.filter(s => {
+                return s._id === stageId.stageid;
+            })[0]);
+        } catch (err) { }
+    };
+    fetchStage();
+}, [sendRequest]);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,14 +35,15 @@ function StageAjout() {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
-    AjouterStage(data);
+    action === "Ajouter" ? AjouterStage(data) : ModifierStage(data);
+
   }
 
   const AjouterStage = async (data) => {
 
-    try{
-      const { titre, nomEntreprise,nom, courriel, numeroCell, adresseEntreprise, typeStage, nbPoste, description, renumeration } = data;
-  
+    try {
+      const { titre, nomEntreprise, nom, courriel, numeroCell, adresseEntreprise, typeStage, nbPoste, description, renumeration } = data;
+
       await axios.post(process.env.REACT_APP_URL + "stages/" + userId,
         {
           "titre": titre,
@@ -41,17 +64,44 @@ function StageAjout() {
       ).then(res => {
       })
       console.log("Création du stage");
-    }catch(Exception){
-        console.log(Exception);
+    } catch (Exception) {
+      console.log(Exception);
     }
   }
 
+  const ModifierStage = async (data) => {
+
+    try {
+      const { titre, nomEntreprise, nom, courriel, numeroCell, adresseEntreprise, typeStage, nbPoste, description, renumeration, etat } = data;
+
+      await axios.patch(process.env.REACT_APP_URL + "stages/" + stageId.stageid,
+        {
+          "titre": titre,
+          "nomCompletContact": nom,
+          "courriel": courriel,
+          "numeroCell": numeroCell,
+          "nomEntreprise": nomEntreprise,
+          "adresseEntreprise": adresseEntreprise,
+          "type": typeStage,
+          "nbPostes": Number(nbPoste),
+          "description": description,
+          "renumeration": renumeration,
+          "etat": etat
+        },
+        { headers: { "Content-Type": "application/json" } }
+      ).then(res => {
+      })
+      console.log("Modification du stage");
+    } catch (Exception) {
+      console.log(Exception);
+    }
+  }
 
   return (
     <div className="spacing">
       <div className="StageAjout-Container">
         <div className="StageAjout-Title">
-          <h2>Ajouter un stage</h2>
+          <h2>{action} un stage</h2>
         </div>
         <div className="formbold-form-wrapper">
           <form onSubmit={handleSubmit}>
@@ -61,6 +111,7 @@ function StageAjout() {
                 type="text"
                 name="titre"
                 id="titre"
+                defaultValue={stage ? stage.titre : ""}
                 placeholder="Stage en Developpement Web FullStack"
                 className="formbold-form-input"
                 required
@@ -73,6 +124,7 @@ function StageAjout() {
                 type="text"
                 name="description"
                 id="description"
+                defaultValue={stage ? stage.description: ""}
                 placeholder="Ce stage vous permet de ..."
                 className="formbold-form-input"
                 required
@@ -87,6 +139,7 @@ function StageAjout() {
                   name="nomEntreprise"
                   id="nomEntreprise"
                   placeholder="TokiLab"
+                  defaultValue={stage ? stage.nomEntreprise : ""}
                   className="formbold-form-input"
                   required
                 />
@@ -97,6 +150,7 @@ function StageAjout() {
                   type="text"
                   name="numeroCell"
                   id="numeroCell"
+                  defaultValue={stage ? stage.numeroCell : ""}
                   placeholder="Numero de Telephone "
                   className="formbold-form-input"
                   required
@@ -110,6 +164,7 @@ function StageAjout() {
                   type="address"
                   name="adresseEntreprise"
                   id="adresseEntreprise"
+                  defaultValue={stage ? stage.adresseEntreprise : ""}
                   placeholder="475 Bd de l'Avenir, Laval, QC"
                   className="formbold-form-input"
                   required
@@ -121,6 +176,7 @@ function StageAjout() {
                   type="text"
                   name="nom"
                   id="nom"
+                  defaultValue={stage ? stage.nomCompletContact : ""}
                   placeholder="Charles Leclerc "
                   className="formbold-form-input"
                   required
@@ -134,6 +190,7 @@ function StageAjout() {
                 type="text"
                 name="courriel"
                 id="courriel"
+                defaultValue={stage ? stage.courriel : ""}
                 placeholder="stage@cmontmorency.qc.ca"
                 className="formbold-form-input"
                 required
@@ -150,6 +207,21 @@ function StageAjout() {
                 <option value="Developpement d'application">Développement</option>
               </select>
             </div>
+            {action === "Modifier" ?
+              <div className="formbold-mb-3">
+                <label className="formbold-form-label">Status :</label>
+
+                <select className="formbold-form-input" name="etat" id="etat" placeholder="Choisissez une option" defaultValue={""} required>
+                  <option value="" disabled>
+                    Choisissez une option
+                  </option>
+                  <option value="Ouvert">Ouvert</option>
+                  <option value="Fermé">Fermé</option>
+                </select>
+              </div> :
+              <div></div>
+            }
+
             <div className="formbold-input-flex">
               <div>
                 <label htmlFor="text" className="formbold-form-label">Salaire proposé :</label>
@@ -157,6 +229,7 @@ function StageAjout() {
                   type="text"
                   name="renumeration"
                   id="renumeration"
+                  defaultValue={stage ? stage.renumeration : ""}
                   placeholder="27.50$/h"
                   className="formbold-form-input"
                   required
@@ -168,6 +241,7 @@ function StageAjout() {
                   type="number"
                   name="nbPoste"
                   id="nbPoste"
+                  defaultValue={stage ? stage.nbPostes : ""}
                   placeholder="Nombre de postes disponibles"
                   className="formbold-form-input formbold-mb-3"
                   required
@@ -205,7 +279,7 @@ function StageAjout() {
                 J'accepte les conditions d'utilisation
               </label>
             </div>
-            <input className="formbold-btn" type="submit" value="Ajouter"></input>
+            <input className="formbold-btn" type="submit" value={action}></input>
           </form>
         </div>
       </div>
