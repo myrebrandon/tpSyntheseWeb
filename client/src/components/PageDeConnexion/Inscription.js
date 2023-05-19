@@ -47,7 +47,7 @@ export default function Inscription (props) {
                 const decodedToken = jwtDecode(token);
                 handleLogin(decodedToken.id, token, decodedToken.type);
             } else if(type === "etudiant") {
-                axios.post(process.env.REACT_APP_URL + "etudiants/inscription")
+                //axios.post(process.env.REACT_APP_URL + "etudiants/inscription")
             }
         }
     }
