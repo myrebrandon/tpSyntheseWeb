@@ -47,7 +47,6 @@ export default function Inscription (props) {
                 const decodedToken = jwtDecode(token);
                 handleLogin(decodedToken.id, token, decodedToken.type);
             } else if(type === "etudiant") {
-                //axios.post(process.env.REACT_APP_URL + "etudiants/inscription")
             }
         }
     }
@@ -56,7 +55,6 @@ export default function Inscription (props) {
         <div class="form-container sign-up-container">
             <form onSubmit={handleSubmit(handleSoumission)}>
                 <h1>Creer un compte</h1>
-                console.log("test")
                 <div>
                     <input type="text" placeholder="Courriel" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
                     {errors.courriel && <span>Veuillez entrer un courriel valide.</span>}
