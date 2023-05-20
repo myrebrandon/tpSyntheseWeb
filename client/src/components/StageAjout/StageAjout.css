@@ -85,6 +85,9 @@ input[type="submit"] {
     border: 1px solid #C1D72D;
     border-radius: 5px;
 }
+.StageAjout-Textarea{
+  width: 370px;
+}
 
 .StageAjout-Input:focus,
 .StageAjout-Textarea:focus,
