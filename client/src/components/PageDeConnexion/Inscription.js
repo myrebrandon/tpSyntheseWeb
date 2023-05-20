@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import React from 'react';
+import './Inscription.css'
 import validator from 'validator';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
