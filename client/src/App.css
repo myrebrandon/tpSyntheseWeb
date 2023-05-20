@@ -179,3 +179,52 @@ nav link:hover {
 nav link:hover::after {
   width: 100%;
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.Content {
+  flex: 1;
+  padding-bottom: 20px; /* Ajustez cette valeur en fonction de la hauteur de votre pied de page */
+}
+
+.Footer-Main {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.Footer-Container {
+  display: flex;
+  justify-content: center;
+}
+
+.Footer-Container div {
+  margin: 0 20px;
+}
+
+.Footer-Container p {
+  margin: 5px 0;
+}
+
+.Footer-Container a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.Footer-Container a:hover {
+  text-decoration: underline;
+}

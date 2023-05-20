@@ -53,31 +53,26 @@ export default function Inscription (props) {
     }
 
     return ( 
-        <div>
+        <div class="form-container sign-up-container">
             <form onSubmit={handleSubmit(handleSoumission)}>
-                <h1>INSCRIPTION</h1>
+                <h1>Creer un compte</h1>
                 <div>
-                    <label>Courriel: </label>
-                    <input type="text" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
+                    <input type="text" placeholder="Courriel" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
                     {errors.courriel && <span>Veuillez entrer un courriel valide.</span>}
                 </div>
                 <div>
-                    <label>Nom : </label>
-                    <input type="text" name="nom" {...register("nom",{required: true})}/>
-                    {errors.nom && <span>Veuillez entrer un svp.</span>}
+                    <input type="text" name="nom" placeholder="Nom" {...register("nom",{required: true})}/>
+                    {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
                 </div>
                 <div>
-                    <label>Mot de passe: </label>
-                    <input type="password" name="mdp" {...register("mdp",{required: true, validate:validator.isLength("8")})}/>
+                    <input type="password" name="mdp" placeholder="Mot de passe" {...register("mdp",{required: true, validate:validator.isLength("8")})}/>
                     {errors.mdp && <span>Veuillez entrer un mot de passe valide.</span>}
                 </div>
                 <div>
-                    <label>Mot de passe confirmation: </label>
-                    <input type="password" name="mdpConfirmation" {...register("mdpConfirmation",{required: true})}/>
+                    <input type="password" name="mdpConfirmation" placeholder="Mot de passe" {...register("mdpConfirmation",{required: true})}/>
                     {errors.mdpConfirmation && <span>Le mot de passe ne correspond pas</span>}
                 </div>
                 <div>
-                    <label>Type de compte: </label>
                     <label><input type="radio" name ="type" value="entrepreneur" checked={true} {...register("type",{required: true})}/>Entrepreneur</label>
                     <label><input type="radio" name ="type" value="etudiant" {...register("type",{required: true})}/>Etudiant</label>
                 </div>

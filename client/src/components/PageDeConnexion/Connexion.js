@@ -1,5 +1,5 @@
 import {React, useContext} from 'react';
-
+import './Connexion.css'
 import { useForm } from 'react-hook-form';
 import axios from "axios";
 import contexteAuthentification from '../../shared/User/User';
@@ -38,21 +38,19 @@ export default function Connexion(props) {
 
     return (
         <div>
-            <form onSubmit={handleSubmit(handleSoumission)}>
-                <h1>CONNEXION</h1>
+            <form class="connexion-form" onSubmit={handleSubmit(handleSoumission)}>
+                <h1 class="connexion-h1">Se connecter</h1>
                 <div>
-                    <label>Courriel : </label>
-                    <input type="text" name="email" {...register("email", { required: true })} />
-                    {errors.email && <span>Veuillez entrer une adresse email valide.</span>}
+                    <input class="connexion-input" type="text" name="email" placeholder='Email' {...register("email", { required: true })} />
+                    {errors.email && <span class="connexion-span">Veuillez entrer une adresse email valide.</span>}
                 </div>
                 <div>
-                    <label>Mot de passe: </label>
-                    <input type="password" name="mdp" {...register("mdp", { required: true })} />
-                    {errors.mdp && <span>Veuillez entrer un mot de passe.</span>}
+                    <input class="connexion-input" type="password" name="mdp" placeholder='Password'{...register("mdp", { required: true })} />
+                    {errors.mdp && <span class="connexion-span">Veuillez entrer un mot de passe.</span>}
                 </div>
-                <button type="submit">Se connecter</button>
+                <button type="submit" class="connexion-button PageConnexion-buttonInscrire">Se connecter</button>
             </form>
-            <button onClick={handleButtonInscription}>S'inscrire</button>
+            <button connexion-button  class="PageConnexion-buttonInscrire margin"onClick={handleButtonInscription}>S'inscrire</button>
         </div>
     )
 }
