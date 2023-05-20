@@ -5,7 +5,6 @@ function PiedPage() {
   return (
     <div className="App">
       <div className="Content">
-        {/* Contenu principal de votre application */}
       </div>
       <div className="Footer-Main">
         <footer className="Footer-Container">
