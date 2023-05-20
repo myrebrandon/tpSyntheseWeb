@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import React from 'react';
 import './Inscription.css'
 import validator from 'validator';
@@ -10,9 +10,14 @@ import jwtDecode from "jwt-decode";
 export default function Inscription (props) {
     const {handleLogin} = useContext(contexteAuthentification);
     const {register, handleSubmit, formState: {errors}, setError} = useForm();
+    const [type, setType] = useState("entrepreneur");
 
     const handleButtonConnexion = () => {
         props.setTypeConnexion("connexion")
+    }
+
+    const handleRole = (event) => {
+        setType(event.target.value);
     }
 
     const handleSoumission = async (data) => {
@@ -53,7 +58,7 @@ export default function Inscription (props) {
     }
 
     return ( 
-        <div class="form-container sign-up-container">
+        <div >
             <form onSubmit={handleSubmit(handleSoumission)}>
                 <h1>Creer un compte</h1>
                 <div>
@@ -64,6 +69,10 @@ export default function Inscription (props) {
                     <input type="text" name="nom" placeholder="Nom" {...register("nom",{required: true})}/>
                     {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
                 </div>
+                {type === "etudiant" &&<div>
+                    <input type="text" name="numDa" placeholder="numDa" {...register("numDa",{required: true})}/>
+                    {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
+                </div>}
                 <div>
                     <input type="password" name="mdp" placeholder="Mot de passe" {...register("mdp",{required: true, validate:validator.isLength("8")})}/>
                     {errors.mdp && <span>Veuillez entrer un mot de passe valide.</span>}
@@ -72,9 +81,13 @@ export default function Inscription (props) {
                     <input type="password" name="mdpConfirmation" placeholder="Mot de passe" {...register("mdpConfirmation",{required: true})}/>
                     {errors.mdpConfirmation && <span>Le mot de passe ne correspond pas</span>}
                 </div>
+                {type === "etudiant" && <div>
+                    <label><input type="radio" name ="typeEtudiant" value="Developpement d'application" checked={true} {...register("typeEtudiant",{required: true})}/>Développement</label>
+                    <label><input type="radio" name ="typeEtudiant" value="Reseaux et securite" {...register("typeEtudiant",{required: true})}/>Réseaux</label>
+                </div>}
                 <div>
-                    <label><input type="radio" name ="type" value="entrepreneur" checked={true} {...register("type",{required: true})}/>Entrepreneur</label>
-                    <label><input type="radio" name ="type" value="etudiant" {...register("type",{required: true})}/>Etudiant</label>
+                    <label><input type="radio" name ="type" value="entrepreneur" onClick={handleRole}  {...register("type",{required: true})}/>Entrepreneur</label>
+                    <label><input type="radio" name ="type" value="etudiant" onClick={handleRole} {...register("type",{required: true})}/>Etudiant</label>
                 </div>
                 <button type="submit">S'inscrire</button>
             </form>
