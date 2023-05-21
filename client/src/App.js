@@ -100,7 +100,7 @@ function App() {
             }
           />
 
-          <Route path="/temp/profil-et-competence"
+          <Route path="/Profil-et-competence"
             element={
               <ProfilEtCompetence/>
             }
@@ -139,7 +139,7 @@ function App() {
             }
           />}
 
-          <Route path="/temp/Deroulement" 
+          <Route path="/Deroulement" 
           element={
             <DeroulementStage/>
           }

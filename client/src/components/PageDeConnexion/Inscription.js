@@ -84,26 +84,26 @@ export default function Inscription (props) {
 
     return ( 
         <div >
-            <form onSubmit={handleSubmit(handleSoumission)}>
-                <h1>Creer un compte</h1>
+            <form className="connexion-form" onSubmit={handleSubmit(handleSoumission)}>
+                <h1 class="connexion-h1">Creer un compte</h1>
                 <div>
-                    <input type="text" placeholder="Courriel" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
+                    <input class="connexion-input" type="text" placeholder="Courriel" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
                     {errors.courriel && <span>Veuillez entrer un courriel valide.</span>}
                 </div>
                 <div>
-                    <input type="text" name="nom" placeholder="Nom" {...register("nom",{required: true})}/>
+                    <input class="connexion-input" type="text" name="nom" placeholder="Nom" {...register("nom",{required: true})}/>
                     {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
                 </div>
                 {type === "etudiant" &&<div>
-                    <input type="text" name="numDa" placeholder="numDa" {...register("numDa",{required: true})}/>
+                    <input class="connexion-input" type="text" name="numDa" placeholder="numDa" {...register("numDa",{required: true})}/>
                     {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
                 </div>}
                 <div>
-                    <input type="password" name="mdp" placeholder="Mot de passe" {...register("mdp",{required: true})}/>
+                    <input class="connexion-input" type="password" name="mdp" placeholder="Mot de passe" {...register("mdp",{required: true})}/>
                     {errors.mdp && <span>Veuillez entrer un mot de passe valide.</span>}
                 </div>
                 <div>
-                    <input type="password" name="mdpConfirmation" placeholder="Mot de passe" {...register("mdpConfirmation",{required: true})}/>
+                    <input class="connexion-input" type="password" name="mdpConfirmation" placeholder="Mot de passe" {...register("mdpConfirmation",{required: true})}/>
                     {errors.mdpConfirmation && <span>Le mot de passe ne correspond pas</span>}
                 </div>
                 {type === "etudiant" && <div>
@@ -114,9 +114,9 @@ export default function Inscription (props) {
                     <label><input type="radio" name ="type" value="entrepreneur" onClick={handleRole}  {...register("type",{required: true})}/>Entrepreneur</label>
                     <label><input type="radio" name ="type" value="etudiant" onClick={handleRole} {...register("type",{required: true})}/>Etudiant</label>
                 </div>
-                <button type="submit">S'inscrire</button>
+                <button class="connexion-button PageConnexion-buttonInscrire" type="submit">S'inscrire</button>
             </form>
-            <button onClick={handleButtonConnexion}>Se connecter</button>
+            <button class="PageConnexion-buttonInscrire margin" onClick={handleButtonConnexion}>Se connecter</button>
         </div>
     )
 }
