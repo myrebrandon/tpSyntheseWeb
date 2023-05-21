@@ -96,7 +96,7 @@ function App() {
           <Navigationbar />
           <Routes>
             <Route path="/Accueil"
-              exact
+              index 
               element={
                 <Accueil />
               }
