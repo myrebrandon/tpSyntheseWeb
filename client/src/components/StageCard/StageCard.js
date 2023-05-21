@@ -1,11 +1,14 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import './StageCard.css';
+import contexteAuthentification from '../../shared/User/User';
 
 function StageCard({ info, idEtudiant }) {
   const imageSrc = info.type === 'Developpement d\'application'
     ? 'https://cdn-icons-png.flaticon.com/512/2809/2809263.png'
     : 'https://cdn-icons-png.flaticon.com/128/4379/4379213.png';
+
+  const { role } = useContext(contexteAuthentification);
 
   return (
     <div className='stageCard-Main'>
@@ -21,12 +24,9 @@ function StageCard({ info, idEtudiant }) {
           <div className="skill">{info.etat}</div>
         </div>
         {!idEtudiant ? 
-          <Link className='apply button-apply' to={`/stage/${info._id}`}>Appliquer</Link> :
-          <Link className='apply button-apply' to={`/${idEtudiant}/Affectation/${info._id}`}>Appliquer</Link>}
-          {/* <div className='div-apply'>
-            <button className="apply button-apply">Appliquer</button>
-          </div> */}
-        {/* <button className="save">Save Job</button> */}
+          <Link className='apply button-apply' to={`/stage/${info._id}`}>Infos</Link> :
+          <Link className='apply button-apply' to={`/${idEtudiant}/Affectation/${info._id}`}>Infos</Link>}
+        
         <a href="#"></a>
       </article>
     </div>
