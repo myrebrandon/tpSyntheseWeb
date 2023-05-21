@@ -1,4 +1,5 @@
 import './StageList.css';
+import '../StageAjout/StageAjout.css'
 import React, { useEffect,useContext, useState } from "react";
 import { useParams } from 'react-router-dom';
 import './StageList.css'
@@ -82,7 +83,7 @@ function StageList(props) {
 
                 {role !== "etudiant" && !idEtudiant && <select id="type" onChange={getType}>
 
-                    <option value="Tout">Tout</option>
+                    <option className='formbold-form-input' value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
 
@@ -103,10 +104,11 @@ function StageList(props) {
 
             <div>
                 <p className='StageList-Titre'>Nos Stages disponibles</p>
+              
+                {role !== "etudiant" && !idEtudiant &&  <select id="type" className='stageList-form-input' onChange={getType}>
 
-                {role !== "etudiant" && !idEtudiant &&  <select id="type" onChange={getType}>
-
-                    <option className='connexion-form-input' value="Tout">Tout</option>
+                    
+                    <option value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
 
