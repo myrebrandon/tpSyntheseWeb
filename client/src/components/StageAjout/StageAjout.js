@@ -7,12 +7,11 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 
 function StageAjout({ action }) {
 
-  const { userId } = useContext(contexteAuthentification);
+  const { userId,token } = useContext(contexteAuthentification);
   const stageId = useParams();
   const [stage, setLoadedStage] = useState();
   const { error, sendRequest, clearError } = useHttpClient();
-
-  console.log(stageId);
+  axios.defaults.headers.common["authorization"] = token;
 
   useEffect(() => {
     const fetchStage = async () => {

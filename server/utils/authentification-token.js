@@ -5,7 +5,8 @@ const { HttpError } = require("../models/http-errors");
 
 function authentifierToken(requete, reponse, next) {
     const headerAuth = requete.headers['authorization'];
-    const token = headerAuth && headerAuth.split(' ')[1];
+    const token = headerAuth;
+    // && headerAuth.split(' ')[1]
 
     if (token == null) return reponse.sendStatus(401);
 

@@ -16,6 +16,7 @@ import PiedPage from './components/PiedPage/PiedPage';
 import Inscription from './components/PageDeConnexion/Inscription';
 import jwtDecode from "jwt-decode";
 import axios from 'axios';
+import InfoProfil from './components/InfoProfil/InfoProfil';
 
 function App() {
 
@@ -116,6 +117,12 @@ function App() {
           {role === "entrepreneur" && <Route path="/temp/ModifierStage/:stageid"
             element={
               <StageAjout action="Modifier"/>
+            }
+          />}
+
+          {role != "guess" && <Route path="/profil"
+            element={
+              <InfoProfil id={userId} realToken={token} realType={role}/>
             }
           />}
 

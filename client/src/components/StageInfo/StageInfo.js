@@ -12,6 +12,7 @@ function StageInfo() {
     const { error, sendRequest, clearError } = useHttpClient();
 
     const { userId, role, token } = useContext(contexteAuthentification);
+    axios.defaults.headers.common["authorization"] = token;
 
     useEffect(() => {
         const fetchStage = async () => {
@@ -35,7 +36,9 @@ function StageInfo() {
         );
     }
 
-    console.log(stage.entrepreneurId + " / " + userId);
+    function SupprimerStage(){
+            axios.delete(`http://localhost:5000/api/stages/` + stageid).catch(error => {});
+    }
 
     return (
         <div className="page">
@@ -86,7 +89,7 @@ function StageInfo() {
                                 <Link to={`/temp/ModifierStage/${stageid}`}>Modifier</Link>
                             </div>
                             <div className="stage-supprimer">
-                                <button>Supprimer</button>
+                                <button href="/stages" onClick={SupprimerStage}>Supprimer</button>
                             </div>
                         </div>
                         :
