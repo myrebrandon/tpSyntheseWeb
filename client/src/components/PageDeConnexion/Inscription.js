@@ -134,6 +134,7 @@ export default function Inscription (props) {
                         <option name ="type" value="entrepreneur">Entrepreneur</option>
                         <option name ="type" value="etudiant">Etudiant</option>
                     </select>
+                <br></br>
                 <button className="connexion-button PageConnexion-buttonInscrire" type="submit">S'inscrire</button>
             </form>
             <button className="PageConnexion-buttonInscrire margin" onClick={handleButtonConnexion}>Se connecter</button>
