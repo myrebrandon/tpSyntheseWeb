@@ -21,7 +21,7 @@ function StageInfo() {
         const fetchStage = async () => {
             try {
                 const responseData = await sendRequest(
-                    `http://localhost:5000/api/stages/`
+                    process.env.REACT_APP_URL + `stages/`
                 );
                 setLoadedStage(responseData.listeStages.filter(s => {
                     return s._id === stageid;
