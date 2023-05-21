@@ -1,0 +1,16 @@
+.InfoProfil-Main{
+    user-select: none;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+}
+
+.InfoProfil-btn-center {
+    display: block;
+    justify-content: center;
+}
