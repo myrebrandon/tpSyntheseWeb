@@ -6,6 +6,7 @@ function StageCard({ info, idEtudiant }) {
   const imageSrc = info.type === 'Developpement d\'application'
     ? 'https://cdn-icons-png.flaticon.com/512/2809/2809263.png'
     : 'https://cdn-icons-png.flaticon.com/128/4379/4379213.png';
+  const poste = info.nbPostes > 1 ? 'postes' : 'poste';
 
   return (
     <div className='stageCard-Main'>
@@ -17,7 +18,7 @@ function StageCard({ info, idEtudiant }) {
         <div className="company-name">{info.type}</div>
         <div className="skills-container">
           <div className="skill">{info.nomEntreprise}</div>
-          <div className="skill">{info.nbPostes} poste(s) à combler</div>
+          <div className="skill">{info.nbPostes} {poste} à combler</div>
           <div className="skill">{info.etat}</div>
         </div>
         {!idEtudiant ? 

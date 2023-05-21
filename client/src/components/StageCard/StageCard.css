@@ -23,7 +23,7 @@ article.job-card {
     grid-template-rows: 35px 10px 35px;
     width: 700px;
     position: relative;
-    border-top: 1px solid #e3e3e3;
+    border-top: 1.5px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
     font-family: 'Helvetica';
     padding-top: 15px;
@@ -33,7 +33,9 @@ article.job-card {
   article.job-card:hover,
   article.job-card:focus {
     background-color: rgba(0,166,194,.03);
-      border-color: #C1D72D;
+    border-top: 2px solid #e3e3e3;
+    border-bottom: 2px solid #e3e3e3;
+    border-color: #C1D72D;
   }
   
   .company-logo-img {
