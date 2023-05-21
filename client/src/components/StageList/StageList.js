@@ -1,7 +1,8 @@
 import './StageList.css';
+import '../StageAjout/StageAjout.css'
 import React, { useEffect,useContext, useState } from "react";
 import { useParams } from 'react-router-dom';
-
+import './StageList.css'
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import './StageList.css'
 import StageCard from '../StageCard/StageCard.js'
@@ -82,7 +83,7 @@ function StageList(props) {
 
                 {role !== "etudiant" && !idEtudiant && <select id="type" onChange={getType}>
 
-                    <option value="Tout">Tout</option>
+                    <option className='formbold-form-input' value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
 
@@ -102,10 +103,11 @@ function StageList(props) {
         return (
 
             <div>
-                <p className='StageList-Titre'>Les Stages</p>
+                <p className='StageList-Titre'>Nos Stages disponibles</p>
+              
+                {role !== "etudiant" && !idEtudiant &&  <select id="type" className='stageList-form-input' onChange={getType}>
 
-                {role !== "etudiant" && !idEtudiant &&  <select id="type" onChange={getType}>
-
+                    
                     <option value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
@@ -121,7 +123,7 @@ function StageList(props) {
 
                 {role === "entrepreneur" ? 
                 <div>
-                    <Link to="/temp/AjoutStage">Ajouter un Stage</Link>
+                    <Link className='PageConnexion-buttonInscrire' to="/temp/AjoutStage">Ajouter un Stage</Link>
                 </div> :
                 <div>
                     
