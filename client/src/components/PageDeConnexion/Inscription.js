@@ -32,59 +32,64 @@ export default function Inscription (props) {
             })
         } else {
             props.setLoading(true);
-            if(type === "entrepreneur") {
-                let token;
-                await axios.post(process.env.REACT_APP_URL + "entrepreneurs/inscription",
-                    { 
-                        "nomComplet": nom,
-                        "courriel": courriel,
-                        "mdp": mdp 
-                    },
-                    { headers: { "Content-Type": "application/json" }}
-                    ).then(res => {
-                    })
-
-                await axios.post(process.env.REACT_APP_URL + "entrepreneurs/login",
-                    {
-                        "courriel": courriel,
-                        "mdp": mdp
-                    },
-                    { headers: { "Content-Type": "application/json" }}
-                    ).then(res => {
-                        token = res.data.message;
-                    })
-                const decodedToken = jwtDecode(token);
-                handleLogin(decodedToken.id, token, decodedToken.type);
-                console.log("Connexion compte");
-            } else if(type === "etudiant") {
-                let token;
-                await axios.post(process.env.REACT_APP_URL + "etudiants/inscription",
-                    { 
-                        "numDa": numDa,
-                        "nomComplet": nom,
-                        "courriel": courriel,
-                        "mdp": mdp,
-                        "type": typeEtudiant
-                    },
-                    { headers: { "Content-Type": "application/json" }}
-                    ).then(res => {
-                    })
-
-                await axios.post(process.env.REACT_APP_URL + "etudiants/login",
-                    {
-                        "courriel": courriel,
-                        "mdp": mdp
-                    },
-                    { headers: { "Content-Type": "application/json" }}
-                    ).then(res => {
-                        token = res.data.message;
-                    })
-                const decodedToken = jwtDecode(token);
-                handleLogin(decodedToken.id, token, decodedToken.type);
-                console.log("Connexion compte");
+            await new Promise(r => setTimeout(r, 1500));
+            try {
+                if(type === "entrepreneur") {
+                    let token;
+                    await axios.post(process.env.REACT_APP_URL + "entrepreneurs/inscription",
+                        { 
+                            "nomComplet": nom,
+                            "courriel": courriel,
+                            "mdp": mdp 
+                        },
+                        { headers: { "Content-Type": "application/json" }}
+                        ).then(res => {
+                        })
+    
+                    await axios.post(process.env.REACT_APP_URL + "entrepreneurs/login",
+                        {
+                            "courriel": courriel,
+                            "mdp": mdp
+                        },
+                        { headers: { "Content-Type": "application/json" }}
+                        ).then(res => {
+                            token = res.data.message;
+                        })
+                    const decodedToken = jwtDecode(token);
+                    handleLogin(decodedToken.id, token, decodedToken.type);
+                    console.log("Connexion compte");
+                } else if(type === "etudiant") {
+                    let token;
+                    await axios.post(process.env.REACT_APP_URL + "etudiants/inscription",
+                        { 
+                            "numDa": numDa,
+                            "nomComplet": nom,
+                            "courriel": courriel,
+                            "mdp": mdp,
+                            "type": typeEtudiant
+                        },
+                        { headers: { "Content-Type": "application/json" }}
+                        ).then(res => {
+                        })
+    
+                    await axios.post(process.env.REACT_APP_URL + "etudiants/login",
+                        {
+                            "courriel": courriel,
+                            "mdp": mdp
+                        },
+                        { headers: { "Content-Type": "application/json" }}
+                        ).then(res => {
+                            token = res.data.message;
+                        })
+                    const decodedToken = jwtDecode(token);
+                    handleLogin(decodedToken.id, token, decodedToken.type);
+                    console.log("Connexion compte");
+                }
+            } catch(err) {
+                alert(err.response.data.message);
             }
+            
             navigate("/Accueil");
-
             props.setLoading(false);
         }
     }
