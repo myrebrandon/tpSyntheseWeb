@@ -13,12 +13,10 @@ import StageAjout from './components/StageAjout/StageAjout';
 import DeroulementStage from './components/DeroulementStage/DeroulementStage';
 import Postulation from './components/Postulation/Postulation';
 import PiedPage from './components/PiedPage/PiedPage';
-import Inscription from './components/PageDeConnexion/Inscription';
 import jwtDecode from "jwt-decode";
 import axios from 'axios';
 import InfoProfil from './components/InfoProfil/InfoProfil';
 import EtudiantList from './components/EtudiantListe/EtudiantListe';
-import LoadingProvider from './components/Loading/LoadingContext';
 
 function App() {
 
@@ -93,100 +91,90 @@ function App() {
         handleLogin,
         handleLogout
       }}>
-      <LoadingProvider>
+      <div className="App">
+        <Router>
+          <Navigationbar />
+          <Routes>
+            <Route path="/Accueil"
+              exact
+              element={
+                <Accueil />
+              }
+            />
 
-        <div className="App">
-          <Router>
-            <Navigationbar />
-            <Routes>
-              <Route path="/Accueil"
-                exact
-                element={
-                  <Accueil />
-                }
-              />
+            {role === "guess" && <Route path="/Login"
+              exact
+              element={
+                <PageDeConnexion />
+              }
+            />}
 
-              {role === "guess" && <Route path="/Login"
-                exact
-                element={
-                  <PageDeConnexion />
-                }
-              />}
+            <Route path="/FAQ"
+              element={
+                <FAQ />
+              }
+            />
+            <Route path="/stage/:stageid"
+              element={
+                <StageInfo />
+              }
+            />
 
-              {role === "guess" && <Route path="/Register"
-                exact
-                element={
-                  <Inscription />
-                }
-              />}
+            <Route path="/Profil-et-competence"
+              element={
+                <ProfilEtCompetence />
+              }
+            />
 
-              <Route path="/FAQ"
-                element={
-                  <FAQ />
-                }
-              />
-              <Route path="/stage/:stageid"
-                element={
-                  <StageInfo />
-                }
-              />
+            {role === "entrepreneur" && <Route path="/temp/AjoutStage"
+              element={
+                <StageAjout action="Ajouter" />
+              }
+            />}
 
-              <Route path="/Profil-et-competence"
-                element={
-                  <ProfilEtCompetence />
-                }
-              />
+            {role === "entrepreneur" && <Route path="/temp/ModifierStage/:stageid"
+              element={
+                <StageAjout action="Modifier" />
+              }
+            />}
 
-              {role === "entrepreneur" && <Route path="/temp/AjoutStage"
-                element={
-                  <StageAjout action="Ajouter" />
-                }
-              />}
+            {role != "guess" && <Route path="/profil"
+              element={
+                <InfoProfil id={userId} realToken={token} realType={role} />
+              }
+            />}
 
-              {role === "entrepreneur" && <Route path="/temp/ModifierStage/:stageid"
-                element={
-                  <StageAjout action="Modifier" />
-                }
-              />}
+            {role === "etudiant" && <Route path="/Stages/:idStage/Postulation"
+              element={<Postulation />}
+            />}
 
-              {role != "guess" && <Route path="/profil"
-                element={
-                  <InfoProfil id={userId} realToken={token} realType={role} />
-                }
-              />}
+            <Route path="/Stages"
+              element={
+                <StageList />
+              }
+            />
 
-              {role === "etudiant" && <Route path="/Stages/:idStage/Postulation"
-                element={<Postulation />}
-              />}
+            {role === "entrepreneur" && <Route path="/temp/StageEntrepreneur"
+              element={
+                <StageList entrepreneur={userId} />
+              }
+            />}
 
-              <Route path="/Stages"
-                element={
-                  <StageList />
-                }
-              />
+            {role === "entrepreneur" && <Route path="/Employeurs"
+              element={
+                <EtudiantList />
+              }
+            />}
 
-              {role === "entrepreneur" && <Route path="/temp/StageEntrepreneur"
-                element={
-                  <StageList entrepreneur={userId} />
-                }
-              />}
-
-              {role === "entrepreneur" && <Route path="/Employeurs"
-                element={
-                  <EtudiantList />
-                }
-              />}
-
-              <Route path="/Deroulement"
-                element={
-                  <DeroulementStage />
-                }
-              />
-            </Routes>
-            <PiedPage />
-          </Router>
-        </div>
-      </LoadingProvider>
+            <Route path="/Deroulement"
+              element={
+                <DeroulementStage />
+              }
+            />
+          </Routes>
+          <PiedPage />
+        </Router>
+      </div>
     </contexteAuthentification.Provider>
   );
 }

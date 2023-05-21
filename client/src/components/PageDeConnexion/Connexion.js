@@ -6,18 +6,19 @@ import contexteAuthentification from '../../shared/User/User';
 import jwtDecode from 'jwt-decode';
 
 export default function Connexion(props) {
-    const {handleLogin} = useContext(contexteAuthentification);
+    const { handleLogin } = useContext(contexteAuthentification);
     const { register, handleSubmit, formState: { errors } } = useForm();
-    
+
     const handleButtonInscription = () => {
         props.setTypeConnexion("inscription")
     }
 
     const handleSoumission = async (data) => {
-
         let token;
         
         try{
+            props.setLoading(true)
+            await new Promise(r => setTimeout(r, 2000));
             await axios.post(process.env.REACT_APP_URL + "login",
             {
                 "courriel": data.email,
@@ -31,8 +32,10 @@ export default function Connexion(props) {
             let decodedToken = jwtDecode(token);
             handleLogin(decodedToken.id, token, decodedToken.type);
             console.log("Connexion compte");
+            props.setLoading(false)
         } catch(err) {
             alert("Mauvaise information de connexion");
+            props.setLoading(false)
         }
     }
 
@@ -50,7 +53,7 @@ export default function Connexion(props) {
                 </div>
                 <button type="submit" className="connexion-button PageConnexion-buttonInscrire">Se connecter</button>
             </form>
-            <button connexion-button  className="PageConnexion-buttonInscrire margin"onClick={handleButtonInscription}>S'inscrire</button>
+            <button className="PageConnexion-buttonInscrire margin"onClick={handleButtonInscription}>S'inscrire</button>
         </div>
     )
 }
