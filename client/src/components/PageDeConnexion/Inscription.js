@@ -11,7 +11,7 @@ import jwtDecode from "jwt-decode";
 export default function Inscription (props) {
     const navigate = useNavigate();
     const {handleLogin} = useContext(contexteAuthentification);
-    const {register, handleSubmit, formState: {errors}, setError} = useForm();
+    const {register, handleSubmit, formState: {errors}, setError, setValue, getValues} = useForm();
     
     const [type, setType] = useState("entrepreneur");
 
@@ -24,7 +24,10 @@ export default function Inscription (props) {
     }
 
     const handleSoumission = async (data) => {
-        const {courriel, nom, numDa, mdp, mdpConfirmation, typeEtudiant, type} = data;
+        const {courriel, nom, numDa, mdp, mdpConfirmation} = data;
+        const type = getValues("type");
+        const typeEtudiant = getValues("typeEtudiant");
+        alert("Type: " + type + "TypeEtudiant: "+ typeEtudiant);
         if (mdp !== mdpConfirmation) { 
             alert("Mot de passe different")
             setError("mdpConfirmation", {
@@ -96,7 +99,7 @@ export default function Inscription (props) {
 
     return ( 
         <div >
-            <form classNameName="connexion-form" onSubmit={handleSubmit(handleSoumission)}>
+            <form classNameName="connexion-form" onSubmit={handleSubmit(handleSoumission)} id="registerForm">
                 <h1 className="connexion-h1">Creer un compte</h1>
                 <div>
                     <input className="connexion-input" type="text" placeholder="Courriel" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
@@ -120,24 +123,17 @@ export default function Inscription (props) {
                 </div>
                 {type === "etudiant" && <div>
 
-                    <select className="connexion-form-input" name="typeEtudiant" id="typeEtudiant" placeholder="Choisissez une option"  checked={true} {...register("typeEtudiant",{required: true})}>
+                    <select className="connexion-form-input" name="typeEtudiant" id="typeEtudiant" placeholder="Choisissez une option" {...register("typeEtudiant",{required: true})}>
                         <option value="" disabled>Choisissez une option</option>
-                        <option name ="typeEtudiant" value="Reseaux et securite"{...register("typeEtudiant",{required: true})}>Reseaux et securite</option>
-                        <option name ="typeEtudiant" value="Developpement d'application" {...register("typeEtudiant",{required: true})}>Developpement d'application</option>
+                        <option name ="typeEtudiant" value="Reseaux et securite">Reseaux et securite</option>
+                        <option name ="typeEtudiant" value="Developpement d'application">Developpement d'application</option>
                     </select>
-                    
-                    {/* <label><input type="radio" name ="typeEtudiant" value="Developpement d'application" checked={true} {...register("typeEtudiant",{required: true})}/>Développement</label>
-                    <label><input type="radio" name ="typeEtudiant" value="Reseaux et securite" {...register("typeEtudiant",{required: true})}/>Réseaux</label> */}
                 </div>}
-                        <select className="connexion-form-input" name="type" id="type" placeholder="Choisissez une option"  checked={true} {...register("typeEtudiant",{required: true})}>
-                            <option value="" disabled>Choisissez une option</option>
-                            <option name ="type" value="entrepreneur" onClick={handleRole}  {...register("type",{required: true})}>Entrepreneur</option>
-                            <option name ="type" value="etudiant" onClick={handleRole} {...register("type",{required: true})}>Etudiant</option>
-                        </select>
-                {/* <div>
-                    <label><input type="radio" name ="type" value="entrepreneur" onClick={handleRole}  {...register("type",{required: true})}/>Entrepreneur</label>
-                    <label><input type="radio" name ="type" value="etudiant" onClick={handleRole} {...register("type",{required: true})}/>Etudiant</label>
-                </div> */}
+                    <select form="registerForm" className="connexion-form-input" name="type" id="type" placeholder="Choisissez une option" onClick={(handleRole)} {...register("type",{required: true})}>
+                        <option value="" disabled>Choisissez une option</option>
+                        <option name ="type" value="entrepreneur">Entrepreneur</option>
+                        <option name ="type" value="etudiant">Etudiant</option>
+                    </select>
                 <button className="connexion-button PageConnexion-buttonInscrire" type="submit">S'inscrire</button>
             </form>
             <button className="PageConnexion-buttonInscrire margin" onClick={handleButtonConnexion}>Se connecter</button>
