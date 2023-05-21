@@ -5,7 +5,7 @@ const { authentifierToken } = require("../utils/authentification-token");
 
 router.post('/login', controllerCoordinateur.loginCoordinateur);
 router.get('/:idCoordinateur', authentifierToken, controllerCoordinateur.retourCoordinateur);
-router.get('/',authentifierToken,controllerCoordinateur.retourDesCoordinateurs);
+router.get('/', controllerCoordinateur.retourDesCoordinateurs);
 router.post("/inscription", controllerCoordinateur.creerCoordinateur);
 router.patch("/:idCoordinateur", authentifierToken, controllerCoordinateur.modifierCoordinateur);
 router.delete("/:idCoordinateur", authentifierToken, controllerCoordinateur.deleteCoordinateur);

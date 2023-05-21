@@ -1,9 +1,12 @@
 import './Navigationbar.css';
 import React, { useState, useContext, useEffect } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import contexteAuthentification from '../../shared/User/User';
 
 function Navigationbar() {
+  const navigate = useNavigate();
+
   const {token, userId, role, handleLogout} = useContext(contexteAuthentification);
 
   const [isActive, setIsActive] = useState(false);
@@ -17,6 +20,11 @@ function Navigationbar() {
   useEffect(() => {
     setIsConnected(token === null);
   }, [token]);
+
+  function deconnexion() {
+    handleLogout();
+    navigate("/Accueil");
+  }
 
   return (
     <div className="Navigationbar">
@@ -37,7 +45,7 @@ function Navigationbar() {
           <Nav className="mr-auto">
             <Nav.Link className={`navElements ${window.location.pathname === '/Accueil' ? 'active' : ''}`} href="/Accueil">Accueil</Nav.Link>
             {role === "entrepreneur" && <Nav.Link className="navElements" href="/Employeurs">Espace Employeurs</Nav.Link>}
-            {role === "coordinateur" && <Nav.Link className="navElements" href="/Coordinateurs">Espace Coordinateurs</Nav.Link>}
+            {role === "coordinateur" && <Nav.Link className="navElements" href="/Coordinateurs">Espace Coordonateurs</Nav.Link>}
             <Nav.Link className="navElements" href="/Stages">Stages</Nav.Link>
             <Nav.Link className="navElements" href="/Deroulement">Déroulement</Nav.Link>
             <NavDropdown className="navElements" title="Autres" id="basic-nav-dropdown">
@@ -61,7 +69,7 @@ function Navigationbar() {
             <NavDropdown.Item href="/Register">S'enregistrer</NavDropdown.Item>
           </NavDropdown>: <NavDropdown title="Connecté" className='loginTitle' id="basic-nav-dropdown">
           <NavDropdown.Item href="/Profil">Profil</NavDropdown.Item>
-            <NavDropdown.Item onClick={handleLogout}>Déconnection</NavDropdown.Item>
+            <NavDropdown.Item onClick={deconnexion}>Déconnection</NavDropdown.Item>
           </NavDropdown>}
         </Navbar.Collapse>
       </Navbar>

@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import Navigationbar from './components/Navbar/Navigationbar.js'
 import PageDeConnexion from './components/PageDeConnexion/PageDeConnexion';
 import FAQ from './components/FAQ/FAQ';
@@ -18,10 +18,10 @@ import jwtDecode from "jwt-decode";
 import axios from 'axios';
 import InfoProfil from './components/InfoProfil/InfoProfil';
 import EtudiantList from './components/EtudiantListe/EtudiantListe';
+import EntrepreneurListe from './components/EntrepreneurListe/EntrepreneurListe';
 import InfoCoordinateur from './components/InfoCoordinateur/InfoCoordinateur';
 
 function App() {
-
   useEffect(() => {
     let token = localStorage.getItem("jwt");
     if(token != null && token !== "") {
@@ -71,7 +71,7 @@ function App() {
   const [role, setRole] = useState("");
 
   const handleLogin = (id, token, type) => {
-    localStorage.setItem("jwt", token)
+    localStorage.setItem("jwt", token);
     setToken(token);
     setUserId(id);
     setRole(type);
@@ -178,7 +178,11 @@ function App() {
 
           {role === "coordinateur" && <Route path="/Coordinateurs"
             element={
-              <EtudiantList/>
+              <div>
+                <EtudiantList/>
+                <EntrepreneurListe/>
+              </div>
+              
             }
           />}
 

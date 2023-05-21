@@ -20,10 +20,15 @@ function StageList(props) {
     axios.defaults.headers.common["authorization"] = token;
 
     const getType = (e) => {
-        if(role !== "etudiant") {
+        if(role !== "etudiant" && !idEtudiant) {
             setType(e.target.value);
-        } else {
+        } else if (!idEtudiant) {
             axios.get(process.env.REACT_APP_URL + "etudiants/" + userId)
+                .then((res) => {
+                    setType(res.data.etudiant.type);
+                });
+        } else {
+            axios.get(process.env.REACT_APP_URL + "etudiants/" + idEtudiant)
                 .then((res) => {
                     setType(res.data.etudiant.type);
                 });
@@ -44,7 +49,7 @@ function StageList(props) {
                 );
                 console.log(responseData);
                 
-                if(role === "etudiant") {
+                if(role === "etudiant" || idEtudiant) {
                     getType();
                 }
 
@@ -75,7 +80,7 @@ function StageList(props) {
             <div>
                 <p className='StageList-Titre'>Les Stages</p>
 
-                {role !== "etudiant" && <select id="type" onChange={getType}>
+                {role !== "etudiant" && !idEtudiant && <select id="type" onChange={getType}>
 
                     <option value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
@@ -91,7 +96,7 @@ function StageList(props) {
             <div>
                 <p className='StageList-Titre'>Les Stages</p>
 
-                {role !== "etudiant" &&  <select id="type" onChange={getType}>
+                {role !== "etudiant" && !idEtudiant &&  <select id="type" onChange={getType}>
 
                     <option value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
