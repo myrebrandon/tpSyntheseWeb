@@ -15,6 +15,9 @@ function StageCard( { info, idEtudiant } ){
              <Link to={`/${idEtudiant}/Affectation/${info._id}`}>Info Stage</Link>}
           </div>
         </div>
+        
+
+
   );
 };
 
