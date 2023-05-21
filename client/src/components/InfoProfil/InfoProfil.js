@@ -14,17 +14,17 @@ function InfoProfil() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/` + (role === "entrepreneur" ? "entrepreneurs" : "etudiants") + `/` + userId).then(res => {
+        axios.get('http://localhost:5000/api/' + role + 's/' + userId).then(res => {
             const data = res.data;
 
             console.log(data);
-
-            setProfil();
 
             if (role === "entrepreneur") {
                 setProfil(data.entrepreneur);
             } else if (role === "etudiant") {
                 setProfil(data.etudiant);
+            } else if (role === "coordinateur") {
+                setProfil(data.coordinateur);
             }
         }).catch(error => {
 

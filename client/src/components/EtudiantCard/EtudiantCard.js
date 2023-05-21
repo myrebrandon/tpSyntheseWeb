@@ -1,29 +1,28 @@
 import React, { useEffect, useState, useContext } from 'react';
+import contexteAuthentification from '../../shared/User/User';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import {Link} from 'react-router-dom';
 import './EtudiantCard.css';
+import axios from 'axios';
 
 function EtudiantCard( { info } ){
 
     const stageId = info.stageAffecte;
     const [stage, setLoadedStage] = useState();
     const { error, sendRequest, clearError } = useHttpClient();
+    const { token } = useContext(contexteAuthentification);
 
     useEffect(() => {
-        const fetchStage = async () => {
-            try {
-                if(stageId){
-                    const responseData = await sendRequest(
-                        `http://localhost:5000/api/stages/stageId`
-                    );
-                    setLoadedStage(responseData.listeStages.filter(s => {
-                        return s._id === stageId;
-                    })[0]);
-                }
-            } catch (err) { }
-        };
-        fetchStage();
-    }, [sendRequest]);
+        axios.defaults.headers.common["authorization"] = token;
+        try {
+            if(stageId){
+                axios.get(process.env.REACT_APP_URL + "stages/" + stageId)
+                    .then((res) => {
+                        setLoadedStage(res.data.stage);
+                    });
+            }
+        } catch (err) { }
+    }, []);
 
 
 
@@ -35,9 +34,9 @@ function EtudiantCard( { info } ){
             <p>{info.courriel}</p>
             {stage ? 
             <div>
-                <Link to={`/stage/${info._id}`}>{stage.titre}</Link>
+                <Link to={`/stage/${stage._id}`}>{stage.titre}</Link>
             </div>
-                 : <div></div>}
+                 : <div><Link to={`/${info._id}/Affectation`}>Affecter</Link></div>}
           </div>
         </div>
   );

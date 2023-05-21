@@ -4,7 +4,7 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import contexteAuthentification from '../../shared/User/User';
 
 function Navigationbar() {
-  const {token, userId, handleLogout} = useContext(contexteAuthentification);
+  const {token, userId, role, handleLogout} = useContext(contexteAuthentification);
 
   const [isActive, setIsActive] = useState(false);
 
@@ -36,7 +36,8 @@ function Navigationbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link className={`navElements ${window.location.pathname === '/Accueil' ? 'active' : ''}`} href="/Accueil">Accueil</Nav.Link>
-            <Nav.Link className="navElements" href="/Employeurs">Espace Employeurs</Nav.Link>
+            {role === "employeur" && <Nav.Link className="navElements" href="/Employeurs">Espace Employeurs</Nav.Link>}
+            {role === "coordinateur" && <Nav.Link className="navElements" href="/Coordinateurs">Espace Coordinateurs</Nav.Link>}
             <Nav.Link className="navElements" href="/Stages">Stages</Nav.Link>
             <Nav.Link className="navElements" href="/Deroulement">Déroulement</Nav.Link>
             <NavDropdown className="navElements" title="Autres" id="basic-nav-dropdown">

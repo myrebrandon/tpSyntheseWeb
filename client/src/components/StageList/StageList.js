@@ -1,5 +1,6 @@
 import './StageList.css';
 import React, { useEffect,useContext, useState } from "react";
+import { useParams } from 'react-router-dom';
 
 import { useHttpClient } from "../../shared/hooks/http-hook";
 
@@ -8,6 +9,8 @@ import contexteAuthentification from '../../shared/User/User';
 import { Link } from 'react-router-dom';
 
 function StageList(props) {
+    const {idEtudiant} = useParams();
+
     const [loadedStage, setLoadedStage] = useState();
     let [type, setType] = useState("Tout");
     const { error, sendRequest, clearError } = useHttpClient();
@@ -24,7 +27,7 @@ function StageList(props) {
         const fetchStages = async () => {
             try {
 
-                const dblink = process.env.REACT_APP_URL + "stages/" //"http://localhost:5000/api/stages/";
+                const dblink = process.env.REACT_APP_URL + "stages/"
 
                 const responseData = await sendRequest(
                     dblink
@@ -81,7 +84,7 @@ function StageList(props) {
 
                 {loadedStage.map(stage => (
                     <div>
-                        <StageCard key={stage.id} info={stage} />
+                        <StageCard key={stage.id} info={stage} idEtudiant={idEtudiant}/>
                     </div>
                 ))}
 

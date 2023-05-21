@@ -35,12 +35,12 @@ function App() {
       // Verif si existe encore
       //Faire fonction externe
 
-      alert(verifExisteEncore(decodedToken.id, decodedToken.type))
+      /*alert(verifExisteEncore(decodedToken.id, decodedToken.type))
       if(verifExisteEncore(decodedToken.id, decodedToken.type)) {
         alert("test");
       } else {
         alert("boom");
-      }
+      }*/
 
       setToken(token);
       setUserId(decodedToken.id);
@@ -173,6 +173,24 @@ function App() {
             element={
               <EtudiantList/>
             }
+          />}
+
+          {role === "coordinateur" && <Route path="/Coordinateurs"
+            element={
+              <EtudiantList/>
+            }
+          />}
+
+          {role === "coordinateur" && <Route path="/:idEtudiant/Affectation"
+            element={
+              <StageList />
+            }  
+          />}
+
+          {role === "coordinateur" && <Route path="/:idEtudiant/Affectation/:stageid"
+            element={
+              <StageInfo />
+            }  
           />}
 
           <Route path="/Deroulement" 

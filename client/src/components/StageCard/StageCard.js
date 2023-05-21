@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './StageCard.css';
 
-function StageCard( { info } ){
+function StageCard( { info, idEtudiant } ){
 
 
   return (
@@ -11,7 +11,8 @@ function StageCard( { info } ){
           <div className="stage-item__info">
             <h3>{info.type}</h3>
             <p>{info.nomEntreprise}</p>
-            <Link to={`/stage/${info._id}`}>Info Stage</Link>
+            {!idEtudiant ? <Link to={`/stage/${info._id}`}>Info Stage</Link> :
+             <Link to={`/${idEtudiant}/Affectation/${info._id}`}>Info Stage</Link>}
           </div>
         </div>
   );

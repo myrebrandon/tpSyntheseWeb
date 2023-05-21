@@ -9,7 +9,7 @@ function StageInfo() {
 
     const navigate = useNavigate();
 
-    let { stageid } = useParams()
+    let { idEtudiant, stageid } = useParams()
     const [stage, setLoadedStage] = useState();
     const { error, sendRequest, clearError } = useHttpClient();
 
@@ -39,8 +39,24 @@ function StageInfo() {
     }
 
     function SupprimerStage(){
-            axios.delete(`http://localhost:5000/api/stages/` + stageid).catch(error => {});
+            axios.delete(process.env.REACT_APP_URL + 'stages/' + stageid).catch(error => {});
             navigate('/Stages');
+    }
+
+    async function Affecter() {
+        await axios.patch(process.env.REACT_APP_URL + 'etudiants/' + idEtudiant + "/affecte",
+        {
+            "idStage": stageid
+        }, 
+        { headers: { "Content-Type": "application/json" }})
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            alert(err.response.data.message);
+        });
+
+        navigate('/Coordinateurs');
     }
 
     return (
@@ -56,7 +72,7 @@ function StageInfo() {
                     <p>{stage.nomEntreprise}</p>
                 </div>
                 <div className="stage-nbPoste">
-                    <p>{stage.nbPoste}</p>
+                    <p>Nombre de postes: {stage.nbPostes}</p>
                 </div>
                 <div className="stage-nom">
                     <p>{stage.nomCompletContact}</p>
@@ -98,6 +114,10 @@ function StageInfo() {
                         </div>
                         :
                         <div className='stage-bouton'></div>
+                }
+
+                {
+                    role === "coordinateur" && idEtudiant && <button onClick={Affecter}>Affecter ici</button>
                 }
 
 
