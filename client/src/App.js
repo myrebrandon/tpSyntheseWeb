@@ -182,7 +182,6 @@ function App() {
                 <EtudiantList/>
                 <EntrepreneurListe/>
               </div>
-              
             }
           />}
 
