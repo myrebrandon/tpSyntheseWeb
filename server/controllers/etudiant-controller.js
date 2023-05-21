@@ -1,6 +1,7 @@
 const { reponse } = require("express");
 const { default: mongoose, mongo } = require("mongoose");
 
+const jwt = require("jsonwebtoken");
 const HttpError = require("../models/http-errors");
 const Etudiant = require("../models/etudiant");
 const Entrepreneur = require("../models/entrepreneur");
@@ -42,7 +43,7 @@ const loginEtudiant = async (requete, reponse, next) => {
     if(!verifMdp) {
         return next(new HttpError("Mauvais mot de passe", 401));
     }
-
+    
     const token = jwt.sign({id: etudiant.id, type: "etudiant"}, process.env.TOKEN_SECRET);
 
     return reponse.status(201).json({message: token});

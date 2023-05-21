@@ -21,7 +21,7 @@ export default function Inscription (props) {
     }
 
     const handleSoumission = async (data) => {
-        const {courriel, nom, mdp, mdpConfirmation, type} = data;
+        const {courriel, nom, numDa, mdp, mdpConfirmation, typeEtudiant, type} = data;
         if (mdp !== mdpConfirmation) { 
             alert("Mot de passe different")
             setError("mdpConfirmation", {
@@ -49,10 +49,35 @@ export default function Inscription (props) {
                     ).then(res => {
                         token = res.data.message;
                     })
-                console.log("Connexion compte");
                 const decodedToken = jwtDecode(token);
                 handleLogin(decodedToken.id, token, decodedToken.type);
+                console.log("Connexion compte");
             } else if(type === "etudiant") {
+                let token;
+                await axios.post(process.env.REACT_APP_URL + "etudiants/inscription",
+                    { 
+                        "numDa": numDa,
+                        "nomComplet": nom,
+                        "courriel": courriel,
+                        "mdp": mdp,
+                        "type": typeEtudiant
+                    },
+                    { headers: { "Content-Type": "application/json" }}
+                    ).then(res => {
+                    })
+
+                await axios.post(process.env.REACT_APP_URL + "etudiants/login",
+                    {
+                        "courriel": courriel,
+                        "mdp": mdp
+                    },
+                    { headers: { "Content-Type": "application/json" }}
+                    ).then(res => {
+                        token = res.data.message;
+                    })
+                const decodedToken = jwtDecode(token);
+                handleLogin(decodedToken.id, token, decodedToken.type);
+                console.log("Connexion compte");
             }
         }
     }
@@ -74,7 +99,7 @@ export default function Inscription (props) {
                     {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
                 </div>}
                 <div>
-                    <input type="password" name="mdp" placeholder="Mot de passe" {...register("mdp",{required: true, validate:validator.isLength("8")})}/>
+                    <input type="password" name="mdp" placeholder="Mot de passe" {...register("mdp",{required: true})}/>
                     {errors.mdp && <span>Veuillez entrer un mot de passe valide.</span>}
                 </div>
                 <div>

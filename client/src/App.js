@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Navigationbar from './components/Navbar/Navigationbar.js'
 import PageDeConnexion from './components/PageDeConnexion/PageDeConnexion';
 import FAQ from './components/FAQ/FAQ';
@@ -144,8 +144,6 @@ function App() {
             <DeroulementStage/>
           }
           />
-
-
         </Routes>
         <PiedPage/>
       </Router>
