@@ -145,6 +145,12 @@ function App() {
             }
           />}
 
+          <Route path="/Employeurs"
+            element={
+              <EtudiantList/>
+            }
+          />
+
           <Route path="/Deroulement" 
           element={
             <DeroulementStage/>
