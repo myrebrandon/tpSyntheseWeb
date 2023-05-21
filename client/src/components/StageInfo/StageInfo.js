@@ -81,8 +81,9 @@ function StageInfo() {
                 {
                     role === "etudiant" ?
                         <div className="stage-bouton">
+                            
                             <div className="stage-appliquer">
-                                <button>Appliquer</button>
+                                <Link to={`/Stages/${stageid}/Postulation`}>Appliquer</Link>
                             </div>
                         </div>
                         :
