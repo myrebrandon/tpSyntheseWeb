@@ -1,14 +1,17 @@
 import './StageList.css';
-import React, { useEffect, useState } from "react";
+import React, { useEffect,useContext, useState } from "react";
 
 import { useHttpClient } from "../../shared/hooks/http-hook";
 
 import StageCard from '../StageCard/StageCard.js'
+import contexteAuthentification from '../../shared/User/User';
+import { Link } from 'react-router-dom';
 
 function StageList(props) {
     const [loadedStage, setLoadedStage] = useState();
     let [type, setType] = useState("Tout");
     const { error, sendRequest, clearError } = useHttpClient();
+    const { userId, role, token } = useContext(contexteAuthentification);
 
     const getType = (e) => {
         setType(e.target.value);
@@ -79,6 +82,15 @@ function StageList(props) {
                         <StageCard key={stage.id} info={stage} />
                     </div>
                 ))}
+
+                {role === "entrepreneur" ? 
+                <div>
+                    <Link to="/temp/AjoutStage">Ajouter un Stage</Link>
+                </div> :
+                <div>
+                    
+                </div>}
+
             </div>
 
 
