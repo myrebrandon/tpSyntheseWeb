@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './StageInfo.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams,useNavigate } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import contexteAuthentification from '../../shared/User/User';
 import axios from 'axios';
 
 function StageInfo() {
+
+    const navigate = useNavigate();
 
     let { stageid } = useParams()
     const [stage, setLoadedStage] = useState();
@@ -38,6 +40,7 @@ function StageInfo() {
 
     function SupprimerStage(){
             axios.delete(`http://localhost:5000/api/stages/` + stageid).catch(error => {});
+            navigate('/Stages');
     }
 
     return (
@@ -89,7 +92,7 @@ function StageInfo() {
                                 <Link to={`/temp/ModifierStage/${stageid}`}>Modifier</Link>
                             </div>
                             <div className="stage-supprimer">
-                                <button href="/stages" onClick={SupprimerStage}>Supprimer</button>
+                                <button href="/Stages" onClick={SupprimerStage}>Supprimer</button>
                             </div>
                         </div>
                         :

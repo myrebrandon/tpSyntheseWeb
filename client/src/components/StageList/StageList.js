@@ -68,6 +68,8 @@ function StageList(props) {
         return (
 
             <div>
+                <p className='StageList-Titre'>Les Stages</p>
+
                 <select id="type" onChange={getType}>
 
                     <option value="Tout">Tout</option>

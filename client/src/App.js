@@ -16,6 +16,7 @@ import Inscription from './components/PageDeConnexion/Inscription';
 import jwtDecode from "jwt-decode";
 import axios from 'axios';
 import InfoProfil from './components/InfoProfil/InfoProfil';
+import EtudiantList from './components/EtudiantListe/EtudiantListe';
 
 function App() {
 
@@ -125,14 +126,7 @@ function App() {
             }
           />}
 
-          <Route path="/Employeurs"
-            element={
-              <>
-
-              </>
-              // <FAQ />
-            }
-          />
+          
 
           <Route path="/Stages"
             element={
