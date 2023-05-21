@@ -33,15 +33,6 @@ function App() {
       } catch(err) {
         console.log(err + "Invalid token");
       }
-      // Verif si existe encore
-      //Faire fonction externe
-
-      /*alert(verifExisteEncore(decodedToken.id, decodedToken.type))
-      if(verifExisteEncore(decodedToken.id, decodedToken.type)) {
-        alert("test");
-      } else {
-        alert("boom");
-      }*/
 
       setToken(token);
       setUserId(decodedToken.id);
@@ -52,6 +43,8 @@ function App() {
       setRole("guess");
     }
   });
+
+
 
   async function verifExisteEncore(id, type) {
     let existe;
@@ -108,14 +101,14 @@ function App() {
           {role === "guess" && <Route path="/Login"
             exact
             element={
-              <PageDeConnexion />
+              <PageDeConnexion type={"connexion"}/>
             }
           />}
 
           {role === "guess" && <Route path="/Register"
             exact
             element={
-              <Inscription />
+              <PageDeConnexion type={"inscription"}/>
             }
           />}
 
@@ -218,4 +211,3 @@ function App() {
 }
 
 export default App;
-// https://www.cmontmorency.qc.ca/wp-content/uploads/2023/04/Accueil-nouveau-site-web-1-992x365.png
