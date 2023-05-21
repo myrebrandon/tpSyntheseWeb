@@ -6,6 +6,7 @@ function StageCard({ info, idEtudiant }) {
   const imageSrc = info.type === 'Developpement d\'application'
     ? 'https://cdn-icons-png.flaticon.com/512/2809/2809263.png'
     : 'https://cdn-icons-png.flaticon.com/128/4379/4379213.png';
+    
   const poste = info.nbPostes > 1 ? 'postes' : 'poste';
 
   return (

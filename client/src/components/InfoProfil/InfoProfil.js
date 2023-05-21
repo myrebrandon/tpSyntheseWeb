@@ -54,6 +54,21 @@ function InfoProfil() {
         <div className="InfoProfil-Main">
             <div className='InfoProfil-Nom'>
                 {profil ? <div>
+                    <div class="our-team">
+                        <div class="picture">
+                            <img src="https://i.imgur.com/lvO0xdv.png"alt="Photo de Profil" />
+                        </div>
+                        <div class="team-content">
+                        <h3 class="name">{profil.nomComplet}</h3>
+                        <h4 class="title">{profil.role}</h4>
+                        </div>
+                        <ul class="social">
+                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-facebook" aria-hidden="true"></a></li>
+                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-twitter" aria-hidden="true"></a></li>
+                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-google-plus" aria-hidden="true"></a></li>
+                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-linkedin" aria-hidden="true"></a></li>
+                        </ul>
+                    </div>
                     <p>{profil.nomComplet}</p>
                     <p>{role}</p>
                     <p>{profil.courriel}</p>
