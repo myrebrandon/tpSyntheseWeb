@@ -10,6 +10,7 @@ export default function Connexion(props) {
     const navigate = useNavigate();
 
     const {handleLogin} = useContext(contexteAuthentification);
+
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const handleButtonInscription = () => {
@@ -17,10 +18,11 @@ export default function Connexion(props) {
     }
 
     const handleSoumission = async (data) => {
-
         let token;
         
         try{
+            props.setLoading(true)
+            await new Promise(r => setTimeout(r, 2000));
             await axios.post(process.env.REACT_APP_URL + "login",
             {
                 "courriel": data.email,
@@ -34,27 +36,31 @@ export default function Connexion(props) {
             let decodedToken = jwtDecode(token);
             handleLogin(decodedToken.id, token, decodedToken.type);
             console.log("Connexion compte");
+
             navigate("/Accueil");
+            
+            props.setLoading(false)
         } catch(err) {
             alert("Mauvaise information de connexion");
+            props.setLoading(false)
         }
     }
 
     return (
         <div>
-            <form class="connexion-form" onSubmit={handleSubmit(handleSoumission)}>
-                <h1 class="connexion-h1">Se connecter</h1>
+            <form className="connexion-form" onSubmit={handleSubmit(handleSoumission)}>
+                <h1 className="connexion-h1">Se connecter</h1>
                 <div>
-                    <input class="connexion-input" type="text" name="email" placeholder='Email' {...register("email", { required: true })} />
-                    {errors.email && <span class="connexion-span">Veuillez entrer une adresse email valide.</span>}
+                    <input className="connexion-input" type="text" name="email" placeholder='Email' {...register("email", { required: true })} />
+                    {errors.email && <span className="connexion-span">Veuillez entrer une adresse email valide.</span>}
                 </div>
                 <div>
-                    <input class="connexion-input" type="password" name="mdp" placeholder='Password'{...register("mdp", { required: true })} />
-                    {errors.mdp && <span class="connexion-span">Veuillez entrer un mot de passe.</span>}
+                    <input className="connexion-input" type="password" name="mdp" placeholder='Password'{...register("mdp", { required: true })} />
+                    {errors.mdp && <span className="connexion-span">Veuillez entrer un mot de passe.</span>}
                 </div>
-                <button type="submit" class="connexion-button PageConnexion-buttonInscrire">Se connecter</button>
+                <button type="submit" className="connexion-button PageConnexion-buttonInscrire">Se connecter</button>
             </form>
-            <button connexion-button  class="PageConnexion-buttonInscrire margin"onClick={handleButtonInscription}>S'inscrire</button>
+            <button className="PageConnexion-buttonInscrire margin"onClick={handleButtonInscription}>S'inscrire</button>
         </div>
     )
 }

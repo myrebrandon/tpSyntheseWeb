@@ -12,6 +12,7 @@ export default function Inscription (props) {
     const navigate = useNavigate();
     const {handleLogin} = useContext(contexteAuthentification);
     const {register, handleSubmit, formState: {errors}, setError} = useForm();
+    
     const [type, setType] = useState("entrepreneur");
 
     const handleButtonConnexion = () => {
@@ -30,6 +31,7 @@ export default function Inscription (props) {
                 type:"validate" 
             })
         } else {
+            props.setLoading(true);
             if(type === "entrepreneur") {
                 let token;
                 await axios.post(process.env.REACT_APP_URL + "entrepreneurs/inscription",
@@ -81,33 +83,34 @@ export default function Inscription (props) {
                 handleLogin(decodedToken.id, token, decodedToken.type);
                 console.log("Connexion compte");
             }
-            
             navigate("/Accueil");
+
+            props.setLoading(false);
         }
     }
 
     return ( 
         <div >
-            <form className="connexion-form" onSubmit={handleSubmit(handleSoumission)}>
-                <h1 class="connexion-h1">Creer un compte</h1>
+            <form classNameName="connexion-form" onSubmit={handleSubmit(handleSoumission)}>
+                <h1 className="connexion-h1">Creer un compte</h1>
                 <div>
-                    <input class="connexion-input" type="text" placeholder="Courriel" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
+                    <input className="connexion-input" type="text" placeholder="Courriel" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
                     {errors.courriel && <span>Veuillez entrer un courriel valide.</span>}
                 </div>
                 <div>
-                    <input class="connexion-input" type="text" name="nom" placeholder="Nom" {...register("nom",{required: true})}/>
+                    <input className="connexion-input" type="text" name="nom" placeholder="Nom" {...register("nom",{required: true})}/>
                     {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
                 </div>
                 {type === "etudiant" &&<div>
-                    <input class="connexion-input" type="text" name="numDa" placeholder="numDa" {...register("numDa",{required: true})}/>
+                    <input className="connexion-input" type="text" name="numDa" placeholder="numDa" {...register("numDa",{required: true})}/>
                     {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
                 </div>}
                 <div>
-                    <input class="connexion-input" type="password" name="mdp" placeholder="Mot de passe" {...register("mdp",{required: true})}/>
+                    <input className="connexion-input" type="password" name="mdp" placeholder="Mot de passe" {...register("mdp",{required: true})}/>
                     {errors.mdp && <span>Veuillez entrer un mot de passe valide.</span>}
                 </div>
                 <div>
-                    <input class="connexion-input" type="password" name="mdpConfirmation" placeholder="Mot de passe" {...register("mdpConfirmation",{required: true})}/>
+                    <input className="connexion-input" type="password" name="mdpConfirmation" placeholder="Mot de passe" {...register("mdpConfirmation",{required: true})}/>
                     {errors.mdpConfirmation && <span>Le mot de passe ne correspond pas</span>}
                 </div>
                 {type === "etudiant" && <div>
@@ -118,9 +121,9 @@ export default function Inscription (props) {
                     <label><input type="radio" name ="type" value="entrepreneur" onClick={handleRole}  {...register("type",{required: true})}/>Entrepreneur</label>
                     <label><input type="radio" name ="type" value="etudiant" onClick={handleRole} {...register("type",{required: true})}/>Etudiant</label>
                 </div>
-                <button class="connexion-button PageConnexion-buttonInscrire" type="submit">S'inscrire</button>
+                <button className="connexion-button PageConnexion-buttonInscrire" type="submit">S'inscrire</button>
             </form>
-            <button class="PageConnexion-buttonInscrire margin" onClick={handleButtonConnexion}>Se connecter</button>
+            <button className="PageConnexion-buttonInscrire margin" onClick={handleButtonConnexion}>Se connecter</button>
         </div>
     )
 }
