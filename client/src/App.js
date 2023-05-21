@@ -24,20 +24,46 @@ function App() {
   useEffect(() => {
     let token = localStorage.getItem("jwt");
     if(token != null && token !== "") {
+      axios.defaults.headers.common["authorization"] = token;
+
+      let decodedToken
       try {
-        const decodedToken = jwtDecode(token);
-        setToken(token);
-        setUserId(decodedToken.id);
-        setRole(decodedToken.type);
+        decodedToken = jwtDecode(token);
       } catch(err) {
         console.log(err + "Invalid token");
       }
+      // Verif si existe encore
+      //Faire fonction externe
+
+      alert(verifExisteEncore(decodedToken.id, decodedToken.type))
+      if(verifExisteEncore(decodedToken.id, decodedToken.type)) {
+        alert("test");
+      } else {
+        alert("boom");
+      }
+
+      setToken(token);
+      setUserId(decodedToken.id);
+      setRole(decodedToken.type);
     } else {
       setToken(null);
       setUserId(null);
       setRole("guess");
     }
   });
+
+  async function verifExisteEncore(id, type) {
+    let existe;
+    await axios.get(process.env.REACT_APP_URL + type + "s/" + id)
+      .then((res) => {
+        existe = true;
+      })
+      .catch((err) => {
+        existe = false;
+      });
+
+      return existe;
+  }
 
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
@@ -127,8 +153,6 @@ function App() {
             }
           />}
 
-          
-
           {role === "etudiant" && <Route path="/Stages/:idStage/Postulation"
             element={<Postulation />}
           />}
@@ -145,11 +169,11 @@ function App() {
             }
           />}
 
-          <Route path="/Employeurs"
+          {role === "entrepreneur" && <Route path="/Employeurs"
             element={
               <EtudiantList/>
             }
-          />
+          />}
 
           <Route path="/Deroulement" 
           element={
