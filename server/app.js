@@ -43,7 +43,7 @@ app.use((error, requete, reponse, next) => {
 });
 
 mongoose
-.connect(process.env.DBLINK)
+.connect(process.env.DBLINK+'/synthese')
 .then(() => {
     app.listen(5000);
     console.log("Connexion a la bd reussie");

@@ -120,20 +120,24 @@ export default function Inscription (props) {
                 </div>
                 {type === "etudiant" && <div>
 
-                <select className="connexion-form-input" name="typeEtudiant" id="Developpement d'application" placeholder="Choisissez une option"  checked={true} {...register("typeEtudiant",{required: true})}>
-                <option value="" disabled>
-                  Choisissez une option
-                </option>
-                <option value="Reseaux et securite" checked={true} {...register("typeEtudiant",{required: true})}>Reseaux et securite</option>
-                <option value="Developpement d'application" {...register("typeEtudiant",{required: true})}>Developpement d'application</option>
-              </select>
+                    <select className="connexion-form-input" name="typeEtudiant" id="typeEtudiant" placeholder="Choisissez une option"  checked={true} {...register("typeEtudiant",{required: true})}>
+                        <option value="" disabled>Choisissez une option</option>
+                        <option name ="typeEtudiant" value="Reseaux et securite"{...register("typeEtudiant",{required: true})}>Reseaux et securite</option>
+                        <option name ="typeEtudiant" value="Developpement d'application" {...register("typeEtudiant",{required: true})}>Developpement d'application</option>
+                    </select>
+                    
                     {/* <label><input type="radio" name ="typeEtudiant" value="Developpement d'application" checked={true} {...register("typeEtudiant",{required: true})}/>Développement</label>
                     <label><input type="radio" name ="typeEtudiant" value="Reseaux et securite" {...register("typeEtudiant",{required: true})}/>Réseaux</label> */}
                 </div>}
-                <div>
+                        <select className="connexion-form-input" name="type" id="type" placeholder="Choisissez une option"  checked={true} {...register("typeEtudiant",{required: true})}>
+                            <option value="" disabled>Choisissez une option</option>
+                            <option name ="type" value="entrepreneur" onClick={handleRole}  {...register("type",{required: true})}>Entrepreneur</option>
+                            <option name ="type" value="etudiant" onClick={handleRole} {...register("type",{required: true})}>Etudiant</option>
+                        </select>
+                {/* <div>
                     <label><input type="radio" name ="type" value="entrepreneur" onClick={handleRole}  {...register("type",{required: true})}/>Entrepreneur</label>
                     <label><input type="radio" name ="type" value="etudiant" onClick={handleRole} {...register("type",{required: true})}/>Etudiant</label>
-                </div>
+                </div> */}
                 <button className="connexion-button PageConnexion-buttonInscrire" type="submit">S'inscrire</button>
             </form>
             <button className="PageConnexion-buttonInscrire margin" onClick={handleButtonConnexion}>Se connecter</button>
