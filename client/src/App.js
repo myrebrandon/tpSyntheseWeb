@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import Navigationbar from './components/Navbar/Navigationbar.js'
 import PageDeConnexion from './components/PageDeConnexion/PageDeConnexion';
 import FAQ from './components/FAQ/FAQ';
@@ -13,32 +13,25 @@ import StageAjout from './components/StageAjout/StageAjout';
 import DeroulementStage from './components/DeroulementStage/DeroulementStage';
 import Postulation from './components/Postulation/Postulation';
 import PiedPage from './components/PiedPage/PiedPage';
+import Inscription from './components/PageDeConnexion/Inscription';
 import jwtDecode from "jwt-decode";
 import axios from 'axios';
 import InfoProfil from './components/InfoProfil/InfoProfil';
 import EtudiantList from './components/EtudiantListe/EtudiantListe';
+import EntrepreneurListe from './components/EntrepreneurListe/EntrepreneurListe';
+import InfoCoordinateur from './components/InfoCoordinateur/InfoCoordinateur';
 
 function App() {
-
   useEffect(() => {
     let token = localStorage.getItem("jwt");
-    if (token != null && token !== "") {
+    if(token != null && token !== "") {
       axios.defaults.headers.common["authorization"] = token;
 
       let decodedToken
       try {
         decodedToken = jwtDecode(token);
-      } catch (err) {
+      } catch(err) {
         console.log(err + "Invalid token");
-      }
-      // Verif si existe encore
-      //Faire fonction externe
-
-      alert(verifExisteEncore(decodedToken.id, decodedToken.type))
-      if (verifExisteEncore(decodedToken.id, decodedToken.type)) {
-        alert("test");
-      } else {
-        alert("boom");
       }
 
       setToken(token);
@@ -51,6 +44,8 @@ function App() {
     }
   });
 
+
+
   async function verifExisteEncore(id, type) {
     let existe;
     await axios.get(process.env.REACT_APP_URL + type + "s/" + id)
@@ -61,7 +56,7 @@ function App() {
         existe = false;
       });
 
-    return existe;
+      return existe;
   }
 
   const [token, setToken] = useState("");
@@ -69,7 +64,7 @@ function App() {
   const [role, setRole] = useState("");
 
   const handleLogin = (id, token, type) => {
-    localStorage.setItem("jwt", token)
+    localStorage.setItem("jwt", token);
     setToken(token);
     setUserId(id);
     setRole(type);
@@ -84,100 +79,135 @@ function App() {
 
   return (
     <contexteAuthentification.Provider
-      value={{
-        token,
-        userId,
-        role,
-        handleLogin,
-        handleLogout
-      }}>
-      <div className="App">
-        <Router>
-          <Navigationbar />
-          <Routes>
-            <Route path="/Accueil"
-              index 
-              element={
-                <Accueil />
-              }
-            />
+    value={{
+      token,
+      userId,
+      role,
+      handleLogin,
+      handleLogout
+    }}>
 
-            {role === "guess" && <Route path="/Login"
-              exact
-              element={
-                <PageDeConnexion />
-              }
-            />}
+    <div className="App">
+      <Router>
+        <Navigationbar />
+        <Routes>
+          <Route path="/Accueil"
+            exact
+            element={
+              <Accueil />
+            }
+          />
+          
+          {role === "guess" && <Route path="/Login"
+            exact
+            element={
+              <PageDeConnexion type={"connexion"}/>
+            }
+          />}
 
-            <Route path="/FAQ"
-              element={
-                <FAQ />
-              }
-            />
-            <Route path="/stage/:stageid"
-              element={
-                <StageInfo />
-              }
-            />
+          {role === "guess" && <Route path="/Register"
+            exact
+            element={
+              <PageDeConnexion type={"inscription"}/>
+            }
+          />}
 
-            <Route path="/Profil-et-competence"
-              element={
-                <ProfilEtCompetence />
-              }
-            />
+          <Route path="/FAQ"
+            element={
+              <FAQ />
+            }
+          />
+          <Route path="/stage/:stageid"
+            element={
+              <StageInfo />
+            }
+          />
 
-            {role === "entrepreneur" && <Route path="/temp/AjoutStage"
-              element={
-                <StageAjout action="Ajouter" />
-              }
-            />}
+          <Route path="/Profil-et-competence"
+            element={
+              <ProfilEtCompetence/>
+            }
+          />
 
-            {role === "entrepreneur" && <Route path="/temp/ModifierStage/:stageid"
-              element={
-                <StageAjout action="Modifier" />
-              }
-            />}
+          {role === "entrepreneur" && <Route path="/temp/AjoutStage"
+            element={
+              <StageAjout action="Ajouter"/>
+            }
+          />}
 
-            {role != "guess" && <Route path="/profil"
-              element={
-                <InfoProfil id={userId} realToken={token} realType={role} />
-              }
-            />}
+          {role === "entrepreneur" && <Route path="/temp/ModifierStage/:stageid"
+            element={
+              <StageAjout action="Modifier"/>
+            }
+          />}
 
-            {role === "etudiant" && <Route path="/Stages/:idStage/Postulation"
-              element={<Postulation />}
-            />}
+          {role != "guess" && <Route path="/profil"
+            element={
+              <InfoProfil id={userId} realToken={token} realType={role}/>
+            }
+          />}
 
-            <Route path="/Stages"
-              element={
-                <StageList />
-              }
-            />
+          {role === "etudiant" && <Route path="/Stages/:idStage/Postulation"
+            element={<Postulation />}
+          />}
 
-            {role === "entrepreneur" && <Route path="/temp/StageEntrepreneur"
-              element={
-                <StageList entrepreneur={userId} />
-              }
-            />}
+          <Route path="/Stages"
+            element={
+              <StageList/>
+            }
+          />
 
-            {role === "entrepreneur" && <Route path="/Employeurs"
-              element={
-                <EtudiantList />
-              }
-            />}
+          {role === "entrepreneur" && <Route path="/temp/StageEntrepreneur"
+            element={
+              <StageList entrepreneur={userId}/>
+            }
+          />}
 
-            <Route path="/Deroulement"
-              element={
-                <DeroulementStage />
-              }
-            />
-          </Routes>
-          <PiedPage />
-        </Router>
-      </div>
+          {role === "entrepreneur" && <Route path="/Employeurs"
+            element={
+              <EtudiantList/>
+            }
+          />}
+
+          {role === "coordinateur" && <Route path="/Coordinateurs"
+            element={
+              <div>
+                <EtudiantList/>
+                <EntrepreneurListe/>
+              </div>
+            }
+          />}
+
+          {role === "coordinateur" && <Route path="/:idEtudiant/Affectation"
+            element={
+              <StageList />
+            }  
+          />}
+
+          {role === "coordinateur" && <Route path="/:idEtudiant/Affectation/:stageid"
+            element={
+              <StageInfo />
+            }  
+          />}
+
+          <Route path="/Deroulement" 
+          element={
+            <DeroulementStage/>
+          }
+          />
+
+          <Route path="/Coordonnateurs" 
+          element={
+            <InfoCoordinateur/>
+          }
+          />
+
+        </Routes>
+        <PiedPage/>
+      </Router>
+    </div>
     </contexteAuthentification.Provider>
   );
 }
 
 export default App;
-// https://www.cmontmorency.qc.ca/wp-content/uploads/2023/04/Accueil-nouveau-site-web-1-992x365.png

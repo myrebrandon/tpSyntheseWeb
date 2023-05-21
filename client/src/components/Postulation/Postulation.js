@@ -1,11 +1,13 @@
 import {React, useContext, useEffect} from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import './Postulation.css'
 import { useForm} from 'react-hook-form';
 import axios from "axios";
 import contexteAuthentification from '../../shared/User/User';
 
 export default function Postulation(props) {
+    const navigate = useNavigate();
+
     const { idStage } = useParams();
 
     const { token, userId } = useContext(contexteAuthentification);
@@ -33,7 +35,12 @@ export default function Postulation(props) {
             { headers: { "Content-Type": "application/json" }}
             ).then((res) => {
                 console.log(res);
+            })
+            .catch((err) => {
+                alert(err.response.data.message);
             });
+
+            navigate("/Stages");
     }
 
     return (

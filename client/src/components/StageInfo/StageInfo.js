@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './StageInfo.css';
-import { Link, useParams,useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import contexteAuthentification from '../../shared/User/User';
 import axios from 'axios';
@@ -9,8 +9,9 @@ function StageInfo() {
 
     const navigate = useNavigate();
 
-    let { stageid } = useParams()
+    let { idEtudiant, stageid } = useParams();
     const [stage, setLoadedStage] = useState();
+    const [dejaAppliquer, setDejaAppliquer] = useState(false);
     const { error, sendRequest, clearError } = useHttpClient();
 
     const { userId, role, token } = useContext(contexteAuthentification);
@@ -28,7 +29,24 @@ function StageInfo() {
             } catch (err) { }
         };
         fetchStage();
-    }, [sendRequest]);
+
+        if(role === "etudiant") {
+            axios.get(process.env.REACT_APP_URL + role + "s/" + userId)
+            .then((res) => {
+                let stages = res.data.etudiant.stages;
+
+                let test = stages.find((st) => {
+                    return st === stageid;
+                });
+
+                if(test) {
+                    setDejaAppliquer(true);
+                } else {
+                    setDejaAppliquer(false);
+                }
+            });
+        }
+    }, [sendRequest, token, role]);
 
     if (stage == null) {
         return (
@@ -38,9 +56,25 @@ function StageInfo() {
         );
     }
 
-    function SupprimerStage(){
-            axios.delete(`http://localhost:5000/api/stages/` + stageid).catch(error => {});
+    function SupprimerStage() {
+            axios.delete(process.env.REACT_APP_URL + 'stages/' + stageid).catch(error => {});
             navigate('/Stages');
+    }
+
+    async function Affecter() {
+        await axios.patch(process.env.REACT_APP_URL + 'etudiants/' + idEtudiant + "/affecte",
+        {
+            "idStage": stageid
+        },
+        { headers: { "Content-Type": "application/json" }})
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            alert(err.response.data.message);
+        });
+
+        navigate('/Coordinateurs');
     }
 
     return (
@@ -56,7 +90,7 @@ function StageInfo() {
                     <p>{stage.nomEntreprise}</p>
                 </div>
                 <div className="stage-nbPoste">
-                    <p>{stage.nbPoste}</p>
+                    <p>Nombre de postes: {stage.nbPostes}</p>
                 </div>
                 <div className="stage-nom">
                     <p>{stage.nomCompletContact}</p>
@@ -83,7 +117,7 @@ function StageInfo() {
                         <div className="stage-bouton">
                             
                             <div className="stage-appliquer">
-                                <Link to={`/Stages/${stageid}/Postulation`}>Appliquer</Link>
+                                {dejaAppliquer ? <Link>Déjà postulé</Link>:<Link to={`/Stages/${stageid}/Postulation`}>Appliquer</Link>}
                             </div>
                         </div>
                         :
@@ -100,9 +134,15 @@ function StageInfo() {
                         <div className='stage-bouton'></div>
                 }
 
+                {
+                    role === "coordinateur" && idEtudiant && <button onClick={Affecter}>Affecter ici</button>
+                }
+
 
                 <div className="bouton-retour">
-                    <Link to="/stages">Retour</Link>
+                    {!idEtudiant ?
+                    <Link to="/stages">Retour</Link> :
+                    <Link to={`/${idEtudiant}/Affectation`}>Retour</Link>}
                 </div>
             </div>
         </div>

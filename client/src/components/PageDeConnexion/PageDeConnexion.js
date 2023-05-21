@@ -4,8 +4,8 @@ import Connexion from "./Connexion"
 import Inscription from "./Inscription"
 import Loading from "../Loading/Loading"
 
-export default function PageDeConnexion() {
-    const [typeConnexion, setTypeConnexion] = useState("connexion")
+export default function PageDeConnexion(prop) {
+    const [typeConnexion, setTypeConnexion] = useState(prop.type)
     const [loading, setLoading] = useState(false)
 
     return (
