@@ -51,6 +51,7 @@
 	transition: transform 80ms ease-in;
 	width: 300px;
 }
+
 .PageConnexion-buttonInscrire:hover {
 	margin-top: 4px;
     user-select: none;

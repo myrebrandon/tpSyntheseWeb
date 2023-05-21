@@ -2,3 +2,20 @@
     font-weight: bold;
     font-size: 50px;
 }
+.EtudiantList-form-input {
+    user-select: none;
+    text-align: center;
+    width: 100%;
+    padding: 13px 22px;
+    border-radius: 5px;
+    border: 1.5px solid #b3cb15;
+    background: #ffffff;
+    font-weight: 500;
+    font-weight: bold;
+    font-size: 24px;
+    color: black;
+    outline: none;
+    resize: none;
+    width: 600px;
+    margin-bottom: 15px;
+  }

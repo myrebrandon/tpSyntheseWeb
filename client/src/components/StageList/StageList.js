@@ -95,48 +95,32 @@ function StageList(props) {
                     <Link className="StageList-btn-center" to="/temp/AjoutStage">Ajouter un Stage</Link>
                 </div> :
                 <div>
-                    
                 </div>}
             </div>
         );
     } else {
         return (
-
             <div>
                 <p className='StageList-Titre'>Nos Stages disponibles</p>
-              
                 {role !== "etudiant" && !idEtudiant &&  <select id="type" className='stageList-form-input' onChange={getType}>
-
-                    
                     <option value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
-
                 </select>}
-
-
                 {loadedStage.map(stage => (
                     <div>
                         <StageCard key={stage.id} info={stage} idEtudiant={idEtudiant}/>
                     </div>
                 ))}
-
                 {role === "entrepreneur" ? 
                 <div>
                     <Link className='PageConnexion-buttonInscrire' to="/temp/AjoutStage">Ajouter un Stage</Link>
                 </div> :
                 <div>
-                    
                 </div>}
-
             </div>
-
-
-
         );
-
     }
-
 }
 
 export default StageList;
