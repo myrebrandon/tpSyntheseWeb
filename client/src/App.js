@@ -11,6 +11,7 @@ import StageList from './components/StageList/StageList'
 import ProfilEtCompetence from './components/ProfilEtCompetence/ProfilEtCompetence';
 import StageAjout from './components/StageAjout/StageAjout';
 import DeroulementStage from './components/DeroulementStage/DeroulementStage';
+import Postulation from './components/Postulation/Postulation';
 import PiedPage from './components/PiedPage/PiedPage';
 import Inscription from './components/PageDeConnexion/Inscription';
 import jwtDecode from "jwt-decode";
@@ -126,6 +127,10 @@ function App() {
               // <FAQ />
             }
           />
+
+          {role === "etudiant" && <Route path="/Stages/:idStage/Postulation"
+            element={<Postulation />}
+          />}
 
           <Route path="/Stages"
             element={
