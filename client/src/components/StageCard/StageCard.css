@@ -59,6 +59,7 @@ article.job-card {
   .job-title {
     grid-area: 1 / 2 / 2 / 3;
     font-size: 20px;
+    font-weight: bold;
     align-self: start;
     font-weight: 500;
     margin-top: 5px;
