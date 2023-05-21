@@ -13,35 +13,28 @@ function InfoProfil() {
 
     const { userId, role, token,handleLogout } = useContext(contexteAuthentification);
     const [profil, setProfil] = useState();
-    axios.defaults.headers.common["authorization"] = token;
 
     let [supprimeText, setSupprimeText] = useState("Supprimer Le Compte");
 
     const profileId = useParams();
-    console.log(profileId);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/' + (profileId ? "etudiant" : role) + 's/' + (profileId ? profileId.userId : userId)).then(res => {
+        axios.defaults.headers.common["authorization"] = token;
+        
+        axios.get(process.env.REACT_APP_URL + role + 's/' + userId).then(res => {
+            
             const data = res.data;
-
-            if(!profileId){
-                if (role === "entrepreneur") {
-                    setProfil(data.entrepreneur);
-                } else if (role === "etudiant") {
-                    setProfil(data.etudiant);
-                } else if (role === "coordinateur") {
-                    setProfil(data.coordinateur);
-                }
-            }else{
+            if(role === "etudiant") {
                 setProfil(data.etudiant);
+            } else if (role === "entrepreneur") {
+                setProfil(data.entrepreneur);
+            } else if (role === "coordinateur") {
+                setProfil(data.coordinateur);
             }
-            
-
-            
+                
         }).catch(error => {
-
         });
-    }, [token]);
+    }, [token, role]);
 
     function handleSupprimer() {
         if (supprimeText === "Supprimer Le Compte") {
@@ -81,15 +74,13 @@ function InfoProfil() {
                     <p>{profil.nomComplet}</p>
                     <p>{role}</p>
                     <p>{profil.courriel}</p>
-                    {role === "entrepreneur" && !profileId ?
+                    {role === "entrepreneur" &&
                         <StageList entrepreneur={userId} />
-                        : <p></p>
                     }
-                    {role !== "coordinateur" && !profileId ?
+                    {role !== "coordinateur" && 
                         <div className='PageConnexion-buttonInscrire InfoProfil-btn-center'>
                             <button onClick={handleSupprimer}>{supprimeText}</button>
                         </div>
-                        : <p></p>
                     }
                 </div> :
                     <div>

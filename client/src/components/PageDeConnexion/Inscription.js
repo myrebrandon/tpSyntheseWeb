@@ -27,7 +27,7 @@ export default function Inscription (props) {
         const {courriel, nom, numDa, mdp, mdpConfirmation} = data;
         const type = getValues("type");
         const typeEtudiant = getValues("typeEtudiant");
-        alert("Type: " + type + "TypeEtudiant: "+ typeEtudiant);
+        
         if (mdp !== mdpConfirmation) { 
             alert("Mot de passe different")
             setError("mdpConfirmation", {
