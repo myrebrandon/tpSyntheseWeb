@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Navigationbar from './components/Navbar/Navigationbar.js'
 import PageDeConnexion from './components/PageDeConnexion/PageDeConnexion';
 import FAQ from './components/FAQ/FAQ';
@@ -11,30 +11,59 @@ import StageList from './components/StageList/StageList'
 import ProfilEtCompetence from './components/ProfilEtCompetence/ProfilEtCompetence';
 import StageAjout from './components/StageAjout/StageAjout';
 import DeroulementStage from './components/DeroulementStage/DeroulementStage';
+import Postulation from './components/Postulation/Postulation';
 import PiedPage from './components/PiedPage/PiedPage';
 import Inscription from './components/PageDeConnexion/Inscription';
 import jwtDecode from "jwt-decode";
 import axios from 'axios';
+import InfoProfil from './components/InfoProfil/InfoProfil';
+import EtudiantList from './components/EtudiantListe/EtudiantListe';
 
 function App() {
 
   useEffect(() => {
     let token = localStorage.getItem("jwt");
     if(token != null && token !== "") {
+      axios.defaults.headers.common["authorization"] = token;
+
+      let decodedToken
       try {
-        const decodedToken = jwtDecode(token);
-        setToken(token);
-        setUserId(decodedToken.id);
-        setRole(decodedToken.type);
+        decodedToken = jwtDecode(token);
       } catch(err) {
         console.log(err + "Invalid token");
       }
+      // Verif si existe encore
+      //Faire fonction externe
+
+      alert(verifExisteEncore(decodedToken.id, decodedToken.type))
+      if(verifExisteEncore(decodedToken.id, decodedToken.type)) {
+        alert("test");
+      } else {
+        alert("boom");
+      }
+
+      setToken(token);
+      setUserId(decodedToken.id);
+      setRole(decodedToken.type);
     } else {
       setToken(null);
       setUserId(null);
       setRole("guess");
     }
   });
+
+  async function verifExisteEncore(id, type) {
+    let existe;
+    await axios.get(process.env.REACT_APP_URL + type + "s/" + id)
+      .then((res) => {
+        existe = true;
+      })
+      .catch((err) => {
+        existe = false;
+      });
+
+      return existe;
+  }
 
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
@@ -100,7 +129,7 @@ function App() {
             }
           />
 
-          <Route path="/temp/profil-et-competence"
+          <Route path="/Profil-et-competence"
             element={
               <ProfilEtCompetence/>
             }
@@ -118,14 +147,15 @@ function App() {
             }
           />}
 
-          <Route path="/Employeurs"
+          {role != "guess" && <Route path="/profil"
             element={
-              <>
-
-              </>
-              // <FAQ />
+              <InfoProfil id={userId} realToken={token} realType={role}/>
             }
-          />
+          />}
+
+          {role === "etudiant" && <Route path="/Stages/:idStage/Postulation"
+            element={<Postulation />}
+          />}
 
           <Route path="/Stages"
             element={
@@ -139,13 +169,17 @@ function App() {
             }
           />}
 
-          <Route path="/temp/Deroulement" 
+          {role === "entrepreneur" && <Route path="/Employeurs"
+            element={
+              <EtudiantList/>
+            }
+          />}
+
+          <Route path="/Deroulement" 
           element={
             <DeroulementStage/>
           }
           />
-
-
         </Routes>
         <PiedPage/>
       </Router>

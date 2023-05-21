@@ -1,17 +1,20 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './StageInfo.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams,useNavigate } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import contexteAuthentification from '../../shared/User/User';
 import axios from 'axios';
 
 function StageInfo() {
 
+    const navigate = useNavigate();
+
     let { stageid } = useParams()
     const [stage, setLoadedStage] = useState();
     const { error, sendRequest, clearError } = useHttpClient();
 
     const { userId, role, token } = useContext(contexteAuthentification);
+    axios.defaults.headers.common["authorization"] = token;
 
     useEffect(() => {
         const fetchStage = async () => {
@@ -35,7 +38,10 @@ function StageInfo() {
         );
     }
 
-    console.log(stage.entrepreneurId + " / " + userId);
+    function SupprimerStage(){
+            axios.delete(`http://localhost:5000/api/stages/` + stageid).catch(error => {});
+            navigate('/Stages');
+    }
 
     return (
         <div className="page">
@@ -75,8 +81,9 @@ function StageInfo() {
                 {
                     role === "etudiant" ?
                         <div className="stage-bouton">
+                            
                             <div className="stage-appliquer">
-                                <button>Appliquer</button>
+                                <Link to={`/Stages/${stageid}/Postulation`}>Appliquer</Link>
                             </div>
                         </div>
                         :
@@ -86,7 +93,7 @@ function StageInfo() {
                                 <Link to={`/temp/ModifierStage/${stageid}`}>Modifier</Link>
                             </div>
                             <div className="stage-supprimer">
-                                <button>Supprimer</button>
+                                <button href="/Stages" onClick={SupprimerStage}>Supprimer</button>
                             </div>
                         </div>
                         :

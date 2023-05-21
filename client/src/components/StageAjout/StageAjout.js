@@ -2,17 +2,18 @@ import { useContext,useState,useEffect } from 'react';
 import './StageAjout.css';
 import contexteAuthentification from '../../shared/User/User';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 
 function StageAjout({ action }) {
 
-  const { userId } = useContext(contexteAuthentification);
+  const navigate = useNavigate();
+
+  const { userId,token } = useContext(contexteAuthentification);
   const stageId = useParams();
   const [stage, setLoadedStage] = useState();
   const { error, sendRequest, clearError } = useHttpClient();
-
-  console.log(stageId);
+  axios.defaults.headers.common["authorization"] = token;
 
   useEffect(() => {
     const fetchStage = async () => {
@@ -67,6 +68,8 @@ function StageAjout({ action }) {
     } catch (Exception) {
       console.log(Exception);
     }
+
+    navigate("/stages");
   }
 
   const ModifierStage = async (data) => {
@@ -95,6 +98,8 @@ function StageAjout({ action }) {
     } catch (Exception) {
       console.log(Exception);
     }
+
+    navigate("/stage/" + stageId.stageid);
   }
 
   return (

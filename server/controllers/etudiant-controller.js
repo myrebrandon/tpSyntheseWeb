@@ -1,6 +1,7 @@
 const { reponse } = require("express");
 const { default: mongoose, mongo } = require("mongoose");
 
+const jwt = require("jsonwebtoken");
 const HttpError = require("../models/http-errors");
 const Etudiant = require("../models/etudiant");
 const Entrepreneur = require("../models/entrepreneur");
@@ -42,7 +43,7 @@ const loginEtudiant = async (requete, reponse, next) => {
     if(!verifMdp) {
         return next(new HttpError("Mauvais mot de passe", 401));
     }
-
+    
     const token = jwt.sign({id: etudiant.id, type: "etudiant"}, process.env.TOKEN_SECRET);
 
     return reponse.status(201).json({message: token});
@@ -73,10 +74,14 @@ const ajouterEtudiant = async (requete, reponse, next) => {
     let emailEntrExistant;
     let emailCoordinateur;
 
+    let etudiantDA;
+
     try {
         etudiantExistant = await Etudiant.findOne({courriel: courriel});
         emailEntrExistant = await Entrepreneur.findOne({courriel: courriel});
         emailCoordinateur = await Coordinateur.findOne({courriel: courriel});
+
+        etudiantDA = await Etudiant.findOne({numDa: numDa});
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }
@@ -91,6 +96,10 @@ const ajouterEtudiant = async (requete, reponse, next) => {
     
     if(emailCoordinateur) {
         return next(new HttpError("Le email est deja utilise", 401));
+    }
+
+    if(etudiantDA) {
+        return next(new HttpError("Le numero de DA est deja utilise", 401));
     }
 
     const hashPwd = await hashage(mdp);

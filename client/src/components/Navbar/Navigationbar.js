@@ -38,8 +38,10 @@ function Navigationbar() {
             <Nav.Link className={`navElements ${window.location.pathname === '/Accueil' ? 'active' : ''}`} href="/Accueil">Accueil</Nav.Link>
             <Nav.Link className="navElements" href="/Employeurs">Espace Employeurs</Nav.Link>
             <Nav.Link className="navElements" href="/Stages">Stages</Nav.Link>
+            <Nav.Link className="navElements" href="/Deroulement">Déroulement</Nav.Link>
             <NavDropdown className="navElements" title="Autres" id="basic-nav-dropdown">
               <NavDropdown.Item href="/FAQ">FAQ</NavDropdown.Item>
+              <NavDropdown.Item href="/Profil-et-competence">Profil et compétences</NavDropdown.Item>
               <NavDropdown.Item href="/Coordonnateurs">Coordonnateurs</NavDropdown.Item>
               <NavDropdown.Item href="https://www.cmontmorency.qc.ca/" target="_blank" >College Montmorency ↗</NavDropdown.Item>
               <NavDropdown.Divider className='Divider'/>
@@ -57,7 +59,7 @@ function Navigationbar() {
             <NavDropdown.Item href="/Login">Connexion</NavDropdown.Item>
             <NavDropdown.Item href="/Register">S'enregistrer</NavDropdown.Item>
           </NavDropdown>: <NavDropdown title="Connecté" className='loginTitle' id="basic-nav-dropdown">
-          <NavDropdown.Item >Profil</NavDropdown.Item>
+          <NavDropdown.Item href="/Profil">Profil</NavDropdown.Item>
             <NavDropdown.Item onClick={handleLogout}>Déconnection</NavDropdown.Item>
           </NavDropdown>}
         </Navbar.Collapse>

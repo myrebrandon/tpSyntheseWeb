@@ -21,7 +21,7 @@ export default function Inscription (props) {
     }
 
     const handleSoumission = async (data) => {
-        const {courriel, nom, mdp, mdpConfirmation, type} = data;
+        const {courriel, nom, numDa, mdp, mdpConfirmation, typeEtudiant, type} = data;
         if (mdp !== mdpConfirmation) { 
             alert("Mot de passe different")
             setError("mdpConfirmation", {
@@ -49,36 +49,61 @@ export default function Inscription (props) {
                     ).then(res => {
                         token = res.data.message;
                     })
-                console.log("Connexion compte");
                 const decodedToken = jwtDecode(token);
                 handleLogin(decodedToken.id, token, decodedToken.type);
+                console.log("Connexion compte");
             } else if(type === "etudiant") {
+                let token;
+                await axios.post(process.env.REACT_APP_URL + "etudiants/inscription",
+                    { 
+                        "numDa": numDa,
+                        "nomComplet": nom,
+                        "courriel": courriel,
+                        "mdp": mdp,
+                        "type": typeEtudiant
+                    },
+                    { headers: { "Content-Type": "application/json" }}
+                    ).then(res => {
+                    })
+
+                await axios.post(process.env.REACT_APP_URL + "etudiants/login",
+                    {
+                        "courriel": courriel,
+                        "mdp": mdp
+                    },
+                    { headers: { "Content-Type": "application/json" }}
+                    ).then(res => {
+                        token = res.data.message;
+                    })
+                const decodedToken = jwtDecode(token);
+                handleLogin(decodedToken.id, token, decodedToken.type);
+                console.log("Connexion compte");
             }
         }
     }
 
     return ( 
         <div >
-            <form onSubmit={handleSubmit(handleSoumission)}>
-                <h1>Creer un compte</h1>
+            <form className="connexion-form" onSubmit={handleSubmit(handleSoumission)}>
+                <h1 class="connexion-h1">Creer un compte</h1>
                 <div>
-                    <input type="text" placeholder="Courriel" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
+                    <input class="connexion-input" type="text" placeholder="Courriel" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
                     {errors.courriel && <span>Veuillez entrer un courriel valide.</span>}
                 </div>
                 <div>
-                    <input type="text" name="nom" placeholder="Nom" {...register("nom",{required: true})}/>
+                    <input class="connexion-input" type="text" name="nom" placeholder="Nom" {...register("nom",{required: true})}/>
                     {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
                 </div>
                 {type === "etudiant" &&<div>
-                    <input type="text" name="numDa" placeholder="numDa" {...register("numDa",{required: true})}/>
+                    <input class="connexion-input" type="text" name="numDa" placeholder="numDa" {...register("numDa",{required: true})}/>
                     {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
                 </div>}
                 <div>
-                    <input type="password" name="mdp" placeholder="Mot de passe" {...register("mdp",{required: true, validate:validator.isLength("8")})}/>
+                    <input class="connexion-input" type="password" name="mdp" placeholder="Mot de passe" {...register("mdp",{required: true})}/>
                     {errors.mdp && <span>Veuillez entrer un mot de passe valide.</span>}
                 </div>
                 <div>
-                    <input type="password" name="mdpConfirmation" placeholder="Mot de passe" {...register("mdpConfirmation",{required: true})}/>
+                    <input class="connexion-input" type="password" name="mdpConfirmation" placeholder="Mot de passe" {...register("mdpConfirmation",{required: true})}/>
                     {errors.mdpConfirmation && <span>Le mot de passe ne correspond pas</span>}
                 </div>
                 {type === "etudiant" && <div>
@@ -89,9 +114,9 @@ export default function Inscription (props) {
                     <label><input type="radio" name ="type" value="entrepreneur" onClick={handleRole}  {...register("type",{required: true})}/>Entrepreneur</label>
                     <label><input type="radio" name ="type" value="etudiant" onClick={handleRole} {...register("type",{required: true})}/>Etudiant</label>
                 </div>
-                <button type="submit">S'inscrire</button>
+                <button class="connexion-button PageConnexion-buttonInscrire" type="submit">S'inscrire</button>
             </form>
-            <button onClick={handleButtonConnexion}>Se connecter</button>
+            <button class="PageConnexion-buttonInscrire margin" onClick={handleButtonConnexion}>Se connecter</button>
         </div>
     )
 }
