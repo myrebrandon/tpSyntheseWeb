@@ -111,6 +111,18 @@ article.job-card {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left:-50px;
+  }
+  .apply:hover {
+    margin: 5px;
+    grid-area: 1 / 3 / 2 / 4;
+    background-color: #C1D72D;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left:-50px;
+    text-decoration: none;
   }
   
   .save {
