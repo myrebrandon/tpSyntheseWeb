@@ -62,7 +62,7 @@ function InfoProfil() {
                         : <p></p>
                     }
                     {role !== "coordinateur" ?
-                        <div className='InfoProfil-Options'>
+                        <div className='PageConnexion-buttonInscrire'>
                             <button onClick={handleSupprimer}>{supprimeText}</button>
                         </div>
                         : <p></p>
