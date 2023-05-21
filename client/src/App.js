@@ -143,7 +143,13 @@ function App() {
 
           {role != "guess" && <Route path="/profil"
             element={
-              <InfoProfil id={userId} realToken={token} realType={role}/>
+              <InfoProfil/>
+            }
+          />}
+
+          {role != "guess" && <Route path="/profil/:userId"
+            element={
+              <InfoProfil/>
             }
           />}
 
@@ -203,8 +209,8 @@ function App() {
           />
 
         </Routes>
-        <PiedPage/>
       </Router>
+      <PiedPage/>
     </div>
     </contexteAuthentification.Provider>
   );
