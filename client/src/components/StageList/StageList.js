@@ -88,6 +88,14 @@ function StageList(props) {
 
                 </select>}
                 <p>Aucun Stage</p>
+                
+                {role === "entrepreneur" ? 
+                <div>
+                    <Link to="/temp/AjoutStage">Ajouter un Stage</Link>
+                </div> :
+                <div>
+                    
+                </div>}
             </div>
         );
     } else {

@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import React from 'react';
 import './Inscription.css'
 import validator from 'validator';
@@ -8,6 +9,7 @@ import contexteAuthentification from "../../shared/User/User";
 import jwtDecode from "jwt-decode";
 
 export default function Inscription (props) {
+    const navigate = useNavigate();
     const {handleLogin} = useContext(contexteAuthentification);
     const {register, handleSubmit, formState: {errors}, setError} = useForm();
     const [type, setType] = useState("entrepreneur");
@@ -79,6 +81,8 @@ export default function Inscription (props) {
                 handleLogin(decodedToken.id, token, decodedToken.type);
                 console.log("Connexion compte");
             }
+            
+            navigate("/Accueil");
         }
     }
 
