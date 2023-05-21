@@ -1,5 +1,5 @@
 import {React, useContext} from 'react';
-
+import './Connexion.css'
 import { useForm } from 'react-hook-form';
 import axios from "axios";
 import contexteAuthentification from '../../shared/User/User';
@@ -38,21 +38,19 @@ export default function Connexion(props) {
 
     return (
         <div>
-            <form onSubmit={handleSubmit(handleSoumission)}>
-                <h1>CONNEXION</h1>
+            <form className="connexion-form" onSubmit={handleSubmit(handleSoumission)}>
+                <h1 className="connexion-h1">Se connecter</h1>
                 <div>
-                    <label>Courriel : </label>
-                    <input type="text" name="email" {...register("email", { required: true })} />
-                    {errors.email && <span>Veuillez entrer une adresse email valide.</span>}
+                    <input className="connexion-input" type="text" name="email" placeholder='Email' {...register("email", { required: true })} />
+                    {errors.email && <span className="connexion-span">Veuillez entrer une adresse email valide.</span>}
                 </div>
                 <div>
-                    <label>Mot de passe: </label>
-                    <input type="password" name="mdp" {...register("mdp", { required: true })} />
-                    {errors.mdp && <span>Veuillez entrer un mot de passe.</span>}
+                    <input className="connexion-input" type="password" name="mdp" placeholder='Password'{...register("mdp", { required: true })} />
+                    {errors.mdp && <span className="connexion-span">Veuillez entrer un mot de passe.</span>}
                 </div>
-                <button type="submit">Se connecter</button>
+                <button type="submit" className="connexion-button PageConnexion-buttonInscrire">Se connecter</button>
             </form>
-            <button onClick={handleButtonInscription}>S'inscrire</button>
+            <button connexion-button  className="PageConnexion-buttonInscrire margin"onClick={handleButtonInscription}>S'inscrire</button>
         </div>
     )
 }

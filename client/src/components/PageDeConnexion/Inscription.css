@@ -1,31 +1,25 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
-* {
-	box-sizing: border-box;
-}
 
-h1 {
+.connexion-h1 {
 	font-weight: bold;
 	margin: 0;
+	font-size: 24px;
 }
 
-h2 {
+.connexion-h2 {
 	text-align: center;
 }
 
-p {
-	font-size: 14px;
-	font-weight: 100;
-	line-height: 20px;
-	letter-spacing: 0.5px;
-	margin: 20px 0 30px;
-}
-
-span {
+.connexion-span {
 	font-size: 12px;
+	display: block;
+	margin-top: 4px;
+	font-size: 12px;
+	
 }
 
-a {
+.connexion-a {
 	color: #333;
 	font-size: 14px;
 	text-decoration: none;
@@ -33,6 +27,7 @@ a {
 }
 
 .PageConnexion-buttonInscrire {
+	margin-top: 4px;
     user-select: none;
 	border-radius: 20px;
 	border: 1px solid white;
@@ -44,22 +39,27 @@ a {
 	letter-spacing: 1px;
 	text-transform: uppercase;
 	transition: transform 80ms ease-in;
+	width: 300px;
+}
+.margin{
+	margin-bottom: 500px;
 }
 
-button:active {
+
+.connexion-button:active {
 	transform: scale(0.95);
 }
 
-button:focus {
+.connexion-buttonbutton:focus {
 	outline: none;
 }
 
-button.ghost {
+.connexion-buttonbutton.ghost {
 	background-color: transparent;
 	border-color: #FFFFFF;
 }
 
-form {
+.connexion-form {
     user-select: none;
 	background-color: #FFFFFF;
 	display: flex;
@@ -71,13 +71,13 @@ form {
 	text-align: center;
 }
 
-input {
+.connexion-input {
     user-select: none;
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;
 	margin: 8px 0;
-	width: 100%;
+	width: 300px;
 }
 
 .container {
@@ -218,15 +218,15 @@ input {
 	width: 40px;
 }
 
-footer p {
+.connexion-footer p {
     margin: 10px 0;
 }
 
-footer i {
+.connexion-footer i {
     color: red;
 }
 
-footer a {
+.connexion-footer a {
     color: #3c97bf;
     text-decoration: none;
 }

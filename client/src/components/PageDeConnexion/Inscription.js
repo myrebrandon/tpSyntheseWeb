@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import React from 'react';
+import './Inscription.css'
 import validator from 'validator';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -9,14 +10,14 @@ import jwtDecode from "jwt-decode";
 export default function Inscription (props) {
     const {handleLogin} = useContext(contexteAuthentification);
     const {register, handleSubmit, formState: {errors}, setError} = useForm();
-    const [typeCompte, setTypeCompte] = useState("entrepreneur");
+    const [type, setType] = useState("entrepreneur");
 
-    const handleTypeCompte = (event) => {
-        setTypeCompte(event.target.value);
-        console.log(typeCompte)
-    }
     const handleButtonConnexion = () => {
         props.setTypeConnexion("connexion")
+    }
+
+    const handleRole = (event) => {
+        setType(event.target.value);
     }
 
     const handleSoumission = async (data) => {
@@ -52,44 +53,41 @@ export default function Inscription (props) {
                 const decodedToken = jwtDecode(token);
                 handleLogin(decodedToken.id, token, decodedToken.type);
             } else if(type === "etudiant") {
-                //axios.post(process.env.REACT_APP_URL + "etudiants/inscription")
             }
         }
     }
 
     return ( 
-        <div>
+        <div >
             <form onSubmit={handleSubmit(handleSoumission)}>
-                <h1>INSCRIPTION</h1>
+                <h1>Creer un compte</h1>
                 <div>
-                    <label>Courriel: </label>
-                    <input type="text" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
+                    <input type="text" placeholder="Courriel" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
                     {errors.courriel && <span>Veuillez entrer un courriel valide.</span>}
                 </div>
                 <div>
-                    <label>Nom : </label>
-                    <input type="text" name="nom" {...register("nom",{required: true})}/>
-                    {errors.nom && <span>Veuillez entrer un nom svp.</span>}
+                    <input type="text" name="nom" placeholder="Nom" {...register("nom",{required: true})}/>
+                    {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
                 </div>
-                {typeCompte === 'etudiant' && (<div>
-                    <label>Numero DA : </label>
-                    <input type="text" name="nda" {...register("nda",{required: true})}/>
-                    {errors.nda && <span>Veuillez entrer un svp.</span>}
-                </div>)}
+                {type === "etudiant" &&<div>
+                    <input type="text" name="numDa" placeholder="numDa" {...register("numDa",{required: true})}/>
+                    {errors.nom && <span>Veuillez entrer votre nom svp.</span>}
+                </div>}
                 <div>
-                    <label>Mot de passe: </label>
-                    <input type="password" name="mdp" {...register("mdp",{required: true, validate:validator.isLength("8")})}/>
+                    <input type="password" name="mdp" placeholder="Mot de passe" {...register("mdp",{required: true, validate:validator.isLength("8")})}/>
                     {errors.mdp && <span>Veuillez entrer un mot de passe valide.</span>}
                 </div>
                 <div>
-                    <label>Mot de passe confirmation: </label>
-                    <input type="password" name="mdpConfirmation" {...register("mdpConfirmation",{required: true})}/>
+                    <input type="password" name="mdpConfirmation" placeholder="Mot de passe" {...register("mdpConfirmation",{required: true})}/>
                     {errors.mdpConfirmation && <span>Le mot de passe ne correspond pas</span>}
                 </div>
+                {type === "etudiant" && <div>
+                    <label><input type="radio" name ="typeEtudiant" value="Developpement d'application" checked={true} {...register("typeEtudiant",{required: true})}/>Développement</label>
+                    <label><input type="radio" name ="typeEtudiant" value="Reseaux et securite" {...register("typeEtudiant",{required: true})}/>Réseaux</label>
+                </div>}
                 <div>
-                    <label>Type de compte: </label>
-                    <label><input type="radio" name="type" onChange={handleTypeCompte} value="entrepreneur"/>Entrepreneur</label>
-                    <label><input type="radio" name="type" onChange={handleTypeCompte} value="etudiant"/>Etudiant</label>
+                    <label><input type="radio" name ="type" value="entrepreneur" onClick={handleRole}  {...register("type",{required: true})}/>Entrepreneur</label>
+                    <label><input type="radio" name ="type" value="etudiant" onClick={handleRole} {...register("type",{required: true})}/>Etudiant</label>
                 </div>
                 <button type="submit">S'inscrire</button>
             </form>
