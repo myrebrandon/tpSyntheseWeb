@@ -21,8 +21,8 @@ function StageCard({ info, idEtudiant }) {
           <div className="skill">{info.etat}</div>
         </div>
         {!idEtudiant ? 
-          <Link className='apply button-apply' to={`/stage/${info._id}`}>Info Stage</Link> :
-          <Link className='apply button-apply' to={`/${idEtudiant}/Affectation/${info._id}`}>Info Stage</Link>}
+          <Link className='apply button-apply' to={`/stage/${info._id}`}>Appliquer</Link> :
+          <Link className='apply button-apply' to={`/${idEtudiant}/Affectation/${info._id}`}>Appliquer</Link>}
           {/* <div className='div-apply'>
             <button className="apply button-apply">Appliquer</button>
           </div> */}
