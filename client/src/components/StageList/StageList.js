@@ -3,7 +3,7 @@ import React, { useEffect,useContext, useState } from "react";
 import { useParams } from 'react-router-dom';
 
 import { useHttpClient } from "../../shared/hooks/http-hook";
-
+import './StageList.css'
 import StageCard from '../StageCard/StageCard.js'
 import contexteAuthentification from '../../shared/User/User';
 import { Link } from 'react-router-dom';
@@ -90,8 +90,8 @@ function StageList(props) {
                 <p>Aucun Stage</p>
                 
                 {role === "entrepreneur" ? 
-                <div>
-                    <Link to="/temp/AjoutStage">Ajouter un Stage</Link>
+                <div className='StageList-Main'>
+                    <Link className="StageList-btn-center" to="/temp/AjoutStage">Ajouter un Stage</Link>
                 </div> :
                 <div>
                     
