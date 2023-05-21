@@ -54,6 +54,17 @@ const retourCoordinateur = async (requete, reponse, next) => {
     return reponse.status(201).json({coordinateur: coordinateur.toObject({getters: true})});
 }
 
+const retourDesCoordinateurs = async (requete, reponse, next) => {
+    let listeCoordinateur;
+    try {
+        listeCoordinateur = await Coordinateur.find();
+    } catch(err) {
+        return next(new HttpError("Erreur de bd", 500));
+    }
+
+    return reponse.status(201).json({listeCoordinateur: listeCoordinateur});
+}
+
 const creerCoordinateur = async (requete, reponse, next) => {
     const { nomComplet, courriel, mdp } = requete.body;
 
@@ -184,3 +195,4 @@ module.exports.retourCoordinateur = retourCoordinateur;
 module.exports.creerCoordinateur = creerCoordinateur;
 module.exports.modifierCoordinateur = modifierCoordinateur;
 module.exports.deleteCoordinateur = deleteCoordinateur;
+module.exports.retourDesCoordinateurs = retourDesCoordinateurs;

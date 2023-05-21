@@ -18,6 +18,7 @@ import jwtDecode from "jwt-decode";
 import axios from 'axios';
 import InfoProfil from './components/InfoProfil/InfoProfil';
 import EtudiantList from './components/EtudiantListe/EtudiantListe';
+import InfoCoordinateur from './components/InfoCoordinateur/InfoCoordinateur';
 
 function App() {
 
@@ -198,6 +199,13 @@ function App() {
             <DeroulementStage/>
           }
           />
+
+          <Route path="/Coordonnateurs" 
+          element={
+            <InfoCoordinateur/>
+          }
+          />
+
         </Routes>
         <PiedPage/>
       </Router>
