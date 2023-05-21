@@ -22,7 +22,7 @@ export default function Connexion(props) {
         
         try{
             props.setLoading(true)
-            await new Promise(r => setTimeout(r, 2000));
+            await new Promise(r => setTimeout(r, 1500));
             await axios.post(process.env.REACT_APP_URL + "login",
             {
                 "courriel": data.email,
