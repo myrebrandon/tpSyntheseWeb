@@ -8,6 +8,8 @@ import StageCard from '../StageCard/StageCard.js'
 import contexteAuthentification from '../../shared/User/User';
 import { Link } from 'react-router-dom';
 
+import axios from 'axios';
+
 function StageList(props) {
     const {idEtudiant} = useParams();
 
@@ -15,9 +17,17 @@ function StageList(props) {
     let [type, setType] = useState("Tout");
     const { error, sendRequest, clearError } = useHttpClient();
     const { userId, role, token } = useContext(contexteAuthentification);
+    axios.defaults.headers.common["authorization"] = token;
 
     const getType = (e) => {
-        setType(e.target.value);
+        if(role !== "etudiant") {
+            setType(e.target.value);
+        } else {
+            axios.get(process.env.REACT_APP_URL + "etudiants/" + userId)
+                .then((res) => {
+                    setType(res.data.etudiant.type);
+                });
+        }
     }
 
     const entrepreneur = props.entrepreneur;
@@ -33,13 +43,19 @@ function StageList(props) {
                     dblink
                 );
                 console.log(responseData);
+                
+                if(role === "etudiant") {
+                    getType();
+                }
+
                 let listeStages = responseData.listeStages.filter(s => {
-                    if (type == "Tout") {
+                    if (type === "Tout") {
                         return true;
                     }
 
                     return s.type === type;
                 })
+                
 
                 //alert(entrepreneur);
                 if(entrepreneur){
@@ -52,18 +68,20 @@ function StageList(props) {
             } catch (err) { }
         };
         fetchStages();
-    }, [sendRequest, type]);
+    }, [sendRequest, type, role]);
 
     if (!loadedStage || loadedStage.length === 0) {
         return (
             <div>
-                <select id="type" onChange={getType}>
+                <p className='StageList-Titre'>Les Stages</p>
+
+                {role !== "etudiant" && <select id="type" onChange={getType}>
 
                     <option value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
 
-                </select>
+                </select>}
                 <p>Aucun Stage</p>
             </div>
         );
@@ -73,13 +91,13 @@ function StageList(props) {
             <div>
                 <p className='StageList-Titre'>Les Stages</p>
 
-                <select id="type" onChange={getType}>
+                {role !== "etudiant" &&  <select id="type" onChange={getType}>
 
                     <option value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
 
-                </select>
+                </select>}
 
 
                 {loadedStage.map(stage => (
