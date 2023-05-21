@@ -37,6 +37,14 @@ function EtudiantCard( { info } ){
           <div className="stage-item__info">
             <h3>{info.type}</h3>
             <p>{info.courriel}</p>
+            {role === "coordinateur" || role === "entrepreneur" && <div>
+                {stage ?
+                    <div><Link to={`/profil/${info._id}`}>Ouvrir Profil</Link></div> :
+                    <div></div>
+                    }
+                </div>
+
+            }
             {role === "coordinateur" && <div>
                 {stage ? 
                     <div><Link to={`/stage/${stage._id}`}>{stage.titre}</Link></div> :
