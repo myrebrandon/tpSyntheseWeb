@@ -120,17 +120,15 @@ export default function Inscription (props) {
                 </div>
                 {type === "etudiant" && <div>
 
-                <select className="formbold-form-input" name="typeEtudiant" id="Developpement d'application" placeholder="Choisissez une option"  checked={true} {...register("typeEtudiant",{required: true})}>
+                <select className="connexion-form-input" name="typeEtudiant" id="Developpement d'application" placeholder="Choisissez une option"  checked={true} {...register("typeEtudiant",{required: true})}>
                 <option value="" disabled>
                   Choisissez une option
                 </option>
-                <option value="Reseaux et securite">Reseaux et securite</option>
-                <option value="Developpement d'application">Developpement d'application</option>
+                <option value="Reseaux et securite" checked={true} {...register("typeEtudiant",{required: true})}>Reseaux et securite</option>
+                <option value="Developpement d'application" {...register("typeEtudiant",{required: true})}>Developpement d'application</option>
               </select>
-
-
-                    <label><input type="radio" name ="typeEtudiant" value="Developpement d'application" checked={true} {...register("typeEtudiant",{required: true})}/>Développement</label>
-                    <label><input type="radio" name ="typeEtudiant" value="Reseaux et securite" {...register("typeEtudiant",{required: true})}/>Réseaux</label>
+                    {/* <label><input type="radio" name ="typeEtudiant" value="Developpement d'application" checked={true} {...register("typeEtudiant",{required: true})}/>Développement</label>
+                    <label><input type="radio" name ="typeEtudiant" value="Reseaux et securite" {...register("typeEtudiant",{required: true})}/>Réseaux</label> */}
                 </div>}
                 <div>
                     <label><input type="radio" name ="type" value="entrepreneur" onClick={handleRole}  {...register("type",{required: true})}/>Entrepreneur</label>
