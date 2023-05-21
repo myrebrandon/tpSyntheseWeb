@@ -74,10 +74,14 @@ const ajouterEtudiant = async (requete, reponse, next) => {
     let emailEntrExistant;
     let emailCoordinateur;
 
+    let etudiantDA;
+
     try {
         etudiantExistant = await Etudiant.findOne({courriel: courriel});
         emailEntrExistant = await Entrepreneur.findOne({courriel: courriel});
         emailCoordinateur = await Coordinateur.findOne({courriel: courriel});
+
+        etudiantDA = await Etudiant.findOne({numDa: numDa});
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }
@@ -92,6 +96,10 @@ const ajouterEtudiant = async (requete, reponse, next) => {
     
     if(emailCoordinateur) {
         return next(new HttpError("Le email est deja utilise", 401));
+    }
+
+    if(etudiantDA) {
+        return next(new HttpError("Le numero de DA est deja utilise", 401));
     }
 
     const hashPwd = await hashage(mdp);
