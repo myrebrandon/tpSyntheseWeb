@@ -1,4 +1,5 @@
 import {React, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Connexion.css'
 import { useForm } from 'react-hook-form';
 import axios from "axios";
@@ -6,6 +7,8 @@ import contexteAuthentification from '../../shared/User/User';
 import jwtDecode from 'jwt-decode';
 
 export default function Connexion(props) {
+    const navigate = useNavigate();
+
     const {handleLogin} = useContext(contexteAuthentification);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -31,6 +34,7 @@ export default function Connexion(props) {
             let decodedToken = jwtDecode(token);
             handleLogin(decodedToken.id, token, decodedToken.type);
             console.log("Connexion compte");
+            navigate("/Accueil");
         } catch(err) {
             alert("Mauvaise information de connexion");
         }
