@@ -36,7 +36,7 @@ function Navigationbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link className={`navElements ${window.location.pathname === '/Accueil' ? 'active' : ''}`} href="/Accueil">Accueil</Nav.Link>
-            {role === "employeur" && <Nav.Link className="navElements" href="/Employeurs">Espace Employeurs</Nav.Link>}
+            {role === "entrepreneur" && <Nav.Link className="navElements" href="/Employeurs">Espace Employeurs</Nav.Link>}
             {role === "coordinateur" && <Nav.Link className="navElements" href="/Coordinateurs">Espace Coordinateurs</Nav.Link>}
             <Nav.Link className="navElements" href="/Stages">Stages</Nav.Link>
             <Nav.Link className="navElements" href="/Deroulement">Déroulement</Nav.Link>
