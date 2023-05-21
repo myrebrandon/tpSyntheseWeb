@@ -1,3 +1,15 @@
+.stageCard-Main {
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
 .stage-item__content{
     background-color: #C1D72D;
     width: 50%;
@@ -25,27 +37,27 @@ article.job-card {
   
   .company-logo-img {
     grid-area: 1 / 1 / 2 / 2;
-    background-color: #fff;
-    border: 1px solid #e3e3e3;
-    height: 80px;
-    width: 80px;
+    height:90px;
+    width: 90px;
     box-sizing: border-box;
     position: relative;
-    padding: 5px;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .company-logo-img img {
-    max-height: calc(100% - 10px);
-    max-width: calc(100% - 10px);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    max-height: 100%;
+    max-width: 100%;
+    display: block;
+    margin: auto;
   }
+  
   
   .job-title {
     grid-area: 1 / 2 / 2 / 3;
-    font-size: 16px;
+    font-size: 20px;
     align-self: start;
     font-weight: 500;
     margin-top: 5px;
@@ -55,7 +67,7 @@ article.job-card {
   .company-name {
     grid-area: 2 / 2 / 3 / 3;
     align-self: center;
-    font-size: 14px;
+    font-size: 18px;
     color: #777;
     margin-bottom: 5px;
     padding: 0 24px;
@@ -70,10 +82,10 @@ article.job-card {
   
   .skill {
     display: inline;
-    color: #00a6c2;
+    color: #90a503;
     border-radius: 2px;
-    background-color: rgba(0,166,194,.05);
-    border: 1px solid rgba(0,166,194,.15);
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     padding: 5px 8px;
     font-size: 12px;
   }
@@ -90,7 +102,7 @@ article.job-card {
   }
   .apply {
     grid-area: 1 / 3 / 2 / 4;
-    background-color: #1ab059;
+    background-color: #C1D72D;
     color: #fff;
   }
   .save {
