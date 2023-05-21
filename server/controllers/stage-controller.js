@@ -5,6 +5,7 @@ const HttpError = require("../models/http-errors");
 const Stage = require("../models/stage");
 const Entrepreneur = require("../models/entrepreneur");
 const Etudiant = require("../models/etudiant");
+const { send } = require("./envoie-email");
 
 const retourDesStages = async (requete, reponse, next) => {
     let listeStages;
@@ -88,6 +89,17 @@ const ajouterStage = async (requete, reponse, next) => {
         await nouvStage.save();
 
         await entrepreneurExistant.save();
+
+        const message = entrepreneurExistant.nomComplet + " a créé un stage.";
+
+        const data = {
+            "from": process.env.EMAIL,
+            "to": "brandon.myre04@gmail.com",
+            "subject": "Creation Stage",
+            "text": message
+        }
+
+        send(data);
     } catch(err) {
         return next(new HttpError("Erreur dans la sauvegarde du stage", 500));
     }

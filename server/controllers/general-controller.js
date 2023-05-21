@@ -10,6 +10,7 @@ const Etudiant = require("../models/etudiant");
 const Coordinateur = require("../models/coordinateur");
 const { compare } = require("./passwordManager");
 
+
 const login = async (requete, reponse, next) => {
     const { courriel, mdp } = requete.body;
 
