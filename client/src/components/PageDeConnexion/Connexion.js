@@ -8,7 +8,7 @@ import jwtDecode from 'jwt-decode';
 export default function Connexion(props) {
     const {handleLogin} = useContext(contexteAuthentification);
     const { register, handleSubmit, formState: { errors } } = useForm();
-
+    
     const handleButtonInscription = () => {
         props.setTypeConnexion("inscription")
     }
