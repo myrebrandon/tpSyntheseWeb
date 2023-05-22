@@ -64,9 +64,9 @@ function StageAjout({ action }) {
         { headers: { "Content-Type": "application/json" } }
       ).then(res => {
       })
-      console.log("Création du stage");
+      alert("Le stage a été créé");
     } catch (Exception) {
-      console.log(Exception);
+      alert("Erreur dans la création du stage");
     }
 
     navigate("/stages");
