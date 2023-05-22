@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import axios from 'axios';
 import './InfoProfil.css';
+import '../StageList/StageList.css'
+import '../PageDeConnexion/PageDeConnexion.css'
 import StageList from '../StageList/StageList';
 
 function InfoProfil() {
@@ -76,8 +78,8 @@ function InfoProfil() {
                         <StageList entrepreneur={userId} />
                     }
                     {role !== "coordinateur" && 
-                        <div className='PageConnexion-buttonInscrire InfoProfil-btn-center'>
-                            <button onClick={handleSupprimer}>{supprimeText}</button>
+                        <div className='StageList-Main'>
+                            <button className='PageConnexion-buttonInscrire InfoProfil-btn-center myDeleteBtn' onClick={handleSupprimer}>{supprimeText}</button>
                         </div>
                     }
                 </div> :
