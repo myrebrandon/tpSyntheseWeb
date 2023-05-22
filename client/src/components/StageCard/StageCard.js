@@ -16,7 +16,7 @@ function StageCard({ info, idEtudiant }) {
     <div className='stageCard-Main'>
       <article className="job-card">
         <div className="company-logo-img">
-          <img src={imageSrc} alt="Stage Type" />
+          <img src={imageSrc} alt="Stage Type"/>
         </div>
         <div className="job-title">{info.titre}</div>
         <div className="company-name">{info.type}</div>

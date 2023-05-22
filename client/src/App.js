@@ -119,7 +119,7 @@ function App() {
           />
           <Route path="/stage/:stageid"
             element={
-              <StageInfo />
+              <StageInfo/>
             }
           />
 
