@@ -9,6 +9,12 @@
     height: 100%;
     text-align: center;
 }
+.myDeleteBtn{
+  margin-top: -10px;
+}
+.myDeleteBtn:hover{
+  margin-top: -10px;
+}
 
 .InfoProfil-btn-center {
     display: block;
@@ -82,6 +88,10 @@
     font-size: 15px;
     color: #4e5052;
     text-transform: capitalize;
+  }
+  .name{
+    font-weight: bold;
+    font-size: 18px;
   }
   
   .our-team .social {

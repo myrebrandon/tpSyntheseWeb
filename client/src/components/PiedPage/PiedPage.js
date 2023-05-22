@@ -12,7 +12,6 @@ function PiedPage() {
       <div class="wave" id="wave4"></div>
     </div>
     <ul class="menu">
-      
     <li class="menu__item menu__link">Sylvain Labranche</li>
     <li class="menu__item menu__link">|</li>
     <li class="menu__item menu__link">Coordonnateur</li>

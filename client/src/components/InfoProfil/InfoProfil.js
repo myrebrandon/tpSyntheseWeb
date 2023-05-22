@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import axios from 'axios';
 import './InfoProfil.css';
+import '../StageList/StageList.css'
+import '../PageDeConnexion/PageDeConnexion.css'
 import StageList from '../StageList/StageList';
 
 function InfoProfil() {
@@ -62,7 +64,8 @@ function InfoProfil() {
                         </div>
                         <div class="team-content">
                         <h3 class="name">{profil.nomComplet}</h3>
-                        <h4 class="title">{profil.role}</h4>
+                        <h3 class="title">{role}</h3>
+                        <h4 class="title">{profil.courriel}</h4>
                         </div>
                         <ul class="social">
                             <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-facebook" aria-hidden="true"></a></li>
@@ -71,15 +74,12 @@ function InfoProfil() {
                             <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-linkedin" aria-hidden="true"></a></li>
                         </ul>
                     </div>
-                    <p>{profil.nomComplet}</p>
-                    <p>{role}</p>
-                    <p>{profil.courriel}</p>
                     {role === "entrepreneur" &&
                         <StageList entrepreneur={userId} />
                     }
                     {role !== "coordinateur" && 
-                        <div className='PageConnexion-buttonInscrire InfoProfil-btn-center'>
-                            <button onClick={handleSupprimer}>{supprimeText}</button>
+                        <div className='StageList-Main'>
+                            <button className='PageConnexion-buttonInscrire InfoProfil-btn-center myDeleteBtn' onClick={handleSupprimer}>{supprimeText}</button>
                         </div>
                     }
                 </div> :
