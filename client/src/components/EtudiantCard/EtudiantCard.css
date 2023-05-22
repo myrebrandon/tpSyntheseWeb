@@ -1,5 +1,18 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
 @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+
+.EtudiantCard-Main {
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
 figure.snip0056 {
   font-family: 'Raleway', Arial, sans-serif;
   position: relative;

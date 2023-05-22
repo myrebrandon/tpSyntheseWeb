@@ -81,15 +81,12 @@ function StageList(props) {
         return (
             <div>
                 <p className='StageList-Titre'>Les Stages</p>
-
                 {role !== "etudiant" && !idEtudiant && <select id="type" className='formbold-form-input' onChange={getType}>
                     <option className="formbold-form-label" value="Tout">Tout</option>
                     <option className="formbold-form-label" value="Reseaux et securite">Reseaux</option>
                     <option className="formbold-form-label" value="Developpement d'application">Developpement</option>
-
                 </select>}
                 <h3>Aucun Stage</h3>
-                
                 {role === "entrepreneur" ? 
                 <div className='StageList-Main'>
                     <Link className="PageConnexion-buttonInscrire InfoProfil-btn-center" to="/temp/AjoutStage">Ajouter un Stage</Link>

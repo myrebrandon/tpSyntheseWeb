@@ -33,7 +33,7 @@ function EtudiantCard( { info } ){
 
   return (
     <div>
-        <div className="stage-item__content"></div>
+        <div className="stage-item__content EtudiantCard-Main centerCard" ></div>
             <figure class="snip0056">
                 <figcaption>
                 <h2><span>{info.nomComplet}</span></h2>
