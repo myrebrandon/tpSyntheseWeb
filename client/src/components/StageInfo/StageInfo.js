@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './StageInfo.css';
+import '../StageCard/StageCard.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import contexteAuthentification from '../../shared/User/User';
@@ -17,6 +18,7 @@ function StageInfo() {
     const { userId, role, token } = useContext(contexteAuthentification);
     axios.defaults.headers.common["authorization"] = token;
 
+
     useEffect(() => {
         const fetchStage = async () => {
             try {
@@ -29,7 +31,7 @@ function StageInfo() {
             } catch (err) { }
         };
         fetchStage();
-
+        
         if(role === "etudiant") {
             axios.get(process.env.REACT_APP_URL + role + "s/" + userId)
             .then((res) => {
@@ -38,7 +40,7 @@ function StageInfo() {
                 let test = stages.find((st) => {
                     return st === stageid;
                 });
-
+                
                 if(test) {
                     setDejaAppliquer(true);
                 } else {
@@ -76,42 +78,39 @@ function StageInfo() {
 
         navigate('/Coordinateurs');
     }
+    const stageSrc = stage.type ==='Developpement d\'application'
+        ? 'https://cdn-icons-png.flaticon.com/512/2809/2809263.png'
+        : 'https://cdn-icons-png.flaticon.com/128/4379/4379213.png';
+    
+    const nbPoste = stage.nbPostes > 1 ? 'postes' : 'poste';
 
     return (
-        <div className="page">
-            <div className="stage-item__content">
-                <div className="stage-titre">
-                    <p>{stage.titre}</p>
+        <div className="stageCard-Main">
+            <div className="job-card">
+                <div className='company-logo-img centerimg'>
+                    <img src={stageSrc} alt="Stage Type"/>
                 </div>
-                <div className="stage-type">
-                    <p>{stage.type}</p>
+                    <div className="job-title">{stage.titre}</div>
+                    <div className="company-name">{stage.type}</div>
+                    <div className="skills-container">
+                    <div className="skill">{stage.nomEntreprise}</div>
+                    <div className="skill">{stage.nbPostes} {nbPoste} à combler</div>
+                    <div className="skill">{stage.etat}</div>
+                    <div className="skill margintop">{stage.adresseEntreprise}</div>
+                    </div>
+                    <br></br>
+                    <div className="skills-container margintop2"> 
+                    <div className="skill">{stage.nomCompletContact}</div>
+                    <div className="skill">{stage.courriel}</div>
+                    <div className="skill">{stage.numeroCell}</div>
+                    </div>
+                    <br></br>
+                    <div className="skills-container margintop2"> 
+                    <div className="skill">{stage.description}</div>
+                    <div className="stage-supprimer">
+                                <button className='btn' href="/Stages" onClick={SupprimerStage}>Supprimer</button>
+                            </div>
                 </div>
-                <div className="stage-nom-entreprise">
-                    <p>{stage.nomEntreprise}</p>
-                </div>
-                <div className="stage-nbPoste">
-                    <p>Nombre de postes: {stage.nbPostes}</p>
-                </div>
-                <div className="stage-nom">
-                    <p>{stage.nomCompletContact}</p>
-                </div>
-                <div className="stage-courriel">
-                    <p>{stage.courriel}</p>
-                </div>
-                <div className="stage-telephone">
-                    <p>{stage.numeroCell}</p>
-                </div>
-                <div className="stage-adresse">
-                    <p>{stage.adresseEntreprise}</p>
-                </div>
-                <div className="stage-description">
-                    <p>{stage.description}</p>
-                </div>
-                <div className="stage-etat">
-                    <p>{stage.etat}</p>
-                </div>
-
-
                 {
                     role === "etudiant" ?
                         <div className="stage-bouton">
@@ -124,7 +123,7 @@ function StageInfo() {
                         userId === stage.entrepreneurId ?
                         <div className='stage-bouton'>
                             <div className="stage-modifier">
-                                <Link to={`/temp/ModifierStage/${stageid}`}>Modifier</Link>
+                                <Link className='btn' to={`/temp/ModifierStage/${stageid}`}>Modifier</Link>
                             </div>
                             <div className="stage-supprimer">
                                 <button href="/Stages" onClick={SupprimerStage}>Supprimer</button>
@@ -141,8 +140,8 @@ function StageInfo() {
 
                 <div className="bouton-retour">
                     {!idEtudiant ?
-                    <Link to="/stages">Retour</Link> :
-                    <Link to={`/${idEtudiant}/Affectation`}>Retour</Link>}
+                    <Link className='btn btn2' to="/stages">Retour</Link> :
+                    <Link className='btn btn2' to={`/${idEtudiant}/Affectation`}>Retour</Link>}
                 </div>
             </div>
         </div>
