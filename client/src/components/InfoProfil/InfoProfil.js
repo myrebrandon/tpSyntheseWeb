@@ -62,7 +62,7 @@ function InfoProfil() {
                         </div>
                         <div class="team-content">
                         <h3 class="name">{profil.nomComplet}</h3>
-                        <h4 class="title">{profil.role}</h4>
+                        <h4 class="title">{profil.courriel}</h4>
                         </div>
                         <ul class="social">
                             <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-facebook" aria-hidden="true"></a></li>

@@ -83,6 +83,10 @@
     color: #4e5052;
     text-transform: capitalize;
   }
+  .name{
+    font-weight: bold;
+    font-size: 18px;
+  }
   
   .our-team .social {
     width: 100%;

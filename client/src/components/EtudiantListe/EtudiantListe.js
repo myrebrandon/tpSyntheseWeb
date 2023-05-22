@@ -46,7 +46,7 @@ function EtudiantList() {
             <div>
                 <p className='EtudiantListe-Titre'>Les Stagiaires</p>
 
-                <select id="type" onChange={getType} className='EtudiantList-form-input'>
+                <select id="type" onChange={getType} className='EtudiantList-form-input'    >
 
                     <option value="Tout" >Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
