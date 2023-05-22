@@ -21,15 +21,20 @@ function EntrepreneurCard( { info } ) {
     }
 
   return (
-        <div className="stage-item__content">
-          <h2>{info.nomComplet}</h2>
-          <div className="stage-item__info">
-            <h3>{info.type}</h3>
-            <p>{info.courriel}</p>
-            {role === "coordinateur" && <div>
-                    <button onClick={supprimerEntrepreneur}>Supprimer</button>
-                </div>}
-            </div>
+    <div className="InfoProfil-Main">
+        <div className="stage-item__content EtudiantCard-Main centerCard" ></div>
+            <figure class="snip0056">
+                <figcaption>
+                <h2><span>{info.nomComplet}</span></h2>
+                <p className='EtudiantCard-p'>{info.type}</p>
+                <p className='EtudiantCard-p'>{info.courriel}</p>
+                {role === "coordinateur" && <div>
+                     <button className="PageConnexion-buttonInscrire InfoProfil-btn-center" onClick={supprimerEntrepreneur}>Supprimer</button>
+                 </div>}
+                </figcaption>
+                <img src="https://cdn3.iconfinder.com/data/icons/dashboard-ui-vol-3-flat/48/Dashboard_-_Vol._3-02-512.png" alt="sample8" />
+                <div class="position">{info.type}</div>
+            </figure>
         </div>
   );
 };
