@@ -38,7 +38,8 @@ function StageInfo() {
                 let stages = res.data.etudiant.stages;
 
                 let test = stages.find((st) => {
-                    return st === stageid;
+                    
+                    return st._id === stageid;
                 });
 
                 if(test) {
