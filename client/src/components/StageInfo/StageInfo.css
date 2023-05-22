@@ -1,3 +1,4 @@
+
 .btn {
     margin-top: 10px;
     user-select: none;
@@ -12,7 +13,6 @@
     text-transform: uppercase;
     transition: transform 80ms ease-in;
 }
-
 .margintop{
     margin-top: 10px;
 }
@@ -215,5 +215,8 @@
     .mobile-wrapper .btn-container .apply {
         /* margin-right: 10px; */
     }
-  
-  
+    .desc{
+        height: 200px;
+        width: 1000px;
+        text-align: left;
+    }
