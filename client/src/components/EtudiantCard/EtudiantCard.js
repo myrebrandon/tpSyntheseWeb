@@ -37,10 +37,18 @@ function EtudiantCard( { info } ){
             <figure class="snip0056">
                 <figcaption>
                 <h2><span>{info.nomComplet}</span></h2>
-                <p>I suppose if we couldn't laugh at things that don't make sense, we couldn't react to a lot of life.</p>
-                <div class="icons"><a href="#"><i class="ion-ios-home"></i></a><a href="#"><i class="ion-ios-email"></i></a><a href="#"><i class="ion-ios-telephone"></i></a></div>
-                </figcaption><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sq-sample8.jpg" alt="sample8" />
-                <div class="position">Web Designer</div>
+                <p className='EtudiantCard-p'>{info.type}</p>
+                <p className='EtudiantCard-p'>{info.courriel}</p>
+                {role === "coordinateur" && <div>
+                {stage ? 
+                    <div><Link to={`/stage/${stage._id}`}>{stage.titre}</Link></div> :
+                    <div><Link to={`/${info._id}/Affectation`}>Affecter</Link></div>}
+                
+                    <button onClick={supprimerEtudiant}>Supprimer</button>
+                </div>}
+                </figcaption>
+                <img src="https://www.shareicon.net/data/512x512/2016/07/03/790265_people_512x512.png" alt="sample8" />
+                <div class="position">{role}</div>
             </figure>
         </div>
   );
