@@ -23,7 +23,6 @@
     margin-left: 40%;
 }
 .stageCard-Main {
-    background-color: red;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -211,12 +210,11 @@
       flex: 1;
       width: 0;
     }
-    
-    .mobile-wrapper .btn-container .apply {
-        /* margin-right: 10px; */
-    }
     .desc{
         height: 200px;
-        width: 1000px;
+        width: 100px;
         text-align: left;
+        border:1.5px solid  #C1D72D;
+        background-color: red;
+        color:red;
     }
