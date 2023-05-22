@@ -18,7 +18,7 @@ function PiedPage() {
     <li class="menu__item menu__link">Coordonnateur</li>
 
     </ul>
-    <p>&copy;2023 WorkForce | All Rights Reserved</p>
+    <p>&copy;2023 WorkForce | All Rights Reserved | Last update: 21/05/2023</p>
   </footer>
 </div>
       // <div className="Footer-Main">
