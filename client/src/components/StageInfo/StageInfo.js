@@ -106,7 +106,7 @@ function StageInfo() {
                     </div>
                     <br></br>
                     <div className="skills-container margintop2"> 
-                    <div className="skill">{stage.description}</div>
+                    <div className="skill desc">{stage.description}</div>
                     <div className="stage-supprimer">
                                 <button className='btn' href="/Stages" onClick={SupprimerStage}>Supprimer</button>
                             </div>
@@ -116,7 +116,7 @@ function StageInfo() {
                         <div className="stage-bouton">
                             
                             <div className="stage-appliquer">
-                                {dejaAppliquer ? <Link>Déjà postulé</Link>:<Link to={`/Stages/${stageid}/Postulation`}>Appliquer</Link>}
+                                {dejaAppliquer ? <Link className='btn'>Déjà postulé</Link>:<Link to={`/Stages/${stageid}/Postulation`}>Appliquer</Link>}
                             </div>
                         </div>
                         :
