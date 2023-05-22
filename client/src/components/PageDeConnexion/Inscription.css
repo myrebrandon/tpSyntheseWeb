@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
 
+.connexion-form-input {
+	user-select: none;
+	background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 300px;
+  }
+
+
 .connexion-h1 {
 	font-weight: bold;
 	margin: 0;
@@ -40,6 +50,23 @@
 	text-transform: uppercase;
 	transition: transform 80ms ease-in;
 	width: 300px;
+}
+
+.PageConnexion-buttonInscrire:hover {
+	margin-top: 4px;
+    user-select: none;
+	border-radius: 20px;
+	border: 1px solid white;
+	background-color: #C1D72D;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+	width: 300px;
+	text-decoration: none;
 }
 .margin{
 	margin-bottom: 500px;

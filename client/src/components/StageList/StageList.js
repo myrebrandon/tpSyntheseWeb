@@ -1,9 +1,10 @@
 import './StageList.css';
+import '../StageAjout/StageAjout.css'
 import React, { useEffect,useContext, useState } from "react";
 import { useParams } from 'react-router-dom';
-
+import './StageList.css'
 import { useHttpClient } from "../../shared/hooks/http-hook";
-
+import './StageList.css'
 import StageCard from '../StageCard/StageCard.js'
 import contexteAuthentification from '../../shared/User/User';
 import { Link } from 'react-router-dom';
@@ -82,51 +83,44 @@ function StageList(props) {
 
                 {role !== "etudiant" && !idEtudiant && <select id="type" onChange={getType}>
 
-                    <option value="Tout">Tout</option>
+                    <option className='formbold-form-input' value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
 
                 </select>}
                 <p>Aucun Stage</p>
+                
+                {role === "entrepreneur" ? 
+                <div className='StageList-Main'>
+                    <Link className="StageList-btn-center" to="/temp/AjoutStage">Ajouter un Stage</Link>
+                </div> :
+                <div>
+                </div>}
             </div>
         );
     } else {
         return (
-
             <div>
-                <p className='StageList-Titre'>Les Stages</p>
-
-                {role !== "etudiant" && !idEtudiant &&  <select id="type" onChange={getType}>
-
+                <p className='StageList-Titre'>Nos Stages disponibles</p>
+                {role !== "etudiant" && !idEtudiant &&  <select id="type" className='stageList-form-input' onChange={getType}>
                     <option value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
-
                 </select>}
-
-
                 {loadedStage.map(stage => (
                     <div>
                         <StageCard key={stage.id} info={stage} idEtudiant={idEtudiant}/>
                     </div>
                 ))}
-
                 {role === "entrepreneur" ? 
                 <div>
-                    <Link to="/temp/AjoutStage">Ajouter un Stage</Link>
+                    <Link className='PageConnexion-buttonInscrire' to="/temp/AjoutStage">Ajouter un Stage</Link>
                 </div> :
                 <div>
-                    
                 </div>}
-
             </div>
-
-
-
         );
-
     }
-
 }
 
 export default StageList;

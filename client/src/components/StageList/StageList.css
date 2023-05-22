@@ -1,4 +1,47 @@
+body{
+    user-select: none;
+}
 .StageList-Titre{
+    user-select: none;
     font-weight: bold;
     font-size: 50px;
 }
+.StageList-Main{
+    user-select: none;
+    user-select: none;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+}
+
+.StageList-btn-center {
+    user-select: none;
+    display: block;
+    justify-content: center;
+}
+  .stageList-form-input {
+    user-select: none;
+    text-align: center;
+    width: 100%;
+    padding: 13px 22px;
+    border-radius: 5px;
+    border: 1.5px solid #b3cb15;
+    background: #ffffff;
+    font-weight: 500;
+    font-weight: bold;
+    font-size: 24px;
+    color: black;
+    outline: none;
+    resize: none;
+    width: 600px;
+  }
+.stageList-form-input:focus {
+    user-select: none;
+    border-color: #C1D72D;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+  }

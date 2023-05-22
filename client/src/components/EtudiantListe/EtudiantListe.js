@@ -4,20 +4,15 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import EtudiantCard from '../EtudiantCard/EtudiantCard';
 
 function EtudiantList() {
-
     const [loadedEtudiant, setLoadedEtudiant] = useState();
     let [type, setType] = useState("Tout");
     const { error, sendRequest, clearError } = useHttpClient();
-
     const getType = (e) => {
         setType(e.target.value);
     }
-
     useEffect(() => {
         const fetchEtudiant = async () => {
             try {
-
-
                 const responseData = await sendRequest(
                     process.env.REACT_APP_URL + "etudiants/" 
                 );
@@ -25,10 +20,8 @@ function EtudiantList() {
                     if (type == "Tout") {
                         return true;
                     }
-
                     return s.type === type;
                 })
-
                 setLoadedEtudiant(listeEtudiant);
             } catch (err) { }
         };
@@ -38,8 +31,7 @@ function EtudiantList() {
     if (!loadedEtudiant || loadedEtudiant.length === 0) {
         return (
             <div>
-                <select id="type" onChange={getType}>
-
+                <select id="type" className='EtudiantList-form-input' onChange={getType}>
                     <option value="Tout">Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
@@ -54,9 +46,9 @@ function EtudiantList() {
             <div>
                 <p className='EtudiantListe-Titre'>Les Stagiaires</p>
 
-                <select id="type" onChange={getType}>
+                <select id="type" onChange={getType} className='EtudiantList-form-input'>
 
-                    <option value="Tout">Tout</option>
+                    <option value="Tout" >Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
 

@@ -1,4 +1,5 @@
 import {React, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Connexion.css'
 import { useForm } from 'react-hook-form';
 import axios from "axios";
@@ -6,7 +7,10 @@ import contexteAuthentification from '../../shared/User/User';
 import jwtDecode from 'jwt-decode';
 
 export default function Connexion(props) {
-    const { handleLogin } = useContext(contexteAuthentification);
+    const navigate = useNavigate();
+
+    const {handleLogin} = useContext(contexteAuthentification);
+
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const handleButtonInscription = () => {
@@ -18,7 +22,7 @@ export default function Connexion(props) {
         
         try{
             props.setLoading(true)
-            await new Promise(r => setTimeout(r, 2000));
+            await new Promise(r => setTimeout(r, 1500));
             await axios.post(process.env.REACT_APP_URL + "login",
             {
                 "courriel": data.email,
@@ -32,6 +36,9 @@ export default function Connexion(props) {
             let decodedToken = jwtDecode(token);
             handleLogin(decodedToken.id, token, decodedToken.type);
             console.log("Connexion compte");
+
+            navigate("/Accueil");
+            
             props.setLoading(false)
         } catch(err) {
             alert("Mauvaise information de connexion");

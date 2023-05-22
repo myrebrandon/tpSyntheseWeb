@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import React from 'react';
 import './Inscription.css'
 import validator from 'validator';
@@ -8,8 +9,9 @@ import contexteAuthentification from "../../shared/User/User";
 import jwtDecode from "jwt-decode";
 
 export default function Inscription (props) {
+    const navigate = useNavigate();
     const {handleLogin} = useContext(contexteAuthentification);
-    const {register, handleSubmit, formState: {errors}, setError} = useForm();
+    const {register, handleSubmit, formState: {errors}, setError, setValue, getValues} = useForm();
     
     const [type, setType] = useState("entrepreneur");
 
@@ -22,7 +24,10 @@ export default function Inscription (props) {
     }
 
     const handleSoumission = async (data) => {
-        const {courriel, nom, numDa, mdp, mdpConfirmation, typeEtudiant, type} = data;
+        const {courriel, nom, numDa, mdp, mdpConfirmation} = data;
+        const type = getValues("type");
+        const typeEtudiant = getValues("typeEtudiant");
+        
         if (mdp !== mdpConfirmation) { 
             alert("Mot de passe different")
             setError("mdpConfirmation", {
@@ -30,64 +35,71 @@ export default function Inscription (props) {
             })
         } else {
             props.setLoading(true);
-            if(type === "entrepreneur") {
-                let token;
-                await axios.post(process.env.REACT_APP_URL + "entrepreneurs/inscription",
-                    { 
-                        "nomComplet": nom,
-                        "courriel": courriel,
-                        "mdp": mdp 
-                    },
-                    { headers: { "Content-Type": "application/json" }}
-                    ).then(res => {
-                    })
-
-                await axios.post(process.env.REACT_APP_URL + "entrepreneurs/login",
-                    {
-                        "courriel": courriel,
-                        "mdp": mdp
-                    },
-                    { headers: { "Content-Type": "application/json" }}
-                    ).then(res => {
-                        token = res.data.message;
-                    })
-                const decodedToken = jwtDecode(token);
-                handleLogin(decodedToken.id, token, decodedToken.type);
-                console.log("Connexion compte");
-            } else if(type === "etudiant") {
-                let token;
-                await axios.post(process.env.REACT_APP_URL + "etudiants/inscription",
-                    { 
-                        "numDa": numDa,
-                        "nomComplet": nom,
-                        "courriel": courriel,
-                        "mdp": mdp,
-                        "type": typeEtudiant
-                    },
-                    { headers: { "Content-Type": "application/json" }}
-                    ).then(res => {
-                    })
-
-                await axios.post(process.env.REACT_APP_URL + "etudiants/login",
-                    {
-                        "courriel": courriel,
-                        "mdp": mdp
-                    },
-                    { headers: { "Content-Type": "application/json" }}
-                    ).then(res => {
-                        token = res.data.message;
-                    })
-                const decodedToken = jwtDecode(token);
-                handleLogin(decodedToken.id, token, decodedToken.type);
-                console.log("Connexion compte");
+            await new Promise(r => setTimeout(r, 1500));
+            try {
+                if(type === "entrepreneur") {
+                    let token;
+                    await axios.post(process.env.REACT_APP_URL + "entrepreneurs/inscription",
+                        { 
+                            "nomComplet": nom,
+                            "courriel": courriel,
+                            "mdp": mdp 
+                        },
+                        { headers: { "Content-Type": "application/json" }}
+                        ).then(res => {
+                        })
+    
+                    await axios.post(process.env.REACT_APP_URL + "entrepreneurs/login",
+                        {
+                            "courriel": courriel,
+                            "mdp": mdp
+                        },
+                        { headers: { "Content-Type": "application/json" }}
+                        ).then(res => {
+                            token = res.data.message;
+                        })
+                    const decodedToken = jwtDecode(token);
+                    handleLogin(decodedToken.id, token, decodedToken.type);
+                    console.log("Connexion compte");
+                } else if(type === "etudiant") {
+                    let token;
+                    await axios.post(process.env.REACT_APP_URL + "etudiants/inscription",
+                        { 
+                            "numDa": numDa,
+                            "nomComplet": nom,
+                            "courriel": courriel,
+                            "mdp": mdp,
+                            "type": typeEtudiant
+                        },
+                        { headers: { "Content-Type": "application/json" }}
+                        ).then(res => {
+                        })
+    
+                    await axios.post(process.env.REACT_APP_URL + "etudiants/login",
+                        {
+                            "courriel": courriel,
+                            "mdp": mdp
+                        },
+                        { headers: { "Content-Type": "application/json" }}
+                        ).then(res => {
+                            token = res.data.message;
+                        })
+                    const decodedToken = jwtDecode(token);
+                    handleLogin(decodedToken.id, token, decodedToken.type);
+                    console.log("Connexion compte");
+                }
+            } catch(err) {
+                alert(err.response.data.message);
             }
+            
+            navigate("/Accueil");
             props.setLoading(false);
         }
     }
 
     return ( 
         <div >
-            <form classNameName="connexion-form" onSubmit={handleSubmit(handleSoumission)}>
+            <form classNameName="connexion-form" onSubmit={handleSubmit(handleSoumission)} id="registerForm">
                 <h1 className="connexion-h1">Creer un compte</h1>
                 <div>
                     <input className="connexion-input" type="text" placeholder="Courriel" name="courriel" {...register("courriel",{required: true, validate:validator.isEmail})}/>
@@ -110,13 +122,19 @@ export default function Inscription (props) {
                     {errors.mdpConfirmation && <span>Le mot de passe ne correspond pas</span>}
                 </div>
                 {type === "etudiant" && <div>
-                    <label><input type="radio" name ="typeEtudiant" value="Developpement d'application" checked={true} {...register("typeEtudiant",{required: true})}/>Développement</label>
-                    <label><input type="radio" name ="typeEtudiant" value="Reseaux et securite" {...register("typeEtudiant",{required: true})}/>Réseaux</label>
+
+                    <select className="connexion-form-input" name="typeEtudiant" id="typeEtudiant" placeholder="Choisissez une option" {...register("typeEtudiant",{required: true})}>
+                        <option value="" disabled>Choisissez une option</option>
+                        <option name ="typeEtudiant" value="Reseaux et securite">Reseaux et securite</option>
+                        <option name ="typeEtudiant" value="Developpement d'application">Developpement d'application</option>
+                    </select>
                 </div>}
-                <div>
-                    <label><input type="radio" name ="type" value="entrepreneur" onClick={handleRole}  {...register("type",{required: true})}/>Entrepreneur</label>
-                    <label><input type="radio" name ="type" value="etudiant" onClick={handleRole} {...register("type",{required: true})}/>Etudiant</label>
-                </div>
+                    <select form="registerForm" className="connexion-form-input" name="type" id="type" placeholder="Choisissez une option" onClick={(handleRole)} {...register("type",{required: true})}>
+                        <option value="" disabled>Choisissez une option</option>
+                        <option name ="type" value="entrepreneur">Entrepreneur</option>
+                        <option name ="type" value="etudiant">Etudiant</option>
+                    </select>
+                <br></br>
                 <button className="connexion-button PageConnexion-buttonInscrire" type="submit">S'inscrire</button>
             </form>
             <button className="PageConnexion-buttonInscrire margin" onClick={handleButtonConnexion}>Se connecter</button>

@@ -14,7 +14,7 @@ function InfoCoordinateur() {
 
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/coordinateurs/').then(res => {
+        axios.get(process.env.REACT_APP_URL + 'coordinateurs/').then(res => {
             const data = res.data;
 
             setProfils(data.listeCoordinateur);

@@ -12,7 +12,7 @@ export default function PageDeConnexion(prop) {
         <div className="border">
             { (typeConnexion === "connexion" && loading != true) && (<Connexion setTypeConnexion={setTypeConnexion} setLoading={setLoading}/>)}
             { (typeConnexion === "inscription" && loading != true) && (<Inscription setTypeConnexion={setTypeConnexion} setLoading={setLoading} />)}
-            { (loading == true && (<Loading/>)) }
+            { (loading === true && (<Loading/>)) }
         </div>
     )
 }
