@@ -32,7 +32,7 @@ function EtudiantCard( { info } ){
     }
 
   return (
-    <div>
+    <div className="InfoProfil-Main">
         <div className="stage-item__content EtudiantCard-Main centerCard" ></div>
             <figure class="snip0056">
                 <figcaption>
