@@ -17,7 +17,7 @@ function StageInfo() {
     const { userId, role, token } = useContext(contexteAuthentification);
     axios.defaults.headers.common["authorization"] = token;
 
-    console.log(stage);
+    
     //const stagePlr = stage.ngPostes > 1 ? 'postes':'poste';
     
 //     const imageSrc = stage.type === 'Developpement d\'application'
@@ -38,7 +38,7 @@ function StageInfo() {
             } catch (err) { }
         };
         fetchStage();
-
+        
         if(role === "etudiant") {
             axios.get(process.env.REACT_APP_URL + role + "s/" + userId)
             .then((res) => {
