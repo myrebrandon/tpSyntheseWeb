@@ -1,6 +1,8 @@
 const { reponse } = require("express");
 const { default: mongoose, mongo } = require("mongoose");
 
+require("dotenv").config();
+
 const HttpError = require("../models/http-errors");
 const Stage = require("../models/stage");
 const Entrepreneur = require("../models/entrepreneur");
@@ -94,7 +96,7 @@ const ajouterStage = async (requete, reponse, next) => {
 
         const data = {
             "from": process.env.EMAIL,
-            "to": "brandon.myre04@gmail.com",
+            "to": process.env.EMAIL_COORDINATEUR,
             "subject": "Creation Stage",
             "text": message
         }
