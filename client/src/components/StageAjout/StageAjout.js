@@ -66,7 +66,7 @@ function StageAjout({ action }) {
       })
       alert("Le stage a été créé");
     } catch (Exception) {
-      alert("Erreur dans la création du stage");
+      alert("Erreur dans la création du stage\nCommuniquer avec: Sylvain Labranche\nEmail: sylvain.labranche@cmontmorency.qc.ca");
     }
 
     navigate("/stages");
