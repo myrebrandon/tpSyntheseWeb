@@ -44,7 +44,7 @@ function EtudiantCard( { info } ){
                     <div><Link to={`/stage/${stage._id}`}>{stage.titre}</Link></div> :
                     <div><Link to={`/${info._id}/Affectation`}>Affecter</Link></div>}
                 
-                    <button className="PageConnexion-buttonInscrire InfoProfil-btn-center" onClick={supprimerEtudiant}>Supprimer</button>
+                    <button onClick={supprimerEtudiant}>Supprimer</button>
                 </div>}
                 </figcaption>
                 <img src="https://www.shareicon.net/data/512x512/2016/07/03/790265_people_512x512.png" alt="sample8" />
