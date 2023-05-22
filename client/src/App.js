@@ -157,11 +157,11 @@ function App() {
             element={<Postulation />}
           />}
 
-          <Route path="/Stages"
+          {role !== "guess" && <Route path="/Stages"
             element={
               <StageList/>
             }
-          />
+          />}
 
           {role === "entrepreneur" && <Route path="/temp/StageEntrepreneur"
             element={

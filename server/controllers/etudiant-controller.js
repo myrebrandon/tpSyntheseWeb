@@ -55,7 +55,7 @@ const retourEtudiant = async (requete, reponse, next) => {
     let etudiant;
 
     try {
-        etudiant = await Etudiant.findById(idEtudiant, "-mdp");
+        etudiant = await Etudiant.findById(idEtudiant, "-mdp").populate("stages").populate("stageAffecte");
     } catch(err) {
         return next(new HttpError("Erreur de bd", 500));
     }

@@ -6,6 +6,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import axios from 'axios';
 import './InfoProfil.css';
 import StageList from '../StageList/StageList';
+import StageCard from '../StageCard/StageCard';
 
 function InfoProfil() {
 
@@ -13,6 +14,8 @@ function InfoProfil() {
 
     const { userId, role, token,handleLogout } = useContext(contexteAuthentification);
     const [profil, setProfil] = useState();
+    const [listeDePostuler, setListePostuler] = useState();
+    const [stageAffecte, setStageAffecte] = useState();
 
     let [supprimeText, setSupprimeText] = useState("Supprimer Le Compte");
 
@@ -26,6 +29,8 @@ function InfoProfil() {
             const data = res.data;
             if(role === "etudiant") {
                 setProfil(data.etudiant);
+                setListePostuler(data.etudiant.stages);
+                setStageAffecte(data.etudiant.stageAffecte);
             } else if (role === "entrepreneur") {
                 setProfil(data.entrepreneur);
             } else if (role === "coordinateur") {
@@ -74,6 +79,18 @@ function InfoProfil() {
                     <p>{profil.nomComplet}</p>
                     <p>{role}</p>
                     <p>{profil.courriel}</p>
+                    {role === "etudiant" &&
+                        <div>
+                            <h1>Stages postulés</h1>
+                            {listeDePostuler.map((stage) => (
+                                <StageCard info={stage}/>
+                            ))}
+                        </div>}
+                        {stageAffecte &&
+                            <div>
+                                <h1>Stage Affecté</h1>
+                                <StageCard info={stageAffecte}/>
+                            </div>}
                     {role === "entrepreneur" &&
                         <StageList entrepreneur={userId} />
                     }
