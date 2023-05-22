@@ -116,7 +116,7 @@ function StageInfo() {
                         <div className="stage-bouton">
                             
                             <div className="stage-appliquer">
-                                {dejaAppliquer ? <Link className='btn'>Déjà postulé</Link>:<Link to={`/Stages/${stageid}/Postulation`}>Appliquer</Link>}
+                                {dejaAppliquer ? <Link className='btn'>Déjà postulé</Link>:<Link className='btn' to={`/Stages/${stageid}/Postulation`}>Appliquer</Link>}
                             </div>
                         </div>
                         :
