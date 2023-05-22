@@ -1,10 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
 
 .maFooter {
-  display: flex;
+  display:block;
   justify-content: flex-end;
   align-items: flex-end;
-  min-height: 30vh;
+  min-height: 0%;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  /* height: 2.5rem;            Hauteur du pied-de-page */
 }
 
 .footer {
@@ -123,33 +129,3 @@
     background-positon-x: 0px;
   }
 }
-/* .Footer-Main {
-    background-color: #333;
-    color: #fff;
-    padding: 5px;
-    text-align: center;
-    margin-top: 200px;
-  }
-  
-  .Footer-Container {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .Footer-Container div {
-    margin: 0 20px;
-  }
-  
-  .Footer-Container p {
-    margin: 5px 0;
-  }
-  
-  .Footer-Container a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .Footer-Container a:hover {
-    text-decoration: underline;
-  }
-   */
