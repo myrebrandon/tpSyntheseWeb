@@ -51,10 +51,7 @@ function EtudiantList() {
                     <option value="Tout" >Tout</option>
                     <option value="Reseaux et securite">Reseaux</option>
                     <option value="Developpement d'application">Developpement</option>
-
                 </select>
-
-
                 {loadedEtudiant.map(et => (
                     <div>
                         <EtudiantCard key={et.id} info={et} />
