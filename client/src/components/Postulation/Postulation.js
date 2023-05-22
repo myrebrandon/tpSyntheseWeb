@@ -48,7 +48,7 @@ export default function Postulation(props) {
             <form class="connexion-form" onSubmit={handleSubmit(handleSoumission)} id="emailForm">
                 <h1 class="connexion-h1">Postuler</h1>
                 <div>
-                    <textarea form="emailForm" name="message" {...register("message")}>
+                    <textarea className="description" form="emailForm" name="message" {...register("message")}>
 
                     </textarea>
                 </div>
