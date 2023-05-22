@@ -37,7 +37,7 @@ function EtudiantCard( { info } ){
             <figure class="snip0056">
                 <figcaption>
                 <h2><span>{info.nomComplet}</span></h2>
-                <p className='EtudiantCard-p'>{info.type}</p>
+                <p className='EtudiantCard-p'>{info.numDa}</p>
                 <p className='EtudiantCard-p'>{info.courriel}</p>
                 {role === "coordinateur" && <div>
                 {stage ? 
@@ -48,7 +48,7 @@ function EtudiantCard( { info } ){
                 </div>}
                 </figcaption>
                 <img src="https://www.shareicon.net/data/512x512/2016/07/03/790265_people_512x512.png" alt="sample8" />
-                <div class="position">{role}</div>
+                <div class="position">{info.type}</div>
             </figure>
         </div>
   );
@@ -64,7 +64,6 @@ export default EtudiantCard;
                 {stage ? 
                     <div><Link to={`/stage/${stage._id}`}>{stage.titre}</Link></div> :
                     <div><Link to={`/${info._id}/Affectation`}>Affecter</Link></div>}
-                
                     <button onClick={supprimerEtudiant}>Supprimer</button>
                 </div>}
             </div>
