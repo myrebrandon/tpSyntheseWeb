@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Navigationbar from './components/Navbar/Navigationbar.js'
 import PageDeConnexion from './components/PageDeConnexion/PageDeConnexion';
 import FAQ from './components/FAQ/FAQ';
@@ -13,7 +13,6 @@ import StageAjout from './components/StageAjout/StageAjout';
 import DeroulementStage from './components/DeroulementStage/DeroulementStage';
 import Postulation from './components/Postulation/Postulation';
 import PiedPage from './components/PiedPage/PiedPage';
-import Inscription from './components/PageDeConnexion/Inscription';
 import jwtDecode from "jwt-decode";
 import axios from 'axios';
 import InfoProfil from './components/InfoProfil/InfoProfil';
@@ -42,22 +41,7 @@ function App() {
       setUserId(null);
       setRole("guess");
     }
-  });
-
-
-
-  async function verifExisteEncore(id, type) {
-    let existe;
-    await axios.get(process.env.REACT_APP_URL + type + "s/" + id)
-      .then((res) => {
-        existe = true;
-      })
-      .catch((err) => {
-        existe = false;
-      });
-
-      return existe;
-  }
+  }, []);
 
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
@@ -141,13 +125,13 @@ function App() {
             }
           />}
 
-          {role != "guess" && <Route path="/profil"
+          {role !== "guess" && <Route path="/profil"
             element={
               <InfoProfil/>
             }
           />}
 
-          {role != "guess" && <Route path="/profil/:userId"
+          {role !== "guess" && <Route path="/profil/:userId"
             element={
               <InfoProfil/>
             }
@@ -207,6 +191,8 @@ function App() {
             <InfoCoordinateur/>
           }
           />
+
+          <Route path="/" element={<Navigate to="Accueil" replace/>}/>
 
         </Routes>
       </Router>
