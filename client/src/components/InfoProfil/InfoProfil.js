@@ -72,9 +72,6 @@ function InfoProfil() {
                             <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-linkedin" aria-hidden="true"></a></li>
                         </ul>
                     </div>
-                    <p>{profil.nomComplet}</p>
-                    <p>{role}</p>
-                    <p>{profil.courriel}</p>
                     {role === "entrepreneur" &&
                         <StageList entrepreneur={userId} />
                     }
