@@ -210,8 +210,8 @@ function App() {
 
         </Routes>
       </Router>
-      <PiedPage/>
     </div>
+    <PiedPage/>
     </contexteAuthentification.Provider>
   );
 }
