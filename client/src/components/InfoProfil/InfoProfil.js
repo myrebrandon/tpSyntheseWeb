@@ -62,6 +62,7 @@ function InfoProfil() {
                         </div>
                         <div class="team-content">
                         <h3 class="name">{profil.nomComplet}</h3>
+                        <h3 class="title">{role}</h3>
                         <h4 class="title">{profil.courriel}</h4>
                         </div>
                         <ul class="social">
