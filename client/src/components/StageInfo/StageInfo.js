@@ -17,8 +17,8 @@ function StageInfo() {
     const { userId, role, token } = useContext(contexteAuthentification);
     axios.defaults.headers.common["authorization"] = token;
 
-    console.log(stage.type)
-    const stagePlr = stage.ngPostes > 1 ? 'postes':'poste';
+    console.log(stage);
+    //const stagePlr = stage.ngPostes > 1 ? 'postes':'poste';
     
 //     const imageSrc = stage.type === 'Developpement d\'application'
 //     ? 'https://cdn-icons-png.flaticon.com/512/2809/2809263.png'
@@ -30,7 +30,7 @@ function StageInfo() {
         const fetchStage = async () => {
             try {
                 const responseData = await sendRequest(
-                    `http://localhost:5000/api/stages/`
+                    process.env.REACT_APP_URL + `stages/`
                 );
                 setLoadedStage(responseData.listeStages.filter(s => {
                     return s._id === stageid;
