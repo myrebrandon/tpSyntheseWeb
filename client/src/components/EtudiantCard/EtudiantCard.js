@@ -32,6 +32,29 @@ function EtudiantCard( { info } ){
     }
 
   return (
+    <div className="InfoProfil-Main">
+        <div className="stage-item__content EtudiantCard-Main centerCard" ></div>
+            <figure class="snip0056">
+                <figcaption>
+                <h2><span>{info.nomComplet}</span></h2>
+                <p className='EtudiantCard-p'>{info.numDa}</p>
+                <p className='EtudiantCard-p'>{info.courriel}</p>
+                {role === "coordinateur" && <div>
+                {stage ? 
+                    <div><Link to={`/stage/${stage._id}`}>{stage.titre}</Link></div> :
+                    <div><Link to={`/${info._id}/Affectation`}>Affecter</Link></div>}
+                
+                    <button onClick={supprimerEtudiant}>Supprimer</button>
+                </div>}
+                </figcaption>
+                <img src="https://www.shareicon.net/data/512x512/2016/07/03/790265_people_512x512.png" alt="sample8" />
+                <div class="position">{info.type}</div>
+            </figure>
+        </div>
+  );
+};
+export default EtudiantCard;
+{/* </div>
         <div className="stage-item__content">
           <h2>{info.nomComplet}</h2>
           <div className="stage-item__info">
@@ -41,12 +64,7 @@ function EtudiantCard( { info } ){
                 {stage ? 
                     <div><Link to={`/stage/${stage._id}`}>{stage.titre}</Link></div> :
                     <div><Link to={`/${info._id}/Affectation`}>Affecter</Link></div>}
-                
                     <button onClick={supprimerEtudiant}>Supprimer</button>
                 </div>}
             </div>
-        </div>
-  );
-};
-
-export default EtudiantCard;
+        </div> */}
