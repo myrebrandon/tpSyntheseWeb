@@ -108,9 +108,6 @@ function StageInfo() {
                     <br></br>
                     <div className="skills-container margintop2"> 
                     <div className="skill desc">{stage.description}</div>
-                    <div className="stage-supprimer">
-                                <button className='btn' href="/Stages" onClick={SupprimerStage}>Supprimer</button>
-                            </div>
                 </div>
                 {
                     role === "etudiant" ?
@@ -127,7 +124,7 @@ function StageInfo() {
                                 <Link className='btn' to={`/temp/ModifierStage/${stageid}`}>Modifier</Link>
                             </div>
                             <div className="stage-supprimer">
-                                <button href="/Stages" onClick={SupprimerStage}>Supprimer</button>
+                                <button className='btn' href="/Stages" onClick={SupprimerStage}>Supprimer</button>
                             </div>
                         </div>
                         :

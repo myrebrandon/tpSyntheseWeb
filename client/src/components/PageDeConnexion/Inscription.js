@@ -11,7 +11,7 @@ import jwtDecode from "jwt-decode";
 export default function Inscription (props) {
     const navigate = useNavigate();
     const {handleLogin} = useContext(contexteAuthentification);
-    const {register, handleSubmit, formState: {errors}, setError, setValue, getValues} = useForm();
+    const {register, handleSubmit, formState: {errors}, setError, getValues} = useForm();
     
     const [type, setType] = useState("entrepreneur");
 
@@ -134,7 +134,9 @@ export default function Inscription (props) {
                         <option name ="type" value="entrepreneur">Entrepreneur</option>
                         <option name ="type" value="etudiant">Etudiant</option>
                     </select>
-                <button className="connexion-button PageConnexion-buttonInscrire" type="submit">S'inscrire</button>
+                <div>
+                    <button className="connexion-button PageConnexion-buttonInscrire" type="submit">S'inscrire</button>
+                </div>
             </form>
             <button className="PageConnexion-buttonInscrire margin" onClick={handleButtonConnexion}>Se connecter</button>
         </div>
